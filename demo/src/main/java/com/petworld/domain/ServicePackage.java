@@ -1,4 +1,5 @@
 package com.petworld.domain;
+import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "service_packages")
 public class ServicePackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +18,6 @@ public class ServicePackage {
 
     private String name;
 
-
+    @Column(name = "status")
+    private boolean isStatus;
 }

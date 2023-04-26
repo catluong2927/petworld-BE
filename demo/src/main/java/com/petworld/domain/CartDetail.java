@@ -10,19 +10,17 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "services")
-public class Service {
+@Table(name = "cart_detail")
+public class CartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    private String description;
-
-    private Float price;
+    @ManyToOne(targetEntity = CartService.class)
+    @JoinColumn(name="cart_service_id",referencedColumnName = "id")
+    private Long cartServiceId;
 
     @ManyToOne(targetEntity = ServicePackage.class)
-    @JoinColumn(name = "service_package_id", referencedColumnName = "id")
-    private ServicePackage servicePackage;
+    @JoinColumn(name = "service_package_id",referencedColumnName = "id")
+    private Long servicePackageId;
 }
