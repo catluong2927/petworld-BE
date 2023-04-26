@@ -15,6 +15,7 @@ public class ServicePackage {
     private Long id;
 
     private String name;
+    ádasdasd
 
 
 }
