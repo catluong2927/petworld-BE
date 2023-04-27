@@ -30,7 +30,7 @@ public class PackageServiceController {
 
     @PostMapping("")
     public ResponseEntity<ServicePackage> saveServicePackages(@RequestBody ServicePackage servicePackage){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/service_package/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/service_package").toUriString());
         return ResponseEntity.created(uri).body(servicePackageService.saveServicePackage(servicePackage));
     }
 
@@ -59,6 +59,8 @@ public class PackageServiceController {
             }
     }
 
-
-
+    @GetMapping("/search/{name}")
+    public ResponseEntity<Collection<ServicePackage>> getAllServicePackageByName(@PathVariable("name") String name){
+        return ResponseEntity.ok().body(servicePackageService.getAllServicePackageByName(name));
+    }
 }

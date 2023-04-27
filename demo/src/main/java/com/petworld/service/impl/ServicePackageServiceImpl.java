@@ -40,4 +40,10 @@ public class ServicePackageServiceImpl implements ServicePackageService {
         log.info("Removing service package ");
         servicePackageRepo.deleteByIdPackageService(id);
     }
+
+    @Override
+    public Collection<ServicePackage> getAllServicePackageByName(String name) {
+        log.info("Getting all service package by name from database");
+        return servicePackageRepo.findServicePackageByName(name);
+    }
 }
