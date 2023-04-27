@@ -23,6 +23,4 @@ public class Service {
     @ManyToOne(targetEntity = ServicePackage.class)
     @JoinColumn(name = "service_package_id", referencedColumnName = "id")
     private ServicePackage servicePackage;
-    ádasd
-
 }
