@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "services")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,9 @@ public class Service {
     private String description;
 
     private Float price;
+
+    @Column(name = "status")
+    private boolean isStatus;
     @ManyToOne(targetEntity = ServicePackage.class)
     @JoinColumn(name = "service_package_id", referencedColumnName = "id")
     private ServicePackage servicePackage;
