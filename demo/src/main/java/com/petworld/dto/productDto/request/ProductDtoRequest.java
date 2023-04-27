@@ -1,9 +1,6 @@
 package com.petworld.dto.productDto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 
@@ -11,6 +8,7 @@ import javax.persistence.Column;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class ProductDtoRequest {
     private String name;
     private String description;

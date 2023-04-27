@@ -2,6 +2,7 @@ package com.petworld.converter;
 
 import com.petworld.domain.Product;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
+import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import org.springframework.beans.BeanUtils;
@@ -25,9 +26,17 @@ public class ProductConverter{
         BeanUtils.copyProperties(product, productDto);
         return productDto;
     }
+
+    //Create a new product
     public Product dtoToEntity(ProductDtoRequest productDtoRequest){
         Product product = new Product();
         BeanUtils.copyProperties(productDtoRequest, product);
+        return product;
+    }
+
+    //Update a product
+    public Product dtoToEntity(UpdateProductDtoRequest updateProductDtoRequest, Product product){
+        BeanUtils.copyProperties(updateProductDtoRequest, product);
         return product;
     }
 

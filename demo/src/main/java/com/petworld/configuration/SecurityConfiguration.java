@@ -1,2 +1,2 @@
-package com.petworld.configuration;public class SecurityConfiguration {
-}
+//package com.petworld.configuration;public class SecurityConfiguration {
+//}
