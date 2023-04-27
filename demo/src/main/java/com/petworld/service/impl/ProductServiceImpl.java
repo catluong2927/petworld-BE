@@ -2,6 +2,7 @@ package com.petworld.service.impl;
 
 import com.petworld.converter.ProductConverter;
 import com.petworld.domain.Product;
+import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import com.petworld.repository.ProductRepository;
@@ -37,6 +38,13 @@ public class ProductServiceImpl implements IProductService {
             }
         return null;
     }
-
-
+    @Override
+    public void addProduct(ProductDtoRequest productDtoRequest){
+        if(productDtoRequest != null){
+            Product product = productConverter.dtoToEntity(productDtoRequest);
+            productRepository.save(product);
+        } else {
+            System.out.println("Don't save database");
+        }
+    }
 }
