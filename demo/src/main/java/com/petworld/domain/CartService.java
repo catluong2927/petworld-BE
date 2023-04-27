@@ -17,6 +17,5 @@ public class CartService {
 
     @OneToMany(targetEntity = Service.class)
     private List<Service> services;
-    ádasdasd
 
 }
