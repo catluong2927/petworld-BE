@@ -15,7 +15,7 @@ public class ServicePackage {
     private Long id;
 
     private String name;
-    ádasdasd
 
-
+    @Column(name = "status")
+    private boolean isStatus;
 }
