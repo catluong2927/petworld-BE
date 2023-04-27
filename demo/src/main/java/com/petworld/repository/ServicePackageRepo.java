@@ -7,10 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
+
 @Repository
 public interface ServicePackageRepo extends JpaRepository<ServicePackage,Long> {
     @Modifying
-    @Query("UPDATE ServicePackage s SET s.isStatus = false WHERE s.id = :id")
+    @Query("UPDATE ServicePackage sp SET sp.isStatus = false WHERE sp.id = :id")
     void deleteByIdPackageService(@Param("id") Long id);
 
+    @Query("SELECT sp FROM ServicePackage sp WHERE sp.name = :name")
+    Collection<ServicePackage> findServicePackageByName(String name);
 }

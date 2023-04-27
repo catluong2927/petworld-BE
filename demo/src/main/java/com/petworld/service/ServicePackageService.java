@@ -13,4 +13,6 @@ public interface ServicePackageService {
     Optional<ServicePackage> getServicePackage(Long id);
 
     void deleteByIdByStatus(Long id);
+
+    Collection<ServicePackage> getAllServicePackageByName(String name);
 }

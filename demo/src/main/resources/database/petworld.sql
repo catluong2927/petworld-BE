@@ -1,7 +1,7 @@
-drop database demo;
-create database demo;
+drop database `petworld-v1`;
+create database `petworld-v1`;
 
-use demo;
+use `petworld-v1`;
 
 create table product(
 	`id`			bigint primary key auto_increment,
@@ -17,7 +17,7 @@ create table product(
 	`vitamins` 		varchar(200) not null,
 	`animal` 		varchar(200) not null,
 	`status` 		bit not null check(`status` = 0 or `status` = 1),
-    `category_id` 	bigint not null
+    `category_id` 	bigint
 );
 
 create table category(
