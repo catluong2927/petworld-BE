@@ -1,13 +1,13 @@
-package com.petworld.dto.productDto.response;
+package com.petworld.dto.productDto.request;
+
 import lombok.*;
 
-
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class ProductDetailDtoResponse {
+public class UpdateProductDtoRequest {
+    private Long id;
     private String name;
     private String description;
     private String image;
@@ -19,4 +19,5 @@ public class ProductDetailDtoResponse {
     private String minerals;
     private String vitamins;
     private String animal;
+    private boolean status;
 }

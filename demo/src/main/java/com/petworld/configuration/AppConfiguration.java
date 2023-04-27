@@ -28,3 +28,4 @@ public class AppConfiguration implements WebMvcConfigurer {
         return new ModelMapper();
     }
 }
+

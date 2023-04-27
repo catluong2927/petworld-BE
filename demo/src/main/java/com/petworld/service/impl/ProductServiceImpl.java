@@ -3,15 +3,20 @@ package com.petworld.service.impl;
 import com.petworld.converter.ProductConverter;
 import com.petworld.domain.Product;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
+import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import com.petworld.repository.ProductRepository;
 import com.petworld.service.IProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.juli.logging.Log;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -46,5 +51,31 @@ public class ProductServiceImpl implements IProductService {
         } else {
             System.out.println("Don't save database");
         }
+    }
+
+    @Override
+    public void deleteProductById(Long id){
+        productRepository.deleteProductById(id);
+    }
+
+    @Override
+    public ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest) {
+        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
+        if(checkExist(id)) {
+            Product product = productRepository.findById(id).get();
+            if (product != null) {
+                product = productConverter.dtoToEntity(updateProductDtoRequest, product);
+                productRepository.save(product);
+                return productDetailDtoResponse;
+            }
+        }
+        return null;
+    }
+
+    public Boolean checkExist(Long id) {
+        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
+        if(productDetailDtoResponse != null)
+            return true;
+        return false;
     }
 }
