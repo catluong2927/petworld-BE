@@ -3,6 +3,10 @@ package com.petworld.controller.controller_FE_SE;
 import com.petworld.domain.ServicePackage;
 import com.petworld.service.ServicePackageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -62,5 +66,19 @@ public class PackageServiceController {
     @GetMapping("/search/{name}")
     public ResponseEntity<Collection<ServicePackage>> getAllServicePackageByName(@PathVariable("name") String name){
         return ResponseEntity.ok().body(servicePackageService.getAllServicePackageByName(name));
+    }
+
+    @GetMapping("/sort/price")
+    public ResponseEntity<Page<ServicePackage>> getAllServicePackages(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(defaultValue = "minPrice") String sortField) {
+
+        Sort sort = sortDirection.equalsIgnoreCase("desc") ? Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<ServicePackage> servicePackages = servicePackageService.findAll(pageable);
+        return ResponseEntity.ok().body(servicePackages);
     }
 }

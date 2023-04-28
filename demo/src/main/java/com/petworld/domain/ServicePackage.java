@@ -14,9 +14,12 @@ public class ServicePackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
+    private Float minPrice;
+    private Float maxPrice;
+    private String description;
     @Column(name = "status")
-    private boolean isStatus;
+    private String status;
+    @Column(name="active")
+    private boolean isActive;
 }

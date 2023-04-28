@@ -5,6 +5,10 @@ import com.petworld.repository.ServicePackageRepo;
 import com.petworld.service.ServicePackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,5 +49,9 @@ public class ServicePackageServiceImpl implements ServicePackageService {
     public Collection<ServicePackage> getAllServicePackageByName(String name) {
         log.info("Getting all service package by name from database");
         return servicePackageRepo.findServicePackageByName(name);
+    }
+
+    public Page<ServicePackage> findAll(Pageable pageable) {
+        return servicePackageRepo.findAll(pageable);
     }
 }
