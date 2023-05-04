@@ -71,5 +71,4 @@ VALUES
 ('Sườn heo chiên giòn', 'Món ăn chính được làm từ sườn heo, được chiên giòn và thêm gia vị tạo nên hương vị thơm ngon đặc trưng', 'suonheochiengion.jpg', 65000, 'SHCG01', '15g', '10g', '5g', '50mg', 'vitamin B3', 'Heo', 1, 4);
 
 Select * from product, category where product.category_id = category.id;
-------------
 
