@@ -1,6 +1,8 @@
 package com.petworld.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,9 +27,8 @@ public class Product {
     private String minerals;
     private String vitamins;
     private String animal;
-    private boolean status;
-    @OneToMany(targetEntity = ProductCart.class)
-    @Column(name = "cart_detail_id")
-    private Set<CartDetail> cartDetails;
-
+    private Boolean status;
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<CartDetail> cartDetailList;
 }

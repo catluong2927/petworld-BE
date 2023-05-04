@@ -1,5 +1,9 @@
 package com.petworld.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,9 +13,11 @@ import java.util.Set;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "Customers",
-        uniqueConstraints = {@UniqueConstraint(name = "users_uk",
-                columnNames = {"email", "phone"})})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,18 +25,18 @@ public class Customer {
     private Integer id;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
+    @JoinTable(name = "customer_role",
+            joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles = new HashSet<Role>();
 
     @NotBlank
-    @Column(name = "fullname", length = 200, nullable = false)
+    @Column(name = "full_name", length = 255, nullable = false)
     private String fullName;
 
     @NotBlank
-    @Column(name = "username", length = 200, nullable = false)
+    @Column(name = "username", length = 255, nullable = false)
     private String username;
 
     @NotBlank
@@ -38,15 +44,15 @@ public class Customer {
     private String password;
 
     @NotBlank
-    @Column(name = "email", length = 50, nullable = false)
+    @Column(name = "email", length = 255, nullable = false)
     private String email;
 
     @NotBlank
-    @Column(name = "address", length = 255, nullable = false)
+    @Column(name = "address", length = 255, nullable = true)
     private String address;
 
     @NotBlank
-    @Column(name = "phone", length = 12, nullable = false)
+    @Column(name = "phone", length = 255, nullable = true)
     private String phone;
 
     @NotBlank
@@ -54,129 +60,12 @@ public class Customer {
             columnDefinition = "text", nullable = true)
     private String avatar;
 
-    @Column(name = "status", nullable = true)
+    @Column(name = "is_status", nullable = true)
     private Boolean isStatus;
 
     @Column(name = "remember_token", length = 255, nullable = true)
     private String rememberToken;
 
-    public Customer() {
-    }
-
-    public Customer(Integer id, String fullName, String username, String password, String email,
-                    String address, String phone, String avatar, Boolean isStatus,
-                    String rememberToken) {
-        super();
-        this.id = id;
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.avatar = avatar;
-        this.isStatus = isStatus;
-        this.rememberToken = rememberToken;
-    }
-
-    public Customer(String fullName,String username,String password, String email, String address,
-                    String phone, String avatar, Boolean isStatus, String rememberToken) {
-        super();
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.avatar = avatar;
-        this.isStatus = isStatus;
-        this.rememberToken = rememberToken;
-    }
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Boolean getStatus() {
-        return isStatus;
-    }
-
-    public void setStatus(Boolean status) {
-        isStatus = status;
-    }
-
-    public String getRememberToken() {
-        return rememberToken;
-    }
-
-    public void setRememberToken(String rememberToken) {
-        this.rememberToken = rememberToken;
-    }
+//    @OneToOne(mappedBy = "customer")
+//    private Cart cart;
 }
