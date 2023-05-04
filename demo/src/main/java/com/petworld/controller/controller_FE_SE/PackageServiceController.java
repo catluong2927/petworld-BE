@@ -20,6 +20,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/service-packages")
 @RequiredArgsConstructor
 public class PackageServiceController {

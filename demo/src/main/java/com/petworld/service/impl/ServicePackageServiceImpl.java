@@ -31,10 +31,10 @@ public class ServicePackageServiceImpl implements ServicePackageService {
     private final ServicePackageConverter servicePackageConverter;
     @Override
     public ServicePackageDtoResponse saveServicePackage(ServicePackageDtoRequest servicePackageDtoRequest) {
-        log.info("Saving new service package to database {}",servicePackageDtoRequest.getName());
-       ServicePackage servicePackage =  servicePackageConverter.dtoToEntity(servicePackageDtoRequest);
-       ServicePackage savedSevicePackage =  servicePackageRepo.save(servicePackage);
-       return servicePackageConverter.entityToDto(savedSevicePackage);
+           log.info("Saving new service package to database {}",servicePackageDtoRequest.getName());
+           ServicePackage servicePackage =  servicePackageConverter.dtoToEntity(servicePackageDtoRequest);
+           ServicePackage savedSevicePackage =  servicePackageRepo.save(servicePackage);
+           return servicePackageConverter.entityToDto(savedSevicePackage);
     }
 
     @Override
@@ -47,7 +47,6 @@ public class ServicePackageServiceImpl implements ServicePackageService {
         return servicePackageDtoResponses;
     }
 
-
     @Override
     public Optional<ServicePackageDtoResponse> getServicePackage(Long id) {
         log.info("Getting service package by id from database");
@@ -59,7 +58,6 @@ public class ServicePackageServiceImpl implements ServicePackageService {
         return Optional.empty();
         }
     }
-
 
     @Override
     public void deleteByIdByStatus(Long id) {

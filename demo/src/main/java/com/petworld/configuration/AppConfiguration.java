@@ -1,30 +1,31 @@
-package com.petworld.configuration;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class AppConfiguration extends RuntimeException{
-    private static final long serialVersionUID = 1L;
-    private String resourceName;
-    private String fieldName;
-    private Object fieldValue;
-
-    public ResourceNotFoundException( String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
-    }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public Object getFieldValue() {
-        return fieldValue;
-    }
-}
+//package com.petworld.configuration;
+//
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.web.servlet.config.annotation.CorsRegistry;
+//import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+//import org.modelmapper.ModelMapper;
+//
+//@Configuration
+//public class AppConfiguration implements WebMvcConfigurer {
+//    private final long MAX_AGE_SECS = 3600;
+//
+//    @Value("${app.cors.allowedOrigins}")
+//    private String[] allowedOrigins;
+//
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/api/**")
+//                .allowedOrigins(allowedOrigins)
+//                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+//                .allowCredentials(false)
+//                .maxAge(MAX_AGE_SECS);
+//    }
+//
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        return new ModelMapper();
+//    }
+//}
+//
