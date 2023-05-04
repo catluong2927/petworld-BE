@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/module6.iml" filepath="$PROJECT_DIR$/.idea/module6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/petworld-BE.main.iml" filepath="$PROJECT_DIR$/.idea/modules/petworld-BE.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/petworld-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/petworld-service.main.iml" />
     </modules>
   </component>
 </project>
