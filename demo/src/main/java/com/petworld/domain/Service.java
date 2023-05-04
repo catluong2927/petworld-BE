@@ -1,12 +1,12 @@
 package com.petworld.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,9 +22,12 @@ public class Service {
 
     private Float price;
 
-    @Column(name = "status")
-    private boolean isStatus;
-    @ManyToOne(targetEntity = ServicePackage.class)
-    @JoinColumn(name = "service_package_id", referencedColumnName = "id")
-    private ServicePackage servicePackage;
+    @OneToMany(targetEntity = ServiceImage.class)
+    @JoinTable(name = "service_image_detail",
+            joinColumns = @JoinColumn(name = "service_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_images_id"))
+    private List<ServiceImage> serviceImages;
+
+    @Column(name = "active")
+    private boolean isActive;
 }

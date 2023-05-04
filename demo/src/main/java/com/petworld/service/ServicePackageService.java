@@ -1,22 +1,28 @@
 package com.petworld.service;
 
+
+import com.petworld.domain.Service;
 import com.petworld.domain.ServicePackage;
+import com.petworld.dto.servicePackageDto.request.ServicePackageDtoRequest;
+import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface ServicePackageService {
-    ServicePackage saveServicePackage(ServicePackage servicePackage);
+    ServicePackageDtoResponse saveServicePackage(ServicePackageDtoRequest servicePackageDtoRequest);
 
-    Collection<ServicePackage> getAllServicePackages();
+    List<ServicePackageDtoResponse> getAllServicePackages();
 
-    Optional<ServicePackage> getServicePackage(Long id);
+    Optional<ServicePackageDtoResponse> getServicePackage(Long id);
 
     void deleteByIdByStatus(Long id);
 
-    Collection<ServicePackage> getAllServicePackageByName(String name);
+    List<ServicePackageDtoResponse> getAllServicePackageByName(String name);
 
-    Page<ServicePackage> findAll(Pageable pageable);
+    Page<ServicePackageDtoResponse> findAll(Pageable pageable);
+
+    Optional<ServicePackageDtoResponse> addServiceToServicePackage(Long id, Long serviceId);
 }
