@@ -25,7 +25,8 @@ public class Product {
     private String minerals;
     private String vitamins;
     private String animal;
-    private boolean status;
+    private Boolean status;
+    private Integer sale;
     @OneToMany(targetEntity = ProductCart.class)
     @Column(name = "cart_detail_id")
     private Set<CartDetail> cartDetails;

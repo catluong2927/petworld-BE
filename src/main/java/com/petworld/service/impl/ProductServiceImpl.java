@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +27,11 @@ public class ProductServiceImpl implements IProductService {
     private final ProductConverter productConverter;
 
     @Override
-    public List<ProductDtoResponse> findAllProducts() {
-        List<Product> products = productRepository.findAllProducts();
+    public Page<ProductDtoResponse> getAllProducts(Pageable pageable) {
+        Page<Product> products = productRepository.getAllProducts(pageable);
         if(!products.isEmpty()){
-            List<ProductDtoResponse> productDtoResponses = productConverter.entitiesToDtos(products);
-                return productDtoResponses;
+            Page<ProductDtoResponse> productDtoResponses = productConverter.entitiesToDtos(products);
+            return productDtoResponses;
         }
         return null;
     }
@@ -60,22 +62,14 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest) {
-        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
-        if(checkExist(id)) {
-            Product product = productRepository.findById(id).get();
-            if (product != null) {
-                product = productConverter.dtoToEntity(updateProductDtoRequest, product);
-                productRepository.save(product);
-                return productDetailDtoResponse;
-            }
+
+        Product product = productRepository.findById(id).get();
+        if (product != null) {
+            product = productConverter.dtoToEntity(updateProductDtoRequest, product);
+            productRepository.save(product);
+            ProductDetailDtoResponse productDetailDtoResponse = findById(id);
+            return productDetailDtoResponse;
         }
         return null;
-    }
-
-    public Boolean checkExist(Long id) {
-        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
-        if(productDetailDtoResponse != null)
-            return true;
-        return false;
     }
 }

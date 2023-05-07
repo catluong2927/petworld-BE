@@ -6,6 +6,7 @@ import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,12 +14,8 @@ import java.util.List;
 
 @Component
 public class ProductConverter{
-    public List<ProductDtoResponse> entitiesToDtos(List<Product> products ){
-        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
-        for(Product element : products){
-            ProductDtoResponse productDtoResponse = entityToDto(element);
-            productDtoResponses.add(productDtoResponse);
-        }
+    public Page<ProductDtoResponse> entitiesToDtos(Page<Product> products){
+        Page<ProductDtoResponse> productDtoResponses = products.map(product -> entityToDto(product));
         return productDtoResponses;
     }
     public ProductDtoResponse entityToDto(Product product){

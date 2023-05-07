@@ -19,4 +19,5 @@ public class ProductDetailDtoResponse {
     private String minerals;
     private String vitamins;
     private String animal;
+    private Integer sale;
 }
