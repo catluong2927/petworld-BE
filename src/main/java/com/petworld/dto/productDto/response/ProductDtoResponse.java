@@ -14,5 +14,6 @@ public class ProductDtoResponse {
     private String image;
     private Double price;
     private String productCode;
+    private Integer sale;
 
 }

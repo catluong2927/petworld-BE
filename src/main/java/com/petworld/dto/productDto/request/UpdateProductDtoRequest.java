@@ -19,5 +19,6 @@ public class UpdateProductDtoRequest {
     private String minerals;
     private String vitamins;
     private String animal;
-    private boolean status;
+    private Boolean status;
+    private Integer sale;
 }

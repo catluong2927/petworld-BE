@@ -27,6 +27,7 @@ public class Product {
     private String minerals;
     private String vitamins;
     private String animal;
+    private Integer sale;
     private Boolean status;
     @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
