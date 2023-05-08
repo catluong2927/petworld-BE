@@ -1,5 +1,6 @@
 package com.petworld.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,17 +16,26 @@ import javax.persistence.*;
 @Table(name = "cart_detail")
 public class CartDetail {
 
-    @EmbeddedId
-    CartDetailKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(targetEntity = ProductCart.class)
-    @MapsId("productCartId")
-    @JoinColumn(name = "product_cart_id", referencedColumnName = "id")
-    private ProductCart productCart;
+    @Column(name = "total_price")
+    private Double totalPrice;
 
-    @ManyToOne(targetEntity = Product.class)
-    @MapsId("productId")
+    @Column(name = "amount")
+    private Integer amount;
+
+    @Column(name = "status")
+    private Boolean status;
+
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 }
