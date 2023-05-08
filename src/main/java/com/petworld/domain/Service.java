@@ -23,7 +23,7 @@ public class Service {
     private Float price;
 
     @OneToMany(targetEntity = ServiceImage.class)
-    @JoinTable(name = "service_image_detail",
+    @JoinTable(name = "service_image_details",
             joinColumns = @JoinColumn(name = "service_id"),
             inverseJoinColumns = @JoinColumn(name = "service_images_id"))
     private List<ServiceImage> serviceImages;
