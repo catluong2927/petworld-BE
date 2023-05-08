@@ -29,6 +29,9 @@ public class Product {
     private String animal;
     private Integer sale;
     private Boolean status;
+    @OneToOne
+    @JoinColumn(name = "mark_id", referencedColumnName = "id")
+    private Mark mark;
     @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<CartDetail> cartDetailList;

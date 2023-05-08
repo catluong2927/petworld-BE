@@ -18,7 +18,7 @@ public class CartController {
     private final ICartService cartService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllCarts(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<?> getAllCarts(@PageableDefault(size = 9) Pageable pageable) {
         Page<CartDtoResponse> cartDtoResponses = cartService.getAllCarts(pageable);
         return new ResponseEntity<>(cartDtoResponses, HttpStatus.OK);
     }
