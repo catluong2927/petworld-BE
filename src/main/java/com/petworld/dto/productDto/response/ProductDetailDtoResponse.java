@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Data
 public class ProductDetailDtoResponse {
     private String name;
     private String description;
