@@ -6,7 +6,7 @@ import com.petworld.domain.ServicePackage;
 import com.petworld.dto.servicePackageDto.request.ServicePackageDtoRequest;
 import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
 import com.petworld.repository.ServicePackageRepo;
-import com.petworld.repository.ServiceRepository;
+import com.petworld.repository.ServiceRepo;
 import com.petworld.service.ServicePackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +26,7 @@ import java.util.Optional;
 public class ServicePackageServiceImpl implements ServicePackageService {
     private final ServicePackageRepo servicePackageRepo;
 
-    private final ServiceRepository serviceRepo;
+    private final ServiceRepo serviceRepo;
     private final ServicePackageConverter servicePackageConverter;
     @Override
     public ServicePackageDtoResponse saveServicePackage(ServicePackageDtoRequest servicePackageDtoRequest) {

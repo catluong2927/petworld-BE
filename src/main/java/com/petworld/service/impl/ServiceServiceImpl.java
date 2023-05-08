@@ -2,11 +2,8 @@ package com.petworld.service.impl;
 
 import com.petworld.domain.Service;
 import com.petworld.domain.ServiceImage;
-import com.petworld.domain.ServicePackage;
-import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
 import com.petworld.repository.ServiceImageRepo;
-import com.petworld.repository.ServiceRepository;
-import com.petworld.service.ServiceImageService;
+import com.petworld.repository.ServiceRepo;
 import com.petworld.service.ServiceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class ServiceServiceImpl implements ServiceService {
 
-    private final ServiceRepository serviceRepo;
+    private final ServiceRepo serviceRepo;
     private final ServiceImageRepo serviceImageRepo;
     @Override
     public Service saveService(Service service) {
