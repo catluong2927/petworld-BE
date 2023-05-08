@@ -1,5 +1,6 @@
 package com.petworld.controller.controller_FE_SE;
 import com.petworld.domain.Service;
+import com.petworld.domain.ServicePackage;
 import com.petworld.dto.servicePackageDto.request.ServicePackageDtoRequest;
 import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
 import com.petworld.service.ServicePackageService;
@@ -28,7 +29,9 @@ public class PackageServiceController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ServicePackageDtoResponse>> getServicePackage(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(servicePackageService.getServicePackage(id));
+        Optional<ServicePackageDtoResponse> servicePackage = servicePackageService.getServicePackage(id);
+        if(servicePackage.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(servicePackage);
     }
 
     @PostMapping("")
@@ -39,32 +42,34 @@ public class PackageServiceController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Optional<ServicePackageDtoResponse>> removeServicePackage(@PathVariable("id") Long id){
-            Optional<ServicePackageDtoResponse> servicePackage = servicePackageService.getServicePackage(id);
-            if(servicePackage.isPresent()) {
-                return ResponseEntity.notFound().build();
-            } else {
-                servicePackageService.deleteByIdByStatus(id);
-                return ResponseEntity.ok().body(servicePackage);
-            }
+        Optional<ServicePackageDtoResponse> servicePackage = servicePackageService.getServicePackage(id);
+        if(servicePackage.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            servicePackageService.deleteByIdByStatus(id);
+            return ResponseEntity.ok().body(servicePackage);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Optional<ServicePackageDtoResponse>> updateServicePackage(@PathVariable("id") Long id,
                                                                                     @RequestBody ServicePackageDtoRequest servicePackage){
-            Optional<ServicePackageDtoResponse> editedServicePackage = servicePackageService.getServicePackage(id);
-            if(!editedServicePackage.isPresent()) {
-                return ResponseEntity.notFound().build();
-            } else {
-                URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("api/service-packages").toUriString());
-                return ResponseEntity.created(uri).body(Optional.ofNullable(
-                        servicePackageService.saveServicePackage(servicePackage)));
-            }
+        Optional<ServicePackageDtoResponse> editedServicePackage = servicePackageService.getServicePackage(id);
+        if(!editedServicePackage.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("api/service-packages").toUriString());
+            return ResponseEntity.created(uri).body(Optional.ofNullable(
+                    servicePackageService.saveServicePackage(servicePackage)));
+        }
     }
 
     @GetMapping("/search/{name}")
     public ResponseEntity<Collection<ServicePackageDtoResponse>> getAllServicePackageByName(@PathVariable("name") String name){
-        return ResponseEntity.ok().body(servicePackageService.getAllServicePackageByName(name));
+        Collection<ServicePackageDtoResponse> servicePackageDtoResponses = servicePackageService.getAllServicePackageByName(name);
+        if (servicePackageDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(servicePackageDtoResponses);
     }
 
     @GetMapping()

@@ -27,7 +27,9 @@ public class ServiceController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Service>> getService(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(serviceService.getService(id));
+        Optional<Service> service = serviceService.getService(id);
+        if (service.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(service);
     }
 
     @PostMapping("")

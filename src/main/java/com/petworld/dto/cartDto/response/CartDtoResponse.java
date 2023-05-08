@@ -5,8 +5,6 @@ import lombok.*;
 import java.sql.Date;
 import java.util.List;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,7 +15,7 @@ public class CartDtoResponse {
     private Integer amountItem;
     private Date cartDate;
 
-    private Integer customerId;
+    private Long userId;
 
     public Integer getAmountItem() {
         return this.getCartDetailDtoResponses().size();

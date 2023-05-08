@@ -62,5 +62,7 @@ public class ServiceServiceImpl implements ServiceService {
        Service service = serviceRepo.getById(id);
        ServiceImage serviceImage = new ServiceImage(urlImage);
        service.getServiceImages().add(serviceImage);
+       serviceImageRepo.save(serviceImage);
+       serviceRepo.save(service);
     }
 }

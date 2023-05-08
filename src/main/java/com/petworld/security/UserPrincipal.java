@@ -1,7 +1,7 @@
 package com.petworld.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.petworld.domain.Customer;
+import com.petworld.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,44 +11,44 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class CustomerPrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private String username;
+    private Long id;
+    private String email;
 
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomerPrincipal(Integer id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public static CustomerPrincipal create(Customer customer) {
-        List<GrantedAuthority> authorities = customer.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName())
+    public static UserPrincipal create(User user) {
+        List<GrantedAuthority> authorities = user.getUserRoles().stream().map(userRole ->
+                new SimpleGrantedAuthority(userRole.getRole().getName())
         ).collect(Collectors.toList());
 
-        return new CustomerPrincipal(
-                customer.getId(),
-                customer.getUsername(),
-                customer.getPassword(),
+        return new UserPrincipal(
+                user.getId(),
+                user.getEmail(),
+                user.getPassword(),
                 authorities
         );
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class CustomerPrincipal implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomerPrincipal that = (CustomerPrincipal) o;
+        UserPrincipal that = (UserPrincipal) o;
         return Objects.equals(id, that.id);
     }
 

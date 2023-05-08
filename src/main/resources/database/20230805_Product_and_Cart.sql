@@ -37,8 +37,8 @@ create table cart(
 	`id`			bigint primary key auto_increment,
     `amount_item`	int default 0,
     `total_payment`	double(16,4) default 0.0000,
-    `cart_date`	date default(CURRENT_DATE),
-	`customer_id`	int not null unique
+    `cart_date`		date default(CURRENT_DATE),
+	`user_id`		bigint not null unique
 );
 
 create table cart_detail(
@@ -51,7 +51,7 @@ create table cart_detail(
 );
 
 create table `user`(
-	`id`				int not null auto_increment,
+	`id`				bigint not null auto_increment,
 	`full_name`			varchar(255) not null,
 	`username`			varchar(255) not null,
 	`password`			varchar(255) not null,
@@ -61,19 +61,20 @@ create table `user`(
 	`avatar`			varchar(255),
 	`is_status`			varchar(255),
 	`remember_token`	varchar(255),
-	`role_id`			int not null,
+	`role_id`			bigint not null,
 	PRIMARY KEY (id)
 );
 create table `role`(
-	`id`		int not null auto_increment,
+	`id`		bigint not null auto_increment,
 	`name`		varchar(255) not null,
 	`desc`		varchar(255) not null,
 	PRIMARY KEY (id)
 );
 
-create table `customer_role`(
-	`customer_id`	int not null,
-	`role_id`		int not null
+create table `user_role`(
+	 `id`		bigint primary key auto_increment,
+	 `user_id`	bigint not null,
+	 `role_id`	bigint not null
 );
 
 -- Khóa ngoại 
@@ -99,39 +100,40 @@ ADD CONSTRAINT fk_cart_detail_cart
 	REFERENCES cart(`id`);
 
 ALTER TABLE cart
-ADD CONSTRAINT fk_customers_cart
-	FOREIGN KEY (`customer_id`)
-	REFERENCES customer(`id`);
+ADD CONSTRAINT fk_user_cart
+	FOREIGN KEY (`user_id`)
+	REFERENCES `user`(`id`);
   
 /*Customer - Role*/
-ALTER TABLE customer_role 
-ADD CONSTRAINT fk_customer_role_customer 
-	FOREIGN KEY(customer_id) 
-	REFERENCES customer(id);
+ALTER TABLE `user_role` 
+ADD CONSTRAINT fk_user_role_user
+    FOREIGN KEY(`user_id`) 
+    REFERENCES `user`(`id`);
     
-ALTER TABLE customer_role 
-ADD CONSTRAINT fk_customer_role_role 
-	FOREIGN KEY(role_id) 
-	REFERENCES role(id);
-  
+ALTER TABLE `user_role` 
+ADD CONSTRAINT fk_user_role_role 
+	FOREIGN KEY(`role_id`) 
+    REFERENCES role(`id`);
+    
 ------------------------------------
 /*Customer - Role*/
-INSERT INTO role(`name`,`Desc`) 
+INSERT INTO `role`(`name`,`Desc`) 
 VALUES
 	('ROLE_ADMIN','Quản trị viên'),
 	('ROLE_CUSTOMER','Khách hàng');
    
-INSERT INTO customer (`full_name`,`username`,`password`,`email`,`is_status`, `role_id`)
+INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`, `role_id`)
 VALUES
 	('Lượng','kakashi','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','luong@codegym.com',1,1),
 	('Hiếu','hieuthuhai','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','hieu@codegym.com',1,2),
 	('Phong','phongxoan','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','xoan@codegym.com',1,3);
  
-INSERT INTO customer_role
+INSERT INTO `user_role`(`user_id`, `role_id`)
 VALUES
 	(1,1),
+	(1,2),
 	(2,2),
-    (3,1);
+    (3,2);
  
 /*Product - Cart*/
 INSERT INTO category(`name`)
@@ -178,7 +180,7 @@ VALUES
 	('Coriander', 'Coriander is a vegetable with a delicious taste and rich in nutrients. Rabbits often love coriander and they can help strengthen the rabbits immune system', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt1RTgzCFLku-ME87YWu23Mnr3WOiInWbZg&usqp=CAU', 45000, 'Coriander06', '8g', '3g', '22g', '200mg', 'vitamin A, D, E, K', 'Coriander', 1, 3, 1),
 	('Sugar beet', 'Beets are a nutritious and high fiber vegetable. They help rabbits digest better and can help improve their heart health', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkOGTGkD5vGjppgoLH6zYcxfJCqcz6ks1Q-6GUZ-OdRK4tPWaouKYp4057NLSi8B7zPCw&usqp=CAU', 35000, 'SUGERBEET10', '6g', '5g', '12g', '210mg', 'vitamin A, D, E, K', 'SugerBeet', 1, 4, 1);
 
-INSERT INTO cart(`customer_id`)
+INSERT INTO cart(`user_id`)
 VALUES
 	(1),(2),(3);
     
@@ -190,31 +192,3 @@ VALUES
     (2, 1, 3, 0, 75000.00),
 	(2, 2, 1, 0, 15000.00),
 	(3, 3, 3, 0, 15000.00);
-
---------------------------- 
-/*Query*/
-Select * from cart_detail where cart_detail.cart_id = 2;
-
--- get cart list
-Select *
-from cart
-join cart_detail on cart.id = cart_detail.cart_id
-join product on cart_detail.product_id = product.id
-where cart.id = 1;
-
--- total payment
-Select cart.id, product.`name`, product.price, cart_detail.amount, (product.price * cart_detail.amount) as total_price
-from cart
-join cart_detail on cart.id = cart_detail.cart_id
-join product on cart_detail.product_id = product.id
-where cart.id = 1;
-
--- Customer
-Select *
-from customer
-join cart on customer.id = cart.customer_id 
-join cart_detail on cart.id = cart_detail.cart_id
-join product on cart_detail.product_id = product.id
-where customer.id = 1 and cart.id = 1;
-
-SELECT * FROM `petworld-v1`.customer;

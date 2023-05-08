@@ -1,9 +1,9 @@
 package com.petworld.configuration;
 
-import com.petworld.repository.CustomerRepository;
+import com.petworld.repository.UserRepository;
 import com.petworld.security.JwtAuthEntryPoint;
 import com.petworld.security.JwtAuthFilter;
-import com.petworld.service.impl.CustomerDetailsServiceImpl;
+import com.petworld.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -28,13 +28,13 @@ import javax.servlet.Filter;
 @EnableAutoConfiguration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = {
-        CustomerDetailsServiceImpl.class,
+        UserDetailsServiceImpl.class,
         JwtAuthEntryPoint.class,
-        CustomerRepository.class
+        UserRepository.class
 })
 public class SecurityConfiguration {
     @Autowired
-    private CustomerDetailsServiceImpl CustomerDetailsService;
+    private UserDetailsServiceImpl CustomerDetailsService;
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
@@ -87,20 +87,20 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests() // links start with /api/
-                .antMatchers("/api/*", "/api/auth/login") // perform segregate authorize
+                .antMatchers("/api/**") // perform segregate authorize
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/role/**", "/api/user/**")
+                .antMatchers("/api/role/**")
                 .hasRole("ADMIN");
 
         // Pages require login with role: ROLE_USER
         // If not login at user role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/user/**")
-                .hasRole("USER");
+                .antMatchers("/api/customer/**")
+                .hasRole("CUSTOMER");
 
         // When user login with ROLE_USER, but try to
         // access pages require ROLE_ADMIN, redirect to /error-403
@@ -123,4 +123,3 @@ public class SecurityConfiguration {
         return new InMemoryTokenRepositoryImpl();
     }
 }
-
