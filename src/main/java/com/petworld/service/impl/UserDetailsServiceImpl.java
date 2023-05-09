@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
-import com.petworld.domain.Customer;
-import com.petworld.repository.CustomerRepository;
+import com.petworld.domain.User;
+import com.petworld.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,22 +13,23 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
-public class CustomerDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(email);
 
-        if (customer == null) {
-            throw new UsernameNotFoundException("User " + username + "was not found in database!");
+        if (user == null) {
+            throw new UsernameNotFoundException("This" +email + "was not found in database!");
         }
 
-        List<String> roles = customerRepository.findRolesByUsername(username);
+        List<String> roles = userRepository.findRolesByEmail(email);
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (String role: roles) {
@@ -37,8 +38,8 @@ public class CustomerDetailsServiceImpl implements UserDetailsService {
         }
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                customer.getUsername(),
-                customer.getPassword(),
+                user.getEmail(),
+                user.getPassword(),
                 grantedAuthorities);
 
         return userDetails;
