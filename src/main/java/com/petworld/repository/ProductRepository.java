@@ -15,11 +15,14 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-//    @Modifying
     @Query( value = "select p from Product p where p.status = true ")
     Page<Product> getAllProducts(Pageable pageable);
     @Transactional
     @Modifying
     @Query("UPDATE Product p SET p.status = false WHERE p.id = :id")
     void deleteProductById(@Param("id") Long id);
+    List<Product> getProductsByCategory(String name);
+
+    List<Product> getProductsById(Long id);
+
 }

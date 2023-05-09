@@ -18,14 +18,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
     private final ProductRepository productRepository;
-
     private final ProductConverter productConverter;
-
     @Override
     public Page<ProductDtoResponse> getAllProducts(Pageable pageable) {
         Page<Product> products = productRepository.getAllProducts(pageable);
@@ -35,7 +33,6 @@ public class ProductServiceImpl implements IProductService {
         }
         return null;
     }
-
     @Override
     public ProductDetailDtoResponse findById(Long id) {
         Product product = productRepository.findById(id).get();
@@ -54,12 +51,10 @@ public class ProductServiceImpl implements IProductService {
             System.out.println("Don't save database");
         }
     }
-
     @Override
     public void deleteProductById(Long id){
         productRepository.deleteProductById(id);
     }
-
     @Override
     public ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest) {
 
@@ -72,4 +67,8 @@ public class ProductServiceImpl implements IProductService {
         }
         return null;
     }
+//    public Page<Product> getProductsByCategoryId(Long categoryid){
+//        return productRepository.getProductsByCategoryId(categoryid);
+//    }
+
 }

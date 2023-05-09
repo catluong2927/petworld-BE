@@ -6,7 +6,7 @@ import com.petworld.dto.productDto.response.ProductDtoResponse;
 import lombok.*;
 
 import javax.persistence.*;
-@Data
+
 @Getter
 @Setter
 @AllArgsConstructor
