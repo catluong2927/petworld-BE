@@ -1,13 +1,19 @@
 package com.petworld.service;
 
+import com.petworld.domain.Center;
+import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
-import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface CenterService {
-    CenterDtoResponse getById(Long id);
-    Page<CenterDtoResponse> findAll(Pageable pageable);
+import java.util.Optional;
 
-    void deleteByIdByStatus (Long id);
+public interface CenterService {
+    Optional<CenterDtoResponse> getById(Long id);
+    Optional<Page<CenterDtoResponse>> findAll(Pageable pageable);
+
+    Optional<CenterDtoResponse> deleteByIdByStatus (Long id);
+
+    Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest);
 }

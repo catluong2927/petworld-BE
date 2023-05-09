@@ -32,11 +32,6 @@ public class ServicePackage {
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<Service> services;
 
-//    @OneToMany(targetEntity = ServicePackageReview.class)
-//    @JoinTable(name = "service_package_review_detail",
-//            joinColumns = @JoinColumn(name = "service_package_id"),
-//            inverseJoinColumns = @JoinColumn(name = "service_package_review_id"))
-//    private List<ServicePackageReview> reviews;
     @Column(name="active")
     private Boolean isActive;
     @Column(name = "status")

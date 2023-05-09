@@ -9,12 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 
 @Repository
-public interface ServicePackageRepo extends JpaRepository<ServicePackage,Long> {
+public interface ServicePackageRepository extends JpaRepository<ServicePackage,Long> {
     @Modifying
     @Query("UPDATE ServicePackage sp SET sp.isActive = false WHERE sp.id = :id")
     void deleteByIdPackageService(@Param("id") Long id);

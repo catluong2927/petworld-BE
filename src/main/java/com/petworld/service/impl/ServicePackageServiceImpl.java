@@ -5,8 +5,8 @@ import com.petworld.converter.ServicePackageConverter;
 import com.petworld.domain.ServicePackage;
 import com.petworld.dto.servicePackageDto.request.ServicePackageDtoRequest;
 import com.petworld.dto.servicePackageDto.response.ServicePackageDtoResponse;
-import com.petworld.repository.ServicePackageRepo;
-import com.petworld.repository.ServiceRepo;
+import com.petworld.repository.ServicePackageRepository;
+import com.petworld.repository.ServiceRepository;
 import com.petworld.service.ServicePackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,22 +24,22 @@ import java.util.Optional;
 @Transactional
 @Slf4j
 public class ServicePackageServiceImpl implements ServicePackageService {
-    private final ServicePackageRepo servicePackageRepo;
+    private final ServicePackageRepository servicePackageRepository;
 
-    private final ServiceRepo serviceRepo;
+    private final ServiceRepository serviceRepository;
     private final ServicePackageConverter servicePackageConverter;
     @Override
     public ServicePackageDtoResponse saveServicePackage(ServicePackageDtoRequest servicePackageDtoRequest) {
            log.info("Saving new service package to database {}",servicePackageDtoRequest.getName());
            ServicePackage servicePackage =  servicePackageConverter.dtoToEntity(servicePackageDtoRequest);
-           ServicePackage savedSevicePackage =  servicePackageRepo.save(servicePackage);
-           return servicePackageConverter.entityToDto(savedSevicePackage);
+           ServicePackage savedServicePackage =  servicePackageRepository.save(servicePackage);
+           return servicePackageConverter.entityToDto(savedServicePackage);
     }
 
     @Override
     public List<ServicePackageDtoResponse> getAllServicePackages() {
         log.info("Getting all service package from database");
-        List<ServicePackage> servicePackages = servicePackageRepo.findAll();
+        List<ServicePackage> servicePackages = servicePackageRepository.findAll();
         List<ServicePackageDtoResponse> servicePackageDtoResponses = new ArrayList<>();
         servicePackages.stream()
                 .forEach(element -> servicePackageDtoResponses.add(servicePackageConverter.entityToDto(element)));
@@ -49,7 +49,7 @@ public class ServicePackageServiceImpl implements ServicePackageService {
     @Override
     public Optional<ServicePackageDtoResponse> getServicePackage(Long id) {
         log.info("Getting service package by id from database");
-        Optional<ServicePackage> servicePackage = servicePackageRepo.findById(id);
+        Optional<ServicePackage> servicePackage = servicePackageRepository.findById(id);
         if(servicePackage.isPresent()){
             ServicePackageDtoResponse servicePackageDtoResponse = servicePackageConverter.entityToDto(servicePackage.get());
             return Optional.of(servicePackageDtoResponse);
@@ -61,13 +61,13 @@ public class ServicePackageServiceImpl implements ServicePackageService {
     @Override
     public void deleteByIdByStatus(Long id) {
         log.info("Removing service package ");
-        servicePackageRepo.deleteByIdPackageService(id);
+        servicePackageRepository.deleteByIdPackageService(id);
     }
 
     @Override
     public List<ServicePackageDtoResponse> getAllServicePackageByName(String name) {
         log.info("Getting all service package by name from database");
-        List<ServicePackage> servicePackages = servicePackageRepo.findServicePackageByName(name);
+        List<ServicePackage> servicePackages = servicePackageRepository.findServicePackageByName(name);
         List<ServicePackageDtoResponse> servicePackageDtoResponses = new ArrayList<>();
         servicePackages.forEach(element -> {servicePackageDtoResponses.add(servicePackageConverter.entityToDto(element));});
         return servicePackageDtoResponses;
@@ -75,19 +75,19 @@ public class ServicePackageServiceImpl implements ServicePackageService {
 
     @Override
     public Page<ServicePackageDtoResponse> findAll(Pageable pageable) {
-        Page<ServicePackage> servicePackages = servicePackageRepo.findAll(pageable);
+        Page<ServicePackage> servicePackages = servicePackageRepository.findAll(pageable);
         return servicePackages.map(servicePackageConverter::entityToDto);
     }
 
     @Override
     public Optional<ServicePackageDtoResponse> addServiceToServicePackage(Long id, Long serviceId) {
-        Optional<ServicePackage> servicePackage = servicePackageRepo.findById(id);
+        Optional<ServicePackage> servicePackage = servicePackageRepository.findById(id);
         if (servicePackage.isPresent()){
             List<com.petworld.domain.Service> services = servicePackage.get().getServices();
-            Optional<com.petworld.domain.Service> findingService = serviceRepo.findById(serviceId);
+            Optional<com.petworld.domain.Service> findingService = serviceRepository.findById(serviceId);
             if (findingService.isPresent()){
                 services.add(findingService.get());
-                ServicePackage editedServicePackage = servicePackageRepo.save(servicePackage.get());
+                ServicePackage editedServicePackage = servicePackageRepository.save(servicePackage.get());
                 return Optional.ofNullable(servicePackageConverter.entityToDto(editedServicePackage));
             }
         }
