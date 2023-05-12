@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.iml" filepath="$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.petworld.petworld-BE.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/petworld-BE.iml" filepath="$PROJECT_DIR$/.idea/petworld-BE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/petworld-BE.iml" filepath="$PROJECT_DIR$/.idea/modules/petworld-BE.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/petworld-BE.main.iml" filepath="$PROJECT_DIR$/.idea/modules/petworld-BE.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/petworld-BE.test.iml" filepath="$PROJECT_DIR$/.idea/modules/petworld-BE.test.iml" />
     </modules>

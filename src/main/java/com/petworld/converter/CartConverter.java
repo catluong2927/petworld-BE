@@ -21,7 +21,7 @@ public class CartConverter {
         CartDtoResponse cartDtoResponse = new CartDtoResponse();
         BeanUtils.copyProperties(cart, cartDtoResponse);
         cartDtoResponse.setCartDetailDtoResponses(cartDetailConverter.entitiesToDtos(cart.getCartDetailList()));
-        cartDtoResponse.setCustomerId(cart.getCustomer().getId());
+        cartDtoResponse.setUserId(cart.getUser().getId());
         return cartDtoResponse;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICartService {
     Page<CartDtoResponse> getAllCarts(Pageable pageable);
-    CartDtoResponse getCartById(Integer id);
+    CartDtoResponse getCartById(Long id);
     void addToCart(String username, Long productId, int quantity);
     void removeToCart (String username, Long productId);
 

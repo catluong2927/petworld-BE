@@ -5,10 +5,10 @@ import com.petworld.domain.Cart;
 import com.petworld.domain.CartDetail;
 import com.petworld.domain.Product;
 import com.petworld.dto.cartDto.response.CartDtoResponse;
-import com.petworld.repository.CustomerRepository;
 import com.petworld.repository.ProductRepository;
 import com.petworld.repository.CartDetailRepository;
 import com.petworld.repository.CartRepository;
+import com.petworld.repository.UserRepository;
 import com.petworld.service.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class CartServiceImpl implements ICartService {
     //Add to cart
     private final CartDetailRepository cartDetailRepository;
     private final ProductRepository productRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
 
     @Override
@@ -38,7 +38,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public CartDtoResponse getCartById(Integer id) {
+    public CartDtoResponse getCartById(Long id) {
         Cart cart = cartRepository.findCartByCustomer(id);
         if(cart != null){
             CartDtoResponse cartDtoResponse = cartConverter.entityToDto(cart);
@@ -51,7 +51,7 @@ public class CartServiceImpl implements ICartService {
 
     public void addToCart(String username, Long productId, int quantity) {
         //Lấy giỏ hàng cho khách hàng
-        Integer customerId = customerRepository.findByUsername(username).getId();
+        Long customerId = userRepository.findUserByEmail(username).getId();
         Long cartId = cartRepository.findCartByCustomer(customerId).getId();
 
         Cart cart = cartRepository.findById(cartId).orElseThrow(null);
@@ -109,7 +109,7 @@ public class CartServiceImpl implements ICartService {
     @Override
     public void removeToCart (String username, Long productId){
         //Lấy giỏ hàng cho khách hàng
-        Integer customerId = customerRepository.findByUsername(username).getId();
+        Long customerId = userRepository.findUserByEmail(username).getId();
         Long cartId = cartRepository.findCartByCustomer(customerId).getId();
 
         Cart cart = cartRepository.findById(cartId).orElse(null);

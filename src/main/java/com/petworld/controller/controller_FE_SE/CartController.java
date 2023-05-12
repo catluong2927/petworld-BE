@@ -18,13 +18,14 @@ public class CartController {
     private final ICartService cartService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllCarts(@PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<?> getAllCarts(@PageableDefault(size = 9) Pageable pageable) {
         Page<CartDtoResponse> cartDtoResponses = cartService.getAllCarts(pageable);
         return new ResponseEntity<>(cartDtoResponses, HttpStatus.OK);
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCartById(@PathVariable("id") Integer customerId) {
+    public ResponseEntity<?> getCartById(@PathVariable("id") Long customerId) {
         CartDtoResponse cartDtoResponses = cartService.getCartById(customerId);
         return new ResponseEntity<>(cartDtoResponses, HttpStatus.OK);
     }

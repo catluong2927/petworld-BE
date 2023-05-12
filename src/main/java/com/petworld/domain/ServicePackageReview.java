@@ -11,6 +11,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "service_package_reviews")
 public class ServicePackageReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +22,4 @@ public class ServicePackageReview {
     private Integer start;
 
     private Date date;
-
-    @ManyToOne(targetEntity = ServicePackage.class)
-    @JoinColumn(name = "service_package_id", referencedColumnName = "id")
-    private ServicePackage servicePackage;
-
-
 }

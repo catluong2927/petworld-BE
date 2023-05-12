@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,5 +16,5 @@ import org.springframework.data.domain.Page;
 public class CategoryDtoResponse {
     private Long id;
     private String name;
-    Page<ProductDtoResponse> productDtoResponses;
+    List<ProductDtoResponse> productDtoResponses;
 }

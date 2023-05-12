@@ -1,6 +1,6 @@
 package com.petworld.security;
 
-import com.petworld.service.impl.CustomerDetailsServiceImpl;
+import com.petworld.service.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
     private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private CustomerDetailsServiceImpl customerDetailsServiceImpl;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -38,7 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String username = tokenProvider.getUsernameFromJWT(jwt);
-                UserDetails userDetails = customerDetailsServiceImpl.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

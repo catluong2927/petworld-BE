@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 
@@ -17,26 +18,29 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customer")
-public class Customer {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "customer_role",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Role> roles = new HashSet<Role>();
+    @OneToMany(mappedBy = "user")
+    private Set<UserRole> userRoles;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+////    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private Set<Role> roles = new HashSet<Role>();
 
     @NotBlank
     @Column(name = "full_name", length = 255, nullable = false)
     private String fullName;
 
     @NotBlank
-    @Column(name = "username", length = 255, nullable = false)
+    @Column(name = "username", length = 20, nullable = false)
     private String username;
 
     @NotBlank
@@ -47,15 +51,15 @@ public class Customer {
     @Column(name = "email", length = 255, nullable = false)
     private String email;
 
-    @NotBlank
+
     @Column(name = "address", length = 255, nullable = true)
     private String address;
 
-    @NotBlank
-    @Column(name = "phone", length = 255, nullable = true)
+
+    @Column(name = "phone", length = 12, nullable = true)
     private String phone;
 
-    @NotBlank
+
     @Column(name = "avatar",
             columnDefinition = "text", nullable = true)
     private String avatar;
@@ -65,7 +69,4 @@ public class Customer {
 
     @Column(name = "remember_token", length = 255, nullable = true)
     private String rememberToken;
-
-//    @OneToOne(mappedBy = "customer")
-//    private Cart cart;
 }
