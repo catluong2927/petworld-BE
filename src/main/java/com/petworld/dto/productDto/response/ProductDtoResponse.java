@@ -11,10 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDtoResponse {
+    private Long id;
     private String name;
     private String image;
     private Double price;
-    private String productCode;
     private Integer sale;
     private MarkDtoResponse MarkDtoResponse;
 

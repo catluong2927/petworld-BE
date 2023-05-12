@@ -62,7 +62,6 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest) {
-
         Product product = productRepository.findById(id).get();
         if (product != null) {
             product = productConverter.dtoToEntity(updateProductDtoRequest, product);

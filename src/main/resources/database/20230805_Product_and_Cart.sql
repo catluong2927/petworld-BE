@@ -192,3 +192,12 @@ VALUES
     (2, 1, 3, 0, 75000.00),
 	(2, 2, 1, 0, 15000.00),
 	(3, 3, 3, 0, 15000.00);
+
+select * from cart;
+
+select cd.*
+from product p
+join cart_detail cd on p.id = cd.`product_id`
+join cart c on cd.cart_id = c.id
+join `user` u on c.user_id = u.id
+where u.email = 'hieu@codegym.com';

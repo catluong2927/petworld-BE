@@ -11,8 +11,8 @@ import java.util.List;
 public class CartDtoResponse {
     private Long id;
     private List<CartDetailDtoResponse> cartDetailDtoResponses;
-    private Double totalPayment;
     private Integer amountItem;
+    private Double totalPayment;
     private Date cartDate;
 
     private Long userId;
