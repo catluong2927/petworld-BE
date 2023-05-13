@@ -43,20 +43,11 @@ public class CartController {
         return new ResponseEntity<>("Product added to cart successfully.", HttpStatus.CREATED);
     }
 
-//    @PostMapping("/{pId}/{quantity}/{username}")
-//    public ResponseEntity<?> addToCart(@PathVariable("pId") Long productId,
-//                                       @PathVariable("quantity") Integer quantity,
-//                                       @PathVariable("username") String username){
-//
-//        cartService.addToCart(username,productId,quantity);
-//        return new ResponseEntity<>("Product added to cart successfully.", HttpStatus.CREATED);
-//    }
+    @DeleteMapping("/{productId}/{email}")
+    public ResponseEntity<?> deleteProductInCart(@PathVariable("productId") Long productId,
+                                                 @PathVariable("email") String email){
 
-    @DeleteMapping("/{pId}/{username}")
-    public ResponseEntity<?> deleteProductInCart(@PathVariable("pId") Long productId,
-                                       @PathVariable("username") String username){
-
-        cartService.removeToCart(username,productId);
+        cartService.removeToCart(email,productId);
         return new ResponseEntity<>("Product is removed successfully.", HttpStatus.NO_CONTENT);
     }
 }

@@ -9,9 +9,5 @@ public interface ICartService {
     Page<CartDtoResponse> getAllCarts(Pageable pageable);
     CartDtoResponse getCartByEmail(String email);
     void addToCart(String email, CartDetailDtoRequest cartDetailDtoRequest);
-    void removeToCart (String username, Long productId);
-
-//    void addToCart(String username, Long productId, int quantity);
-//    void addToCart(Long cartId, Long productId, int quantity);
-//    void removeToCart (Long cartId, Long productId);
+    void removeToCart (String email, Long productId);
 }

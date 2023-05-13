@@ -28,7 +28,6 @@ public class CartServiceImpl implements ICartService {
     //Add to cart
     private final CartDetailRepository cartDetailRepository;
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
 
 
     @Override
@@ -52,7 +51,6 @@ public class CartServiceImpl implements ICartService {
 
     public void addToCart(String email, CartDetailDtoRequest cartDetailDtoRequest) {
         //Lấy giỏ hàng cho khách hàng
-//        Long userId = userRepository.findUserByEmail(email).getId();
         Long cartId = cartRepository.findCartByEmail(email).getId();
 
         Cart cart = cartRepository.findById(cartId).orElse(null);
@@ -108,15 +106,12 @@ public class CartServiceImpl implements ICartService {
 
     //Xóa cartDetail
     @Override
-    public void removeToCart (String username, Long productId){
+    public void removeToCart (String email, Long productId){
         //Lấy giỏ hàng cho khách hàng
-        Long customerId = userRepository.findUserByEmail(username).getId();
-        Long cartId = cartRepository.findCartByUser(customerId).getId();
-
+        Long cartId = cartRepository.findCartByEmail(email).getId();
         Cart cart = cartRepository.findById(cartId).orElse(null);
 
         List<CartDetail> cartDetailList = cart.getCartDetailList();
-
         CartDetail cartDetail = getCartDetail(cartDetailList, productId);
 
         cart.setTotalPayment(cart.getTotalPayment() - cartDetail.getTotalPrice());
@@ -142,138 +137,4 @@ public class CartServiceImpl implements ICartService {
         }
         return null;
     }
-
-
-    /*version 02
-    public void addToCart(String username, Long productId, int quantity) {
-        //Lấy giỏ hàng cho khách hàng
-        Long customerId = userRepository.findUserByEmail(username).getId();
-        Long cartId = cartRepository.findCartByCustomer(customerId).getId();
-
-        Cart cart = cartRepository.findById(cartId).orElseThrow(null);
-        Product product = productRepository.findById(productId).orElse(null);
-
-        List<CartDetail> cartDetailList = cart.getCartDetailList();
-
-        boolean isProductExist = false;
-
-        //Kiểm tra xem trong giỏ hàng có sản phẩm này chưa. Nếu có thì tăng số lượng và giá.
-        for (CartDetail cartDetail : cartDetailList) {
-            if (cartDetail.getProduct().getId().equals(productId)) {
-                cartDetail.setAmount(cartDetail.getAmount() + quantity);
-                cartDetail.setTotalPrice(cartDetail.getProduct().getPrice() * cartDetail.getAmount());
-                cartDetailRepository.save(cartDetail);
-                isProductExist = true;
-                break;
-            }
-        }
-
-        //Ngược lại
-        if (!isProductExist) {
-            CartDetail cartDetail = new CartDetail();
-            cartDetail.setProduct(product);
-            cartDetail.setAmount(quantity);
-            cartDetail.setTotalPrice(product.getPrice() * quantity);
-            cartDetail.setCart(cart);
-            cartDetail.setStatus(false);
-            cartDetailRepository.save(cartDetail);
-            cartDetailList.add(cartDetail);
-        }
-
-        //Tổng số lượng và tổng chi phí
-        Double totalPayment = 0.0;
-        Integer amountItem = 0;
-
-        if(!cartDetailList.isEmpty()) {
-            for (CartDetail cartDetail : cartDetailList) {
-                //Cái nào được chọn sẽ lấy
-//                if (cartDetail.getStatus()) {
-//                    totalPayment += cartDetail.getTotalPrice();
-//                    amountItem += cartDetail.getAmount();
-//                }
-                totalPayment += cartDetail.getTotalPrice();
-                amountItem += cartDetail.getAmount();
-            }
-        }
-
-        cart.setTotalPayment(totalPayment);
-        cart.setAmountItem(amountItem);
-        cartRepository.save(cart);
-    }
-    */
-
-
-    /*Version 01*/
-    //    public void addToCart(Long cartId, Long productId, int quantity) {
-//        Cart cart = cartRepository.findById(cartId).orElseThrow(null);
-//        Product product = productRepository.findById(productId).orElse(null);
-//
-//        List<CartDetail> cartDetailList = cart.getCartDetailList();
-//
-//        boolean isProductExist = false;
-//
-//        //Kiểm tra xem trong giỏ hàng có sản phẩm này chưa. Nếu có thì tăng số lượng và giá.
-//        for (CartDetail cartDetail : cartDetailList) {
-//            if (cartDetail.getProduct().getId().equals(productId)) {
-//                cartDetail.setAmount(cartDetail.getAmount() + quantity);
-//                cartDetail.setTotalPrice(cartDetail.getProduct().getPrice() * cartDetail.getAmount());
-//                cartDetailRepository.save(cartDetail);
-//                isProductExist = true;
-//                break;
-//            }
-//        }
-//
-//        //Ngược lại
-//        if (!isProductExist) {
-//            CartDetail cartDetail = new CartDetail();
-//            cartDetail.setProduct(product);
-//            cartDetail.setAmount(quantity);
-//            cartDetail.setTotalPrice(product.getPrice() * quantity);
-//            cartDetail.setCart(cart);
-//            cartDetail.setStatus(false);
-//            cartDetailRepository.save(cartDetail);
-//            cartDetailList.add(cartDetail);
-//        }
-//
-//        //Tổng số lượng và tổng chi phí
-//        Double totalPayment = 0.0;
-//        Integer amountItem = 0;
-//
-//        if(!cartDetailList.isEmpty()) {
-//            for (CartDetail cartDetail : cartDetailList) {
-//                //Cái nào được chọn sẽ lấy
-////                if (cartDetail.getStatus()) {
-////                    totalPayment += cartDetail.getTotalPrice();
-////                    amountItem += cartDetail.getAmount();
-////                }
-//                totalPayment += cartDetail.getTotalPrice();
-//                amountItem += cartDetail.getAmount();
-//            }
-//        }
-//
-//        cart.setTotalPayment(totalPayment);
-//        cart.setAmountItem(amountItem);
-//        cartRepository.save(cart);
-//    }
-
-//    @Override
-//    public void removeToCart (Long cartId, Long productId){
-//        Cart cart = cartRepository.findById(cartId).orElse(null);
-//
-//        List<CartDetail> cartDetailList = cart.getCartDetailList();
-//
-//        CartDetail cartDetail = getCartDetail(cartDetailList, productId);
-//
-//        cart.setTotalPayment(cart.getTotalPayment() - cartDetail.getTotalPrice());
-//        cart.setAmountItem(cart.getAmountItem() - cartDetail.getAmount());
-//
-//        //Xóa cartDetail trong danh sách
-//        cartDetailList.remove(cartDetail);
-//
-//        //Xóa cartDetail trong database
-//        cartDetailRepository.delete(cartDetail);
-//
-//        //Lưu cart
-//        cartRepository.save(cart);
-//    }
 }
