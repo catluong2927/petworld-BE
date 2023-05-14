@@ -10,7 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CenterDtoRequest {
+    private Long id;
     private String name;
-    List<Seller> sellers;
+
+    private String phone;
+
+    private String email;
+
+    private String address;
     private Boolean isActive;
 }

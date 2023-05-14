@@ -1,7 +1,4 @@
 package com.petworld.controller.controller_FE_SE;
-
-
-import com.petworld.domain.Center;
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
@@ -47,16 +44,10 @@ public class CenterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCenter(@PathVariable(name = "id") Long id,
-                                          @RequestBody CenterDtoRequest centerDtoRequest){
-        Optional<CenterDtoResponse> editedCenter = centerService.getById(id);
-        if(!editedCenter.isPresent()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("api/centers").toUriString());
-            return ResponseEntity.created(uri).body(centerService.save(centerDtoRequest));
-        }
+    public ResponseEntity<?> updateCenter(@RequestBody CenterDtoRequest centerDtoRequest){
+        Optional<CenterDtoResponse> editedCenter = centerService.getById(centerDtoRequest.getId());
+        if (editedCenter.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(centerService.save(centerDtoRequest));
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,6 @@
 package com.petworld.service;
 
-import com.petworld.domain.Center;
+
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 

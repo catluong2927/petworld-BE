@@ -4,7 +4,9 @@ import com.petworld.domain.Center;
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CenterConverter {
     public CenterDtoResponse entityToDto(Center center){
         CenterDtoResponse centerDtoResponse = new CenterDtoResponse();
