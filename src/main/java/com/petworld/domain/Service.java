@@ -1,8 +1,12 @@
 package com.petworld.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,12 +26,13 @@ public class Service {
 
     private Float price;
 
-    @OneToMany(targetEntity = ServiceImage.class)
-    @JoinTable(name = "service_image_details",
-            joinColumns = @JoinColumn(name = "service_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_images_id"))
-    private List<ServiceImage> serviceImages;
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private Package servicePackage;
 
     @Column(name = "active")
     private boolean isActive;
+
+    @OneToMany(mappedBy = "service", fetch = FetchType.LAZY)
+    private List<ServiceImage> serviceImages = new ArrayList<>();
 }

@@ -64,6 +64,7 @@ create table `user`(
 	`role_id`			bigint not null,
 	PRIMARY KEY (id)
 );
+
 create table `role`(
 	`id`		bigint not null auto_increment,
 	`name`		varchar(255) not null,

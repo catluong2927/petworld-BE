@@ -19,15 +19,17 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank
     private String name;
-
     @NotBlank
     private String phone;
-
+    @NotBlank
+    private String email;
+    @NotBlank
     private String address;
-
     @Column(name = "active")
     private Boolean isActive;
+    @ManyToOne
+    @JoinColumn(name = "center_id",referencedColumnName = "id")
+    private Center center;
 }
