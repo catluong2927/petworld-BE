@@ -22,4 +22,5 @@ public class ServicePackageReview {
     private Integer start;
 
     private Date date;
+    
 }
