@@ -16,7 +16,7 @@ public class ServiceImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String url;
-    public ServiceImage(String url){
-        this.url = url;
-    }
+    @ManyToOne
+    @JoinColumn(name = "service_id")
+    private Service service;
 }
