@@ -19,7 +19,14 @@ create table product(
     `sale`          int default 0 check(`sale` >= 0 and `sale` <= 100),
 	`status` 		bit not null check(`status` = 0 or `status` = 1),
     `mark_id`		bigint not null,
-    `category_id` 	bigint
+    `category_id` 	bigint,
+    `image_details_id` bigint
+);
+
+create table image_details(
+	`id`           bigint primary key auto_increment,
+    `image_detail` varchar(255) not null,
+    `product_id`  bigint
 );
 
 create table category(
@@ -87,6 +94,15 @@ ALTER TABLE product
 ADD CONSTRAINT fk_product_mark
 	FOREIGN KEY (`mark_id`)
 	REFERENCES mark(`id`);
+ 
+ALTER TABLE product
+ADD CONSTRAINT fk_product_image_details
+	FOREIGN KEY (`image_details_id`)
+    REFERENCES image_details(`id`);
+
+-- ALTER TABLE product
+-- ADD FOREIGN KEY (`image_product_details`)
+-- REFERENCES image_product_details(`id`);
   
 /*Cart - CartDetail*/
 ALTER TABLE cart_detail
