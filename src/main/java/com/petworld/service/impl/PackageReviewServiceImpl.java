@@ -2,9 +2,11 @@ package com.petworld.service.impl;
 
 import com.petworld.converter.PackageReviewConverter;
 import com.petworld.domain.PackageReview;
+import com.petworld.domain.User;
 import com.petworld.dto.packageReviewDto.request.PackageReviewDtoRequest;
 import com.petworld.dto.packageReviewDto.response.PackageReviewDtoResponse;
 import com.petworld.repository.PackageReviewRepository;
+import com.petworld.repository.UserRepository;
 import com.petworld.service.PackageReviewService;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class PackageReviewServiceImpl implements PackageReviewService {
     private final PackageReviewRepository packageReviewRepository;
     private final PackageReviewConverter packageReviewConverter;
+    private final UserRepository userRepository;
     @Override
     public Page<PackageReviewDtoResponse> findAll(Pageable pageable) {
         Page<PackageReview> packageReviews = packageReviewRepository.findAll(pageable);
@@ -33,6 +36,8 @@ public class PackageReviewServiceImpl implements PackageReviewService {
     @Override
     public PackageReview savePackageReview(PackageReviewDtoRequest packageReviewDtoRequest) {
         PackageReview packageReview = packageReviewConverter.dtoToEntity(packageReviewDtoRequest);
+        User user = userRepository.getById(packageReviewDtoRequest.getUser_id());
+        packageReview.setUser(user);
         return packageReviewRepository.save(packageReview);
     }
 
