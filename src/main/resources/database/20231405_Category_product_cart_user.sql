@@ -19,14 +19,13 @@ create table product(
     `sale`          int default 0 check(`sale` >= 0 and `sale` <= 100),
 	`status` 		bit not null check(`status` = 0 or `status` = 1),
     `mark_id`		bigint not null,
-    `category_id` 	bigint,
-    `image_details_id` bigint
+    `category_id` 	bigint
 );
 
 create table image_details(
 	`id`           bigint primary key auto_increment,
     `image_detail` varchar(255) not null,
-    `product_id`  bigint
+    `product_id`   bigint
 );
 
 create table category(
@@ -95,10 +94,10 @@ ADD CONSTRAINT fk_product_mark
 	FOREIGN KEY (`mark_id`)
 	REFERENCES mark(`id`);
  
-ALTER TABLE product
-ADD CONSTRAINT fk_product_image_details
-	FOREIGN KEY (`image_details_id`)
-    REFERENCES image_details(`id`);
+ALTER TABLE image_details
+ADD CONSTRAINT fk_image_details_product
+	FOREIGN KEY (`product_id`)
+    REFERENCES product(`id`);
 
 -- ALTER TABLE product
 -- ADD FOREIGN KEY (`image_product_details`)
@@ -137,6 +136,9 @@ INSERT INTO `role`(`name`,`Desc`)
 VALUES
 	('ROLE_ADMIN','Quản trị viên'),
 	('ROLE_CUSTOMER','Khách hàng');
+    
+
+    
    
 INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`, `role_id`)
 VALUES
@@ -210,6 +212,202 @@ VALUES
 	('Cat food', 'Cat Food - Kitcat Grain Food is produced and packaged according to international standards, the ingredients of the food are made from selected and high-grade raw materials. Food will be the most balanced and healthy source of nutrition for the cat to develop fully', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzeDA7w_rOUT6LmGJjQSKdXmxCDqH5jbMvTg&usqp=CAU', 25000, 'SEED04', '1g', '2g', '20g', '50mg', '', '', 1, 5, 3,0);
 	
 
+INSERT INTO `image_details`(`image_detail`, `product_id`)
+VALUES  ('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1 ),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',2), 
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',2),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',2),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',2),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',2),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',3),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',3),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',3),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',3),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',3),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',4),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',4),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',4),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',4),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',4),
+		('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',5),
+		('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',5),
+		('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',5),
+		('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',5),
+		('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',5),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',6),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',6),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',6),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',6),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',6),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',7),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',7),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',7),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',7),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',7),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',8),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',8),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',8),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',8),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',8),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',9),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',9),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',9),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',9),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',9),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',10),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',10),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',10),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',10),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',10),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',11),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',11),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',11),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',11),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',11),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',12),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',12),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',12),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',12),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',12),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',13),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',13),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',13),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',13),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',13),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',14),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',14),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',14),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',14),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',14),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',15),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',15),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',15),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',15),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',15),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',16),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',16),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',16),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',16),
+		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',16),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',17),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',17),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',17),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',17),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',17),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',18),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',18),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',18),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',18),
+		('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',18),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',19),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',19),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',19),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',19),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',19),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',20),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',20),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',20),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',20),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',20),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',21),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',21),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',21),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',21),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',21),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',22),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',22),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',22),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',22),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',22),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',23),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',23),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',23),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',23),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',23),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',24),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',24),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',24),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',24),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',24),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',25),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',25),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',25),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',25),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',25),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',26),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',26),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',26),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',26),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',26),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',27),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',27),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',27),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',27),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',27),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',28),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',28),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',28),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',28),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',28),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',29),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',29),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',29),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',29),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',29),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',30),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',30),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',30),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',30),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',30),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',31),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',31),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',31),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',31),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',31),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',32),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',32),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',32),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',32),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',32),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',33),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',33),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',33),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',33),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',33),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',34),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',34),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',34),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',34),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8Gle_xDKBYCeFR01lgPgcEOl2DGV3M0Hm3A&usqp=CAU',34),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',35),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',35),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',35),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',35),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',35),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',36),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',36),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',36),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',36),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkVR4aC8uZeqKBYttGlUJYPCkx-AYaiDD0rw&usqp=CAU',36),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',37),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',37),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',37),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',37),
+	    ('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',37),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',38),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',38),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',38),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',38),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',38),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',39),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',39),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',39),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',39),
+	    ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvr25lkbDerWxW_Ujjip4dmlxbNe8ww--WQ&usqp=CAU',39);
 
 
 
@@ -227,19 +425,21 @@ VALUES
 	(3, 3, 3, 0, 15000.00);
 
 
-select * 
-from product p
-	inner join category c on p.category_id = c.id
-where c.id in (2, 3, 4, 5);
+-- select * 
+-- from product p
+-- 	inner join category c on p.category_id = c.id
+-- where c.id in (2, 3, 4, 5);
 
-select p.* 
-from product p
-	inner join category c on p.category_id = c.id
--- where c.id = 1 or c.id = 2 or c.id = 3 or c.id = 4;
-where c.id in (1,2,3);
+-- select p.* 
+-- from product p
+-- 	inner join category c on p.category_id = c.id
+-- -- where c.id = 1 or c.id = 2 or c.id = 3 or c.id = 4;
+-- where c.id in (1,2,3);
 
 
-
+-- ----test : 
+select * from category;
+select * from image_details;
 -- use `petworld-v1`;
--- select * from product;
+ select * from product; 
 -- select * from Product  where `status` = 1;

@@ -1,6 +1,8 @@
 package com.petworld.converter;
 
+import com.petworld.domain.ImageDetail;
 import com.petworld.domain.Product;
+import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
@@ -17,11 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductConverter{
     private final MarkConverter markConverter;
+    private final ImageDetailsConverter imageDetailsConverter;
 
     public Page<ProductDtoResponse> entitiesToDtos(Page<Product> products){
         Page<ProductDtoResponse> productDtoResponses = products.map(product -> entityToDto(product));
         return productDtoResponses;
     }
+
     public ProductDtoResponse entityToDto(Product product){
         ProductDtoResponse productDto = new ProductDtoResponse();
         BeanUtils.copyProperties(product, productDto);
@@ -45,6 +49,7 @@ public class ProductConverter{
     public ProductDetailDtoResponse entityToProductDetailDto(Product product){
         ProductDetailDtoResponse productDetailDtoResponse = new ProductDetailDtoResponse();
         BeanUtils.copyProperties(product, productDetailDtoResponse);
+        productDetailDtoResponse.setImageDetailList(imageDetailsConverter.entititesToDtos(product.getImageDetails()));
         return productDetailDtoResponse;
     }
 

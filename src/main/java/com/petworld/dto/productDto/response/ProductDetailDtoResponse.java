@@ -1,5 +1,9 @@
 package com.petworld.dto.productDto.response;
+import com.petworld.domain.ImageDetail;
+import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import lombok.*;
+
+import java.util.List;
 
 
 @Getter
@@ -8,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 
 public class ProductDetailDtoResponse {
+    private long id ;
     private String name;
     private String description;
     private String image;
@@ -20,4 +25,5 @@ public class ProductDetailDtoResponse {
     private String vitamins;
     private String animal;
     private Integer sale;
+    private List<ImageDetailsDto> imageDetailList;
 }
