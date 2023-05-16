@@ -25,6 +25,6 @@ public interface SellerRepository extends JpaRepository <Seller,Long> {
 
     @Query(value = "SELECT * FROM sellers " +
             "JOIN centers ON sellers.center_id = centers.id " +
-            "WHERE centers.name =:name", nativeQuery = true)
+            "WHERE sellers.name =:name", nativeQuery = true)
     Seller findByCenterName(@Param("name") String name);
 }

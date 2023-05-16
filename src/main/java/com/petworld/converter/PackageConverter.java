@@ -19,6 +19,7 @@ public class PackageConverter {
     public PackageDtoResponse entityToDto(Package servicePackage){
         PackageDtoResponse packageDtoResponse = new PackageDtoResponse();
         BeanUtils.copyProperties(servicePackage, packageDtoResponse);
+        packageDtoResponse.setCenterName(servicePackage.getCenter().getName());
         // Converter services of service-packages
         List<Service> services = servicePackage.getServices();
         if(services != null){
@@ -26,6 +27,7 @@ public class PackageConverter {
             services.forEach(service -> serviceDtoResponses.add(serviceConverter.entityToDto(service)));
             packageDtoResponse.setServiceDtoResponses(serviceDtoResponses);
         }
+
         return packageDtoResponse;
     }
     public Package dtoToEntity(PackageDtoRequest packageDtoRequest){

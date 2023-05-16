@@ -21,4 +21,6 @@ public class PackageDtoResponse {
     private boolean isActive;
     private String status;
     private List<ServiceDtoResponse> serviceDtoResponses;
+
+    private String centerName;
 }
