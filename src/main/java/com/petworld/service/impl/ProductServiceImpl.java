@@ -7,7 +7,7 @@ import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import com.petworld.repository.ProductRepository;
-import com.petworld.service.IProductService;
+import com.petworld.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,19 +18,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements IProductService {
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductConverter productConverter;
-
-//    @Override
-//    public Page<ProductDtoResponse> getAllProducts(Pageable pageable) {
-//        Page<Product> products = productRepository.getAllProducts(pageable);
-//        if (!products.isEmpty()) {
-//            Page<ProductDtoResponse> productDtoResponses = productConverter.entitiesToDtos(products);
-//            return productDtoResponses;
-//        }
-//        return null;
-//    }
 
     @Override
     public Page<ProductDtoResponse> getAllProducts(List<Long> categoryIds,Pageable pageable) {
@@ -40,7 +30,6 @@ public class ProductServiceImpl implements IProductService {
         } else {
             products = productRepository.findByCategoryIds(categoryIds, pageable);
         }
-
         if (!products.isEmpty()) {
             Page<ProductDtoResponse> productDtoResponses = productConverter.entitiesToDtos(products);
             return productDtoResponses;
@@ -82,23 +71,5 @@ public class ProductServiceImpl implements IProductService {
         return productDetailDtoResponse;
     }
 
-
-//    @Override
-//    public Page<ProductDtoResponse> getProductsByCategoryIds(List<Long> categoryIds,Pageable pageable) {
-//        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
-//        if (categoryIds.isEmpty()) {
-//            productRepository.getAllProducts(pageable);
-//        }
-//        categoryIds.forEach(category -> {
-//           List<Product> products = productRepository.findByCategoryId(category);
-//            List<ProductDtoResponse> productDtoResponseList = new ArrayList<>();
-//            products.forEach(product -> {
-//                productDtoResponseList.add(productConverter.entityToDto(product));
-//                productDtoResponses.addAll(productDtoResponseList);
-//            });
-//        });
-//        Page<ProductDtoResponse> productDtoResponseList= new PageImpl<>(productDtoResponses);
-//        return productDtoResponseList;
-//    }
 
 }
