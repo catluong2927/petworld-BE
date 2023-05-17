@@ -30,13 +30,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserRole> userRoles;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-////    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private Set<Role> roles = new HashSet<Role>();
-
     @NotBlank
     @Column(name = "full_name", length = 255, nullable = false)
     private String fullName;

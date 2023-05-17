@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartDetailDtoResponse {
     private Long id;
-    private Double totalPrice;
     private Integer amount;
+    private Double totalPrice;
     private Boolean status;
     private ProductDtoResponse productDtoResponse;
 //    private Cart cart;

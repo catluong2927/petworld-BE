@@ -70,6 +70,4 @@ public class ProductServiceImpl implements ProductService {
         ProductDetailDtoResponse productDetailDtoResponse = findById(id);
         return productDetailDtoResponse;
     }
-
-
 }

@@ -30,8 +30,4 @@ public class CategoryConverter {
         categoryDto.setProductDtoResponses(productDtoResponses);
         return categoryDto;
     }
-
-
-
-
 }
