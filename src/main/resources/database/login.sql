@@ -84,7 +84,7 @@ ALTER TABLE product
    REFERENCES category(`id`);
 
 
-------------------------------------
+# ------------------------------------
 INSERT INTO category(`name`)
 VALUES
  ('Food Toppers'),

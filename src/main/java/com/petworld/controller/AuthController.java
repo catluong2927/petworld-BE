@@ -10,20 +10,20 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(value = "*", maxAge = 3600)
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
 
     @Autowired
     JwtTokenProvider tokenProvider;
@@ -31,7 +31,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
-            // Gọi hàm authenticate để xác thực thông tin đăng nhập
+            // Call authenticate function to authenticate credentials
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(), loginRequest.getPassword()));
@@ -40,10 +40,10 @@ public class AuthController {
 
             // Gọi hàm tạo Token
             String token = tokenProvider.generateToken(authentication);
-            return new ResponseEntity<>(new LoginResponse("Đăng nhập thành công!", token), HttpStatus.OK);
+            return new ResponseEntity<>(new LoginResponse("Logged in successfully", token), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new LoginResponse("Đăng nhập thất bại!", null), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginResponse("Login failed", null), HttpStatus.BAD_REQUEST);
         }
     }
 }
