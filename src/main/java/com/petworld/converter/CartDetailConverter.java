@@ -30,7 +30,6 @@ public class CartDetailConverter {
         CartDetailDtoResponse cartDetailDtoResponse = new CartDetailDtoResponse();
         BeanUtils.copyProperties(cartDetail, cartDetailDtoResponse);
         cartDetailDtoResponse.setProductDtoResponse(productConverter.entityToDto(cartDetail.getProduct()));
-        cartDetailDtoResponse.setTotalPrice(cartDetail.getAmount() * cartDetail.getProduct().getPrice());
         return cartDetailDtoResponse;
     }
 }
