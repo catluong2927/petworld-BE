@@ -3,6 +3,7 @@ package com.petworld.dto.productDto.request;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Setter
 @Getter
@@ -22,4 +23,5 @@ public class ProductDtoRequest {
     private String vitamins;
     private String animal;
     private boolean status;
+    private Integer sale;
 }

@@ -1,7 +1,14 @@
 package com.petworld.domain;
-import lombok.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -25,9 +32,16 @@ public class Product {
     private String minerals;
     private String vitamins;
     private String animal;
-    private boolean status;
-    @OneToMany(targetEntity = ProductCart.class)
-    @Column(name = "cart_detail_id")
-    private Set<CartDetail> cartDetails;
-
+    private Integer sale;
+    private Boolean status;
+    @OneToOne
+    @JoinColumn(name = "mark_id", referencedColumnName = "id")
+    private Mark mark;
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<CartDetail> cartDetailList;
+//    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    private Category category;
 }
