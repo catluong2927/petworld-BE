@@ -41,10 +41,9 @@ public class User {
 
     @NotBlank
     @Column(name = "username", length = 20, nullable = false)
-    private String username;
+    private String userName;
 
-    @NotBlank
-    @Column(name = "password", length = 255, nullable = false)
+    @Column(name = "password", length = 255, nullable = true)
     private String password;
 
     @NotBlank
@@ -64,7 +63,7 @@ public class User {
             columnDefinition = "text", nullable = true)
     private String avatar;
 
-    @Column(name = "is_status", nullable = true)
+    @Column(name = "is_status", nullable = false)
     private Boolean isStatus;
 
     @Column(name = "remember_token", length = 255, nullable = true)

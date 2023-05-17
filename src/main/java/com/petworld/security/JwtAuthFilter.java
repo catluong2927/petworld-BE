@@ -1,6 +1,6 @@
 package com.petworld.security;
 
-import com.petworld.service.impl.UserDetailsServiceImpl;
+import com.petworld.service.impl.UserSecurityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
     private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserSecurityServiceImpl userSecurityServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -37,8 +37,8 @@ public class JwtAuthFilter extends OncePerRequestFilter{
             String jwt = getJwtFromRequest(request);
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                String username = tokenProvider.getUsernameFromJWT(jwt);
-                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+                String email = tokenProvider.getEmailFromJWT(jwt);
+                UserDetails userDetails = userSecurityServiceImpl.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -51,7 +51,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
         filterChain.doFilter(request, response);
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
+    public String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
