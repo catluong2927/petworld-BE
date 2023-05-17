@@ -4,9 +4,7 @@ import com.petworld.dto.cartDto.response.CartDtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-public interface ICartService {
+public interface CartService {
     Page<CartDtoResponse> getAllCarts(Pageable pageable);
     CartDtoResponse getCartById(Long id);
     void addToCart(String username, Long productId, int quantity);

@@ -1,11 +1,7 @@
-package com.petworld.controller.controller_FE_SE;
+package com.petworld.controller.controller_FE_SF;
 
-import com.petworld.domain.Category;
-import com.petworld.domain.Product;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
-import com.petworld.repository.CategoryRepository;
-import com.petworld.service.ICategoryService;
-import com.petworld.service.IProductService;
+import com.petworld.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,8 +16,7 @@ import java.util.Optional;
 @RequestMapping("api/categorys")
 @CrossOrigin("*")
 public class CategoryController {
-    private final ICategoryService categoryService;
-    private final IProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping("")
     public ResponseEntity<?> getAllCategory(Pageable pageable) {
@@ -36,9 +30,4 @@ public class CategoryController {
         if(categoryDtoResponse.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(categoryDtoResponse);
     }
-
-//    @GetMapping("")
-//    public List<Category> getProductsByCategoryIds(@RequestParam List<Long> categoryIds) {
-//        return
-//    }
 }

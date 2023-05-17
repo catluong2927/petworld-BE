@@ -4,7 +4,7 @@ import com.petworld.converter.CartDetailConverter;
 import com.petworld.domain.CartDetail;
 import com.petworld.dto.cartDto.response.CartDetailDtoResponse;
 import com.petworld.repository.CartDetailRepository;
-import com.petworld.service.ICartDetailService;
+import com.petworld.service.CartDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CartDetailServiceImpl implements ICartDetailService {
+public class CartDetailServiceImpl implements CartDetailService {
     private final CartDetailRepository cartDetailRepository;
     private final CartDetailConverter cartDetailConverter;
 

@@ -10,18 +10,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class ProductConverter{
     private final MarkConverter markConverter;
+    private final ImageDetailsConverter imageDetailsConverter;
 
     public Page<ProductDtoResponse> entitiesToDtos(Page<Product> products){
         Page<ProductDtoResponse> productDtoResponses = products.map(product -> entityToDto(product));
         return productDtoResponses;
     }
+
     public ProductDtoResponse entityToDto(Product product){
         ProductDtoResponse productDto = new ProductDtoResponse();
         BeanUtils.copyProperties(product, productDto);
@@ -45,6 +44,7 @@ public class ProductConverter{
     public ProductDetailDtoResponse entityToProductDetailDto(Product product){
         ProductDetailDtoResponse productDetailDtoResponse = new ProductDetailDtoResponse();
         BeanUtils.copyProperties(product, productDetailDtoResponse);
+        productDetailDtoResponse.setImageDetailList(imageDetailsConverter.entititesToDtos(product.getImageDetails()));
         return productDetailDtoResponse;
     }
 

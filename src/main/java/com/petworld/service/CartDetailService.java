@@ -4,7 +4,7 @@ import com.petworld.dto.cartDto.response.CartDetailDtoResponse;
 
 import java.util.List;
 
-public interface ICartDetailService {
+public interface CartDetailService {
     List<CartDetailDtoResponse> findAllCartDetail();
     List<CartDetailDtoResponse> findCartDetailById(Long id);
 }
