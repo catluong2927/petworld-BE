@@ -1,6 +1,5 @@
 package com.petworld.service;
 
-import com.petworld.domain.Product;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
@@ -10,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface IProductService {
+public interface ProductService {
 
 //    Page<ProductDtoResponse> getAllProducts(Pageable pageable);
 //    Page<Product> getAllProducts(Pageable pageable)

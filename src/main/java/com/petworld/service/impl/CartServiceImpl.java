@@ -9,7 +9,7 @@ import com.petworld.dto.cartDto.response.CartDtoResponse;
 import com.petworld.repository.CartDetailRepository;
 import com.petworld.repository.CartRepository;
 import com.petworld.repository.ProductRepository;
-import com.petworld.service.ICartService;
+import com.petworld.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CartServiceImpl implements ICartService {
+public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final CartConverter cartConverter;

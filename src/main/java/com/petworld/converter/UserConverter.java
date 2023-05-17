@@ -1,15 +1,13 @@
 package com.petworld.converter;
 
 import com.petworld.domain.User;
-import com.petworld.dto.userDto.request.UserDtoRequest;
+import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
+//import com.petworld.validation.RegexValidate;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -24,9 +22,13 @@ public class UserConverter {
         BeanUtils.copyProperties(user, userDtoResponse);
         return userDtoResponse;
     }
-    public User dtoToEntity(UserDtoRequest userDtoRequest){
+    public User dtoToEntity(UserDtoCreateRequest userDtoCreateRequest){
         User user = new User();
-        BeanUtils.copyProperties(userDtoRequest, user);
+        BeanUtils.copyProperties(userDtoCreateRequest, user);
+        return user;
+    }
+    public User dtoToEntity(UserDtoCreateRequest userDtoCreateRequest, User user){
+        BeanUtils.copyProperties(userDtoCreateRequest, user);
         return user;
     }
 

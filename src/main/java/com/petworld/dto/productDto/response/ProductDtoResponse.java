@@ -1,5 +1,7 @@
 package com.petworld.dto.productDto.response;
 
+import com.petworld.domain.ImageDetail;
+import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import com.petworld.dto.markDto.response.MarkDtoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +19,6 @@ public class ProductDtoResponse {
     private Double price;
     private Integer sale;
     private MarkDtoResponse MarkDtoResponse;
+
 
 }

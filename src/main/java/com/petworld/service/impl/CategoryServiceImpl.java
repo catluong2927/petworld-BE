@@ -4,7 +4,7 @@ import com.petworld.converter.CategoryConverter;
 import com.petworld.domain.Category;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
 import com.petworld.repository.CategoryRepository;
-import com.petworld.service.ICategoryService;
+import com.petworld.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceImpl implements ICategoryService {
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryConverter categoryConverter;
 

@@ -3,11 +3,13 @@ package com.petworld.configuration;
 import com.petworld.repository.UserRepository;
 import com.petworld.security.JwtAuthEntryPoint;
 import com.petworld.security.JwtAuthFilter;
-import com.petworld.service.impl.UserDetailsServiceImpl;
+import com.petworld.service.impl.UserSecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,16 +30,22 @@ import javax.servlet.Filter;
 @EnableAutoConfiguration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = {
-        UserDetailsServiceImpl.class,
+        UserSecurityServiceImpl.class,
         JwtAuthEntryPoint.class,
         UserRepository.class
 })
 public class SecurityConfiguration {
     @Autowired
-    private UserDetailsServiceImpl CustomerDetailsService;
+    private UserSecurityServiceImpl CustomerDetailsService;
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setBasenames("validation-message");
+//        return messageSource;
+//    }
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {

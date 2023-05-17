@@ -1,9 +1,9 @@
-package com.petworld.controller.controller_FE_SE;
+package com.petworld.controller.controller_FE_SF;
 
 import com.petworld.dto.cartDto.request.CartDetailDtoRequest;
 import com.petworld.dto.cartDto.response.CartDtoResponse;
-import com.petworld.service.ICartService;
 import com.petworld.service.SecurityService;
+import com.petworld.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final ICartService cartService;
+
     private final SecurityService securityService;
+    private final CartService cartService;
 
     @GetMapping("")
     public ResponseEntity<?> getAllCarts(@RequestHeader("Authorization") final String authToken,

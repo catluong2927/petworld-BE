@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-public interface ICategoryService {
+public interface CategoryService {
     Page<CategoryDtoResponse> getAllCategory(Pageable pageable);
 
     Optional<CategoryDtoResponse> getById(Long id);
