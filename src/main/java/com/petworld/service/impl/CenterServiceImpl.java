@@ -46,7 +46,7 @@ public class CenterServiceImpl implements CenterService {
     public Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest) {
         Center center = centerConverter.dtoToEntity(centerDtoRequest);
         centerRepository.save(center);
-        log.info("Save new center to database",center.getName());
+        log.info("Saved new center to database",center.getName());
         return Optional.ofNullable(centerConverter.entityToDto(center));
     }
 }
