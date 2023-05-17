@@ -32,14 +32,6 @@ public class CategoryConverter {
     }
 
 
-//    public CategoryDtoResponse entityToDto(Category category){
-//        CategoryDtoResponse categoryDtoResponse = new CategoryDtoResponse();
-//        BeanUtils.copyProperties(category, categoryDtoResponse);
-//        List<Product> products = category.getProducts();
-//        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
-//        products.forEach(product -> productDtoResponses.add(productConverter.entityToDto(product)));
-//        categoryDtoResponse.setProductDtoResponses(productDtoResponses);
-//        return categoryDtoResponse;
-//    }
+
 
 }

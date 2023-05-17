@@ -1,4 +1,4 @@
-package com.petworld.controller.controller_FE_SE;
+package com.petworld.controller.controller_FE_SF;
 import com.petworld.dto.packageDto.request.PackageDtoRequest;
 import com.petworld.dto.packageDto.response.PackageDtoResponse;
 import com.petworld.service.PackageService;
