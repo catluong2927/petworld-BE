@@ -1,11 +1,10 @@
 package com.petworld.dto.cartDto.response;
 
-import com.petworld.domain.Cart;
-import com.petworld.domain.Product;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

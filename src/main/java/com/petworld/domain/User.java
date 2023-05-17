@@ -1,5 +1,6 @@
 package com.petworld.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,13 +29,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<UserRole> userRoles;
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-////    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private Set<Role> roles = new HashSet<Role>();
 
     @NotBlank
     @Column(name = "full_name", length = 255, nullable = false)
