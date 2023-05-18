@@ -1,6 +1,5 @@
-package com.petworld.dto.cartDto.response;
+package com.petworld.dto.cartDto;
 
-import com.petworld.dto.productDto.response.ProductDtoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDetailDtoResponse {
-    private Long id;
-    private Integer amount;
-    private Double totalPrice;
-    private Boolean status;
-    private ProductDtoResponse productDtoResponse;
-//    private Cart cart;
+public class CartDetailDto {
+  private Long id;
+  private String  name;
+  private  Double price;
+  private Float minPrice;
+  private Float maxPrice;
+  private Integer amount;
+  private Double totalPrice;
+
 }
