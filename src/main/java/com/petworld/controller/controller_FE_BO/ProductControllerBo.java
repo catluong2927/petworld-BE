@@ -1,35 +1,21 @@
-package com.petworld.controller.controller_FE_SF;
+package com.petworld.controller.controller_FE_BO;
 
 import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
-import com.petworld.dto.productDto.response.ProductDtoResponse;
 import com.petworld.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductControllerBo {
+
     private final ProductService productService;
-    @GetMapping("")
-    public ResponseEntity<?> getAllProducts(@PageableDefault(size = 9) Pageable pageable,
-                                            @RequestParam(required = false) List<Long> categoryIds) {
-        System.out.println(categoryIds);
-        Page<ProductDtoResponse> productDtoResponses = productService.getAllProducts(categoryIds, pageable);
-        return new ResponseEntity<>(productDtoResponses, HttpStatus.OK);
-    }
-
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findProductById(@PathVariable("id") Long id){
@@ -39,8 +25,8 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<?> addProduct(@RequestBody ProductDtoRequest productDtoRequest){
-            productService.addProduct(productDtoRequest);
-            return new ResponseEntity<>(HttpStatus.OK);
+        productService.addProduct(productDtoRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -56,4 +42,5 @@ public class ProductController {
         ProductDetailDtoResponse productDetailDtoResponse = productService.updateProductById(id, updateProductDtoRequest);
         return new ResponseEntity<>(productDetailDtoResponse, HttpStatus.OK);
     }
+
 }
