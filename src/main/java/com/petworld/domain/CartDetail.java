@@ -1,11 +1,8 @@
 package com.petworld.domain;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @AllArgsConstructor
@@ -20,6 +17,8 @@ public class CartDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean type;
+
     @Column(name = "total_price")
     private Double totalPrice;
 
@@ -29,9 +28,8 @@ public class CartDetail {
     @Column(name = "status")
     private Boolean status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+   @Column(name = "type_id")
+    private Long typeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")

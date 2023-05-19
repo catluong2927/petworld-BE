@@ -16,7 +16,7 @@ public class PackageReviewDtoRequest {
     private String review;
 
     private Integer star;
+
     private Date date;
-    private Long packageId;
     private String email;
 }
