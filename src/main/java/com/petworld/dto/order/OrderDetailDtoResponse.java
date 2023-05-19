@@ -1,6 +1,6 @@
 package com.petworld.dto.order;
 
-import com.petworld.dto.userDto.response.UserDtoResponse;
+import com.petworld.domain.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +9,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDtoResponse {
+public class OrderDetailDtoResponse {
     private Long id;
     private String itemName;
-    private Date date;
-
+    private Integer quantity;
     private Double total;
+    private String note;
 
-    private String status;
-    private String address;
-
-    private UserDtoResponse user;
+    private OrdersDtoResponse orders;
 }

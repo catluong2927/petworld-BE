@@ -3,7 +3,6 @@ package com.petworld.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -11,21 +10,16 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "orders")
-public class Orders {
+@Table(name = "order_detail")
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Date date;
-
+    private String itemName;
+    private Integer quantity;
     private Double total;
-
-    private String status;
-
-    private String address;
-
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private String note;
+    @ManyToOne(targetEntity = Orders.class)
+    @JoinColumn(name = "orders_id", referencedColumnName = "id")
+    private Orders orders;
 }
