@@ -4,9 +4,7 @@ import com.petworld.converter.OrderConverter;
 import com.petworld.converter.OrderDetailConverter;
 import com.petworld.domain.OrderDetail;
 import com.petworld.domain.Orders;
-import com.petworld.domain.User;
 import com.petworld.dto.order.OrderDetailDtoRequest;
-import com.petworld.dto.order.OrderDetailDtoResponse;
 import com.petworld.dto.order.OrdersDtoRequest;
 import com.petworld.dto.order.OrdersDtoResponse;
 import com.petworld.repository.OrderRepository;
@@ -28,7 +26,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderConverter orderConverter;
     private final OrderDetailService orderDetailService;
     private final OrderDetailConverter orderDetailConverter;
-    private final UserRepository userRepository;
 
 
     @Override
