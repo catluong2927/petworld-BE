@@ -1,12 +1,9 @@
 package com.petworld.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -63,4 +60,7 @@ public class User {
 
     @Column(name = "remember_token", length = 255, nullable = true)
     private String rememberToken;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 }
