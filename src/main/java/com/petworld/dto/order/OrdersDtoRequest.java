@@ -16,6 +16,8 @@ public class OrdersDtoRequest {
     private Long id;
     private String phoneNumber;
     private String note;
+    private Double total;
+
     private Date date;
     private String address;
     private String status;

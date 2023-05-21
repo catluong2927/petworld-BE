@@ -15,6 +15,7 @@ import java.util.Date;
 public class OrderDetailDtoRequest {
     private Long id;
     private String itemName;
+    private String image;
     private Integer quantity;
     private Double total;
     private String note;

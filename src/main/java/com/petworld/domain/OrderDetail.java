@@ -16,6 +16,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String itemName;
+    private String image;
     private Integer quantity;
     private Double total;
     private String note;

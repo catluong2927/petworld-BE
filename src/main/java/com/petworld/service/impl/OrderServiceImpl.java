@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrdersDtoResponse> findOrderByEmail(String email) {
-        List< Orders> orders = orderRepository.findOrdersByUserEmail(email);
+        List< Orders> orders = orderRepository.findOrdersByUserEmailOrderByDateDesc(email);
         List<OrdersDtoResponse> ordersDtoResponses = new ArrayList<>();
         orders.forEach(element -> ordersDtoResponses.add(orderConverter.entityToDto(element)));
         return ordersDtoResponses;

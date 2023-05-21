@@ -14,6 +14,8 @@ import java.util.List;
 public class OrdersDtoResponse {
     private Long id;
     private String phoneNumber;
+    private Double total;
+
     private String note;
     private Date date;
     private String address;
