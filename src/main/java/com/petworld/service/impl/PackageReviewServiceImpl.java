@@ -40,7 +40,7 @@ public class PackageReviewServiceImpl implements PackageReviewService {
     @Override
     public PackageReview savePackageReview(PackageReviewDtoRequest packageReviewDtoRequest) {
         PackageReview packageReview = packageReviewConverter.dtoToEntity(packageReviewDtoRequest);
-        User user = userRepository.findUserByEmail(packageReviewDtoRequest.getEmail());
+        User user = userRepository.findUserByEmail(packageReviewDtoRequest.getUseEmail());
         Package servicePackage = packageRepository.getById(packageReviewDtoRequest.getPackageId());
         packageReview.setUser(user);
         packageReview.setServicePackage(servicePackage);

@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductDtoResponse> getAllProducts(List<Long> categoryIds,Pageable pageable) {
         Page<Product> products;
-        if(categoryIds.isEmpty()) {
+        if(categoryIds==null) {
             products = productRepository.getAllProducts(pageable);
         } else {
             products = productRepository.findByCategoryIds(categoryIds, pageable);
