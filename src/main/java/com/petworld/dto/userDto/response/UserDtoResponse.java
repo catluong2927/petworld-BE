@@ -1,9 +1,12 @@
 package com.petworld.dto.userDto.response;
 
+import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,6 +18,7 @@ public class UserDtoResponse {
     private String userName;
     private String email;
     private String avatar;
-
+    private Boolean isStatus;
+    private Set<UserRoleDtoResponse> userRoleDtos;
 
 }

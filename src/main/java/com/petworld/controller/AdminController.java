@@ -50,7 +50,6 @@ public class AdminController {
 
     @GetMapping
     public ResponseEntity<?> getAll(@RequestHeader("Authorization") final String authToken, @PageableDefault(size = 3) Pageable pageable) {
-
         if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
             return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
         }
