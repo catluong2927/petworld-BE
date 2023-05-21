@@ -18,7 +18,8 @@ public class ProductDtoResponse {
     private String image;
     private Double price;
     private Integer sale;
-    private MarkDtoResponse MarkDtoResponse;
+    private MarkDtoResponse markDtoResponse;
+    private Boolean status;
 
 
 }
