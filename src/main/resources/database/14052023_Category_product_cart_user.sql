@@ -22,9 +22,9 @@ create table product(
     `category_id` 	bigint
 );
 
-create table image_details(
+create table image_detail(
 	`id`           bigint primary key auto_increment,
-    `image_detail` varchar(255) not null,
+    `url` 		   varchar(255) not null,
     `product_id`   bigint
 );
 
@@ -94,14 +94,10 @@ ADD CONSTRAINT fk_product_mark
 	FOREIGN KEY (`mark_id`)
 	REFERENCES mark(`id`);
  
-ALTER TABLE image_details
-ADD CONSTRAINT fk_image_details_product
+ALTER TABLE image_detail
+ADD CONSTRAINT fk_image_detail_product
 	FOREIGN KEY (`product_id`)
     REFERENCES product(`id`);
-
--- ALTER TABLE product
--- ADD FOREIGN KEY (`image_product_details`)
--- REFERENCES image_product_details(`id`);
   
 /*Cart - CartDetail*/
 ALTER TABLE cart_detail
@@ -212,7 +208,7 @@ VALUES
 	('Cat food', 'Cat Food - Kitcat Grain Food is produced and packaged according to international standards, the ingredients of the food are made from selected and high-grade raw materials. Food will be the most balanced and healthy source of nutrition for the cat to develop fully', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzeDA7w_rOUT6LmGJjQSKdXmxCDqH5jbMvTg&usqp=CAU', 25000, 'SEED04', '1g', '2g', '20g', '50mg', '', '', 1, 5, 3,0);
 	
 
-INSERT INTO `image_details`(`image_detail`, `product_id`)
+INSERT INTO `image_detail`(`url`, `product_id`)
 VALUES  ('hhttps://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
 		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1 ),
 		('https://beptruong.edu.vn/wp-content/uploads/2020/06/pate-gan-ga.jpg',1),
@@ -425,6 +421,16 @@ VALUES
 	(3, 3, 3, 0, 15000.00);
 
 
+
+
+
+-- ----test : 
+select * from category;
+select * from image_detail;
+-- use `petworld-v1`;
+ select * from product; 
+-- select * from Product  where `status` = 1;
+
 -- select * 
 -- from product p
 -- 	inner join category c on p.category_id = c.id
@@ -435,11 +441,3 @@ VALUES
 -- 	inner join category c on p.category_id = c.id
 -- -- where c.id = 1 or c.id = 2 or c.id = 3 or c.id = 4;
 -- where c.id in (1,2,3);
-
-
--- ----test : 
-select * from category;
-select * from image_details;
--- use `petworld-v1`;
- select * from product; 
--- select * from Product  where `status` = 1;
