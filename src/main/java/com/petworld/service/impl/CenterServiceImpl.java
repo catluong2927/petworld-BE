@@ -37,9 +37,9 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
-    public Optional<CenterDtoResponse> deleteByIdByStatus(Long id) {
+    public void deleteByIdByStatus(Long id) {
         log.info("deleting center from database");
-        return Optional.of(centerRepository.deleteByIdCenter(id));
+        centerRepository.deleteByIdCenter(id);
     }
 
     @Override

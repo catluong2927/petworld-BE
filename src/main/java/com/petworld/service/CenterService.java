@@ -13,7 +13,7 @@ public interface CenterService {
     Optional<CenterDtoResponse> getById(Long id);
     Optional<Page<CenterDtoResponse>> findAll(Pageable pageable);
 
-    Optional<CenterDtoResponse> deleteByIdByStatus (Long id);
+   void deleteByIdByStatus (Long id);
 
     Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest);
 }

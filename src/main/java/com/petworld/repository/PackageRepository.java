@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 
 @Repository
@@ -18,4 +21,7 @@ public interface PackageRepository extends JpaRepository<Package,Long> {
     Page<Package> findPackageByName(String name, Pageable pageable);
     @Override
     Page<Package> findAll(Pageable pageable);
+
+    @Query("SELECT p FROM Package p JOIN p.center c WHERE c.id = :centerId")
+    List<Package> getPackagesByCenterId(@PathVariable Long centerId);
 }
