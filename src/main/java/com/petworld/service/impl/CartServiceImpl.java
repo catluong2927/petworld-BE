@@ -104,5 +104,12 @@ public class CartServiceImpl implements CartService {
                 cartDetailRepository.deleteById(existingCartDetail.get().getId());
             }
         }
+    }
+
+    @Override
+    public void deleteAllItemsInCart(List<Long> cartDetailIds) {
+        cartDetailIds.forEach(id -> {
+            cartDetailRepository.deleteById(id);
+        });
     };
 }

@@ -194,6 +194,10 @@ VALUES
 	(2, 2, 1, 0, 15000.00),
 	(3, 3, 3, 0, 15000.00);
 
+
+
+
+
 create table `centers` (
 					id int primary key auto_increment,
                     name varchar(30) not null,
