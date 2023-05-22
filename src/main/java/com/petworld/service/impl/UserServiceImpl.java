@@ -125,10 +125,11 @@ public class UserServiceImpl implements UserService {
         return userDtoResponseFullNames;
     }
 
-//    @Override
-//    public User isExitUserName(String userName) {
-//        return userRepository.isExitUserName(userName);
-//    }
+    @Override
+    public UserDtoResponse getUserByEmail(String email) {
+        UserDtoResponse userDtoResponse = userConverter.entityToDto(userRepository.findUserByEmail(email));
+        return userDtoResponse;
+    }
 
 
 //    @Override

@@ -40,12 +40,6 @@ public class SecurityConfiguration {
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
-//    @Bean
-//    public MessageSource messageSource() {
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasenames("validation-message");
-//        return messageSource;
-//    }
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
