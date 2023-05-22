@@ -5,13 +5,17 @@ import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 //import com.petworld.validation.RegexValidate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class UserConverter {
+
+    private final UserRoleConverter userRoleConverter;
     public Optional<UserDtoResponse> entityToDtoOptional(Optional<User> user ){
         Optional<UserDtoResponse> userDtoResponse = Optional.of(new UserDtoResponse());
         BeanUtils.copyProperties(user,userDtoResponse);
@@ -20,6 +24,7 @@ public class UserConverter {
     public UserDtoResponse entityToDto(User user){
         UserDtoResponse userDtoResponse = new UserDtoResponse();
         BeanUtils.copyProperties(user, userDtoResponse);
+        userDtoResponse.setUserRoleDtos(userRoleConverter.entitiesToDtos(user.getUserRoles()));
         return userDtoResponse;
     }
     public User dtoToEntity(UserDtoCreateRequest userDtoCreateRequest){
@@ -37,5 +42,6 @@ public class UserConverter {
         BeanUtils.copyProperties(user, userDtoResponseDetail);
         return userDtoResponseDetail;
     }
+
 
 }
