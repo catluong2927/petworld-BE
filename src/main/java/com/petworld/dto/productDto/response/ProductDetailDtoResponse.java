@@ -1,5 +1,6 @@
 package com.petworld.dto.productDto.response;
 import com.petworld.domain.ImageDetail;
+import com.petworld.domain.Mark;
 import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import lombok.*;
 
@@ -25,5 +26,6 @@ public class ProductDetailDtoResponse {
     private String vitamins;
     private String animal;
     private Integer sale;
+    private Mark mark;
     private List<ImageDetailsDto> imageDetailList;
 }

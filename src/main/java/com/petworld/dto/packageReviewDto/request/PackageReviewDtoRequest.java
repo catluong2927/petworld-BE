@@ -18,5 +18,5 @@ public class PackageReviewDtoRequest {
     private Integer star;
 
     private Date date;
-    private Long user_id;
+    private String email;
 }

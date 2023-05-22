@@ -1,6 +1,10 @@
 package com.petworld.dto.productDto.request;
 
+import com.petworld.domain.ImageDetail;
+import com.petworld.dto.markDto.request.MarkDtoRequest;
 import lombok.*;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,4 +25,7 @@ public class UpdateProductDtoRequest {
     private String animal;
     private Boolean status;
     private Integer sale;
+    private MarkDtoRequest markDtoRequest;
+    private List<ImageDetail> imageDetail;
+
 }
