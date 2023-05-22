@@ -18,5 +18,6 @@ public class PackageReviewDtoRequest {
     private Integer star;
 
     private Date date;
-    private String email;
+    private Long packageId;
+    private String useEmail;
 }

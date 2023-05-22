@@ -1,6 +1,7 @@
 package com.petworld.service;
 
 
+import com.petworld.domain.Package;
 import com.petworld.dto.packageDto.request.PackageDtoRequest;
 import com.petworld.dto.packageDto.response.PackageDtoResponse;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ public interface PackageService {
     void deleteByIdByStatus(Long id);
 
     Page<PackageDtoResponse> getAllPackageByName(String name,Pageable pageable);
+
+    List<PackageDtoResponse> findByCenterId(Long id);
 
     Page<PackageDtoResponse> findAll(Pageable pageable);
 

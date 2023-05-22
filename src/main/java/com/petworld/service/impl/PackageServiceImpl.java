@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +58,13 @@ public class PackageServiceImpl implements PackageService {
         log.info("Getting all package by name from database");
         Page<Package> packages = packageRepository.findPackageByName(name,pageable);
         Page<PackageDtoResponse> packageDtoResponses= packages.map(packageConverter::entityToDto);
+        return packageDtoResponses;
+    }
+
+    @Override
+    public List<PackageDtoResponse> findByCenterId(Long id) {
+        List<Package> packages =  packageRepository.getPackagesByCenterId(id);
+        List<PackageDtoResponse> packageDtoResponses= packages.stream().map(packageConverter::entityToDto).collect(Collectors.toList());
         return packageDtoResponses;
     }
 

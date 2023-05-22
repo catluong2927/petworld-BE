@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/packages")
+@RequestMapping("/api/packages" )
 @RequiredArgsConstructor
 public class PackageController {
     private final PackageService packageService;
@@ -33,6 +34,13 @@ public class PackageController {
         Optional<PackageDtoResponse> servicePackage = packageService.getPackage(id);
         if(servicePackage.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(servicePackage);
+    }
+
+    @GetMapping("/center/{id}")
+    public ResponseEntity<?> getPackagesByCenterId (@PathVariable("id") Long id){
+        List<PackageDtoResponse> packageDtoResponses = packageService.findByCenterId(id);
+        if (packageDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(packageDtoResponses);
     }
 
     @PostMapping("")
