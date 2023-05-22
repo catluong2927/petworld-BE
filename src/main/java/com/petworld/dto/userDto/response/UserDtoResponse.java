@@ -18,5 +18,6 @@ public class UserDtoResponse {
     private String userName;
     private String email;
     private String avatar;
+    private Boolean isStatus;
     private Set<UserRoleDtoResponse> userRoleDtos;
 }
