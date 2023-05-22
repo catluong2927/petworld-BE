@@ -1,15 +1,12 @@
 package com.petworld.service;
+import com.petworld.dto.cartDto.response.CartDetailDtoResponse;
+import com.petworld.dto.cartDto.request.CartDetailDtoRequest;
 
-import com.petworld.dto.cartDto.response.CartDtoResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 public interface CartService {
-    Page<CartDtoResponse> getAllCarts(Pageable pageable);
-    CartDtoResponse getCartById(Long id);
-    void addToCart(String username, Long productId, int quantity);
-    void removeToCart (String username, Long productId);
-
-//    void addToCart(Long cartId, Long productId, int quantity);
-//    void removeToCart (Long cartId, Long productId);
+    List<CartDetailDtoResponse> getCartByEmail(String email);
+    void addToCart( CartDetailDtoRequest cartDetailDtoRequest);
+    void removeToCart (CartDetailDtoRequest cartDetailDtoRequest);
+    void deleteAllItemsInCart(List<Long> cartDetailIds);
 }

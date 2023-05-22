@@ -1,12 +1,9 @@
 package com.petworld.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -37,10 +34,7 @@ public class Product {
     @OneToOne
     @JoinColumn(name = "mark_id", referencedColumnName = "id")
     private Mark mark;
-    @JsonIgnore
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<CartDetail> cartDetailList;
-//    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",referencedColumnName = "id")
     private Category category;

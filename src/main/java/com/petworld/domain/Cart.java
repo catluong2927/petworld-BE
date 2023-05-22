@@ -30,12 +30,10 @@ public class Cart {
     @Column(name = "cart_date")
     private Date cartDate;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
     private List<CartDetail> cartDetailList;
 
-    @OneToOne
-    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }
