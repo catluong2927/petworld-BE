@@ -28,5 +28,6 @@ public interface UserService {
     Boolean updateSimple(String email, UserDtoUpdate userDtoUpdate);
     Boolean updatePassword (String email, UserDtoPassword userDtoPassword);
     Boolean active(Long id);
+    UserDtoResponse getUserByEmail(String email);
 
 }

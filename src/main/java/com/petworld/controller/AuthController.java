@@ -1,8 +1,12 @@
 package com.petworld.controller;
 
+import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.payload.request.LoginRequest;
 import com.petworld.payload.response.LoginResponse;
+import com.petworld.payload.response.UserDtoReponse;
+import com.petworld.repository.UserRepository;
 import com.petworld.security.JwtTokenProvider;
+import com.petworld.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,8 @@ import javax.validation.Valid;
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserService userService;
 
 //    @Autowired
 //    PasswordEncoder passwordEncoder;
@@ -40,10 +46,11 @@ public class AuthController {
 
             // Gọi hàm tạo Token
             String token = tokenProvider.generateToken(authentication);
-            return new ResponseEntity<>(new LoginResponse("Logged in successfully", token), HttpStatus.OK);
+            UserDtoResponse userDtoResponse = userService.getUserByEmail(loginRequest.getEmail());
+            return new ResponseEntity<>(new LoginResponse(userDtoResponse, token), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new LoginResponse("Login failed", null), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginResponse( "login fail",null), HttpStatus.BAD_REQUEST);
         }
     }
 }

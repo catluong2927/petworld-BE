@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
@@ -62,5 +61,5 @@ public class User {
     private String rememberToken;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
 }

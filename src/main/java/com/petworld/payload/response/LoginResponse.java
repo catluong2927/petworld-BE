@@ -1,40 +1,28 @@
 package com.petworld.payload.response;
 
-import org.springframework.lang.Nullable;
+import com.petworld.dto.userDto.response.UserDtoResponse;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
+@Getter
+@Setter
 public class LoginResponse {
-
-    @NotBlank
     private String message;
-
-    @Nullable
+    private UserDtoResponse userDtoResponse;
     private String token;
 
+    public LoginResponse(String message,String token) {
+        this.message = message;
+        this.token = token;
+    }
+
+    public LoginResponse(UserDtoResponse userDtoResponse, String token) {
+        this.userDtoResponse = userDtoResponse;
+        this.token = token;
+    }
+
     public LoginResponse() {
-        super();
-    }
-
-    public LoginResponse(@NotBlank String message, String token) {
-        super();
-        this.message = message;
-        this.token = token;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }
+
