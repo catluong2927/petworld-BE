@@ -88,9 +88,9 @@ public class SecurityConfiguration {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeHttpRequests() // links start with /api/
-                .antMatchers("/api/**") // perform segregate authorize
-                .permitAll();
+//        http.authorizeHttpRequests() // links start with /api/
+//                .antMatchers("/api/**")// perform segregate authorize
+//                .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
@@ -98,11 +98,16 @@ public class SecurityConfiguration {
                 .antMatchers("/api/role/**")
                 .hasRole("ADMIN");
 
+
         // Pages require login with role: ROLE_USER
         // If not login at user role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/customer/**")
+                .antMatchers("/api/users/**")
                 .hasRole("CUSTOMER");
+
+        http.authorizeHttpRequests()
+                .antMatchers("/api/users/**")
+                .hasRole("OWNER");
 
         // When user login with ROLE_USER, but try to
         // access pages require ROLE_ADMIN, redirect to /error-403

@@ -1,6 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
+import com.petworld.domain.Role;
 import com.petworld.domain.User;
 import com.petworld.domain.UserRole;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
@@ -64,10 +65,9 @@ public class UserServiceImpl implements UserService {
             userDtoReponse.setUserName("userName already exists");
             userDtoReponse.setEmail("email already exists");
             return userDtoReponse;
-        }
-        else if (email == null && userName != null) {
-                userDtoReponse.setUserName("userName already exists");
-                return userDtoReponse;
+        } else if (email == null && userName != null) {
+            userDtoReponse.setUserName("userName already exists");
+            return userDtoReponse;
         } else if (email != null && userName == null) {
             userDtoReponse.setEmail("email already exists");
             return userDtoReponse;
@@ -169,5 +169,23 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    public Boolean updateAddRole(Long id, Role role) {
+        User user = userRepository.getUserById(id);
+        if (user != null) {
+            UserRole userRole = new UserRole(user, role);
+            userRoleRepository.save(userRole);
+            return true;
+        }
+        return false;
+    }
 
+    public Boolean updateRemoveRole(Long userId, Role role) {
+        User user = userRepository.getUserById(userId);
+        UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+        if (userRole != null) {
+            userRoleRepository.removeUserRoleById(userRole.getId());
+            return true;
+        }
+        return false;
+    }
 }
