@@ -19,4 +19,6 @@ public interface CenterRepository extends JpaRepository<Center,Long> {
     @Override
     @Query("SELECT c FROM Center c WHERE c.isActive = true")
     Page<Center> findAll(Pageable pageable);
+
+    Center findCenterByUserEmail(String email);
 }

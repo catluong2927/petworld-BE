@@ -1,9 +1,11 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.SellerConverter;
+import com.petworld.domain.Center;
 import com.petworld.domain.Seller;
 import com.petworld.dto.sellerDto.request.SellerDtoRequest;
 import com.petworld.dto.sellerDto.response.SellerDtoResponse;
+import com.petworld.repository.CenterRepository;
 import com.petworld.repository.SellerRepository;
 import com.petworld.service.SellerService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ import java.util.Optional;
 public class SellerServiceImpl implements SellerService {
     private final SellerRepository sellerRepository;
     private final SellerConverter sellerConverter;
+    private final CenterRepository centerRepository;
     @Override
     public Optional<SellerDtoResponse> getById(Long id) {
         SellerDtoResponse seller = sellerConverter.entityToDto(sellerRepository.getById(id));
@@ -41,13 +46,19 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public Optional<SellerDtoResponse> save(SellerDtoRequest sellerDtoRequest) {
         Seller seller = sellerConverter.dtoToEntity(sellerDtoRequest);
+        Center center = centerRepository.findCenterByUserEmail(sellerDtoRequest.getUserEmail());
+        seller.setCenter(center);
         sellerRepository.save(seller);
         return Optional.ofNullable(sellerConverter.entityToDto(seller));
     }
 
+
     @Override
-    public Optional<SellerDtoResponse> getByNameCenter(String name) {
-        Seller seller = sellerRepository.findByCenterName(name);
-        return Optional.ofNullable(sellerConverter.entityToDto(seller));
+    public List<SellerDtoResponse> findSellersByCenterUserEmail(String email) {
+       List<Seller> sellers = sellerRepository.findSellersByCenterUserEmail(email);
+       List<SellerDtoResponse> sellerDtoResponses = new ArrayList<>();
+       sellers.forEach(element -> sellerDtoResponses.add(sellerConverter.entityToDto(element))
+       );
+        return sellerDtoResponses;
     }
 }

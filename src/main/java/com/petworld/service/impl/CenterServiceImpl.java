@@ -5,6 +5,7 @@ import com.petworld.domain.Center;
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 import com.petworld.repository.CenterRepository;
+import com.petworld.repository.UserRepository;
 import com.petworld.service.CenterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class CenterServiceImpl implements CenterService {
     private final CenterRepository centerRepository;
     private final CenterConverter centerConverter;
+    private final UserRepository userRepository;
     @Override
     public Optional<CenterDtoResponse> getById(Long id) {
         CenterDtoResponse center = centerConverter.entityToDto(centerRepository.getById(id));
@@ -45,6 +47,7 @@ public class CenterServiceImpl implements CenterService {
     @Override
     public Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest) {
         Center center = centerConverter.dtoToEntity(centerDtoRequest);
+        center.setUser(userRepository.findUserByEmail(centerDtoRequest.getUserEmail()));
         centerRepository.save(center);
         log.info("Saved new center to database",center.getName());
         return Optional.ofNullable(centerConverter.entityToDto(center));
