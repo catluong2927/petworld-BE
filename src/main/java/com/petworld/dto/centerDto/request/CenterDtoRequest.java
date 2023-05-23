@@ -12,6 +12,7 @@ import java.util.List;
 public class CenterDtoRequest {
     private Long id;
     private String name;
+    private String userEmail;
 
     private String phone;
 
