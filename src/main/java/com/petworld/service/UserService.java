@@ -1,5 +1,6 @@
 package com.petworld.service;
 
+import com.petworld.domain.Role;
 import com.petworld.domain.User;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
@@ -29,5 +30,7 @@ public interface UserService {
     Boolean updatePassword (String email, UserDtoPassword userDtoPassword);
     Boolean active(Long id);
     UserDtoResponse getUserByEmail(String email);
+    Boolean updateAddRole(Long id, Role role);
+    Boolean updateRemoveRole(Long userId, Role role);
 
 }

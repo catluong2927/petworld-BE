@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,5 +31,5 @@ public class Role {
     private String desc;
 
     @OneToMany(mappedBy = "role")
-    private Set<UserRole> userRoles;
+    private List<UserRole> userRoles;
 }

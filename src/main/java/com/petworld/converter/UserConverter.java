@@ -4,7 +4,6 @@ import com.petworld.domain.User;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
-//import com.petworld.validation.RegexValidate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -40,6 +39,7 @@ public class UserConverter {
     public UserDtoResponseDetail entityToUserDtoResponseDetail(User user){
         UserDtoResponseDetail userDtoResponseDetail = new UserDtoResponseDetail();
         BeanUtils.copyProperties(user, userDtoResponseDetail);
+        userDtoResponseDetail.setUserRoleDtos(userRoleConverter.entitiesToDtoResponseDetails(user.getUserRoles()));
         return userDtoResponseDetail;
     }
 

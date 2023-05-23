@@ -24,7 +24,7 @@ public class User {
     private Long id;
 
     @OneToMany(mappedBy = "user")
-    private Set<UserRole> userRoles;
+    private List<UserRole> userRoles;
 
     @NotBlank
     @Column(name = "full_name", length = 255, nullable = false)
