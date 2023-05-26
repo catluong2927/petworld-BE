@@ -1,8 +1,8 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.SellerConverter;
-import com.petworld.domain.Center;
-import com.petworld.domain.Seller;
+import com.petworld.entity.Center;
+import com.petworld.entity.Seller;
 import com.petworld.dto.sellerDto.request.SellerDtoRequest;
 import com.petworld.dto.sellerDto.response.SellerDtoResponse;
 import com.petworld.repository.CenterRepository;

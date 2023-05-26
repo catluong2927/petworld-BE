@@ -1,6 +1,5 @@
 package com.petworld.dto.packageReviewDto.response;
 
-import com.petworld.domain.User;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;

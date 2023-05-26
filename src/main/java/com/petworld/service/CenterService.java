@@ -11,9 +11,8 @@ import java.util.Optional;
 
 public interface CenterService {
     Optional<CenterDtoResponse> getById(Long id);
-    Optional<Page<CenterDtoResponse>> findAll(Pageable pageable);
-
+    Optional<Page<CenterDtoResponse>> findAllByStatus(Pageable pageable);
    void deleteByIdByStatus (Long id);
-
+    Optional<Page<CenterDtoResponse>> findAll(Pageable pageable);
     Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest);
 }

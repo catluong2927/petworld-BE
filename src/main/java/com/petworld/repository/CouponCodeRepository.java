@@ -1,6 +1,6 @@
 package com.petworld.repository;
 
-import com.petworld.domain.CouponCode;
+import com.petworld.entity.CouponCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

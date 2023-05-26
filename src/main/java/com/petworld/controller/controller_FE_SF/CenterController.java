@@ -20,7 +20,14 @@ import java.util.Optional;
 public class CenterController {
     private final CenterService centerService;
     @GetMapping("")
-    public ResponseEntity<?> getAllCenters(@PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<?> getAllCentersByStatus(@PageableDefault(size = 9) Pageable pageable) {
+        Optional<Page<CenterDtoResponse>> centerDtoResponses = centerService.findAllByStatus(pageable);
+        if (centerDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(centerDtoResponses);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllCenters(@PageableDefault(size = 9) Pageable pageable) {
         Optional<Page<CenterDtoResponse>> centerDtoResponses = centerService.findAll(pageable);
         if (centerDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(centerDtoResponses);

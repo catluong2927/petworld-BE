@@ -1,6 +1,5 @@
 package com.petworld.service;
 
-import com.petworld.domain.Seller;
 import com.petworld.dto.sellerDto.request.SellerDtoRequest;
 import com.petworld.dto.sellerDto.response.SellerDtoResponse;
 import org.springframework.data.domain.Page;

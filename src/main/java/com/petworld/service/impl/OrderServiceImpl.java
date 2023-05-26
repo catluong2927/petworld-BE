@@ -2,13 +2,12 @@ package com.petworld.service.impl;
 
 import com.petworld.converter.OrderConverter;
 import com.petworld.converter.OrderDetailConverter;
-import com.petworld.domain.OrderDetail;
-import com.petworld.domain.Orders;
+import com.petworld.entity.OrderDetail;
+import com.petworld.entity.Orders;
 import com.petworld.dto.order.OrderDetailDtoRequest;
 import com.petworld.dto.order.OrdersDtoRequest;
 import com.petworld.dto.order.OrdersDtoResponse;
 import com.petworld.repository.OrderRepository;
-import com.petworld.repository.UserRepository;
 import com.petworld.service.OrderDetailService;
 import com.petworld.service.OrderService;
 import lombok.RequiredArgsConstructor;

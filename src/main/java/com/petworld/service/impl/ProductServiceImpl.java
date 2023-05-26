@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.ProductConverter;
-import com.petworld.domain.Product;
+import com.petworld.entity.Product;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;

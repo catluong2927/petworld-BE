@@ -36,28 +36,10 @@ public class PackageController {
         return ResponseEntity.ok().body(servicePackage);
     }
 
-    @GetMapping("/center/{id}")
-    public ResponseEntity<?> getPackagesByCenterId (@PathVariable("id") Long id){
-        List<PackageDtoResponse> packageDtoResponses = packageService.findByCenterId(id);
-        if (packageDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(packageDtoResponses);
-    }
-
     @PostMapping("")
     public ResponseEntity<PackageDtoResponse> savePackages(@RequestBody PackageDtoRequest servicePackage){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/packages").toUriString());
         return ResponseEntity.created(uri).body(packageService.savePackage(servicePackage));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Optional<PackageDtoResponse>> removePackage(@PathVariable("id") Long id){
-        Optional<PackageDtoResponse> servicePackage = packageService.getPackage(id);
-        if(servicePackage.isPresent()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            packageService.deleteByIdByStatus(id);
-            return ResponseEntity.ok().body(servicePackage);
-        }
     }
 
     @PutMapping("/{id}")
@@ -70,10 +52,14 @@ public class PackageController {
         }
     }
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<?> getAllPackageByName(@PathVariable("name") String name,Pageable pageable){
-        Page<PackageDtoResponse> packageDtoResponses = packageService.getAllPackageByName(name,pageable);
-        if (packageDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(packageDtoResponses);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePackage(@PathVariable("id") Long id){
+        Optional<PackageDtoResponse> deletePackage = packageService.getPackage(id);
+        if(deletePackage.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            packageService.deleteByIdByStatus(id);
+            return ResponseEntity.ok().body(packageService.getPackage(id));
+        }
     }
 }

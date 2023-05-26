@@ -1,8 +1,6 @@
 package com.petworld.repository;
 
-import com.petworld.domain.PackageReview;
-import com.petworld.domain.Seller;
-import com.petworld.domain.Service;
+import com.petworld.entity.Seller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

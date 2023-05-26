@@ -1,4 +1,4 @@
-package com.petworld.domain;
+package com.petworld.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

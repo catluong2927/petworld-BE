@@ -1,6 +1,4 @@
 package com.petworld.dto.userDto.response;
-import com.petworld.domain.UserRole;
-import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponseDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

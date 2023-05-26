@@ -1,6 +1,6 @@
 package com.petworld.service;
 
-import com.petworld.domain.Service;
+import com.petworld.entity.Service;
 import com.petworld.dto.serviceDto.request.ServiceDtoRequest;
 import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.CouponCode;
+import com.petworld.entity.CouponCode;
 import com.petworld.dto.couponCodeDto.response.CouponCodeDtoResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

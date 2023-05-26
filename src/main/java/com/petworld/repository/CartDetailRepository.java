@@ -1,5 +1,5 @@
 package com.petworld.repository;
-import com.petworld.domain.CartDetail;
+import com.petworld.entity.CartDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

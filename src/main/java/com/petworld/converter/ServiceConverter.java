@@ -1,7 +1,7 @@
 package com.petworld.converter;
 
-import com.petworld.domain.Service;
-import com.petworld.domain.ServiceImage;
+import com.petworld.entity.Service;
+import com.petworld.entity.ServiceImage;
 import com.petworld.dto.serviceDto.request.ServiceDtoRequest;
 import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
 import com.petworld.dto.serviceImageDto.response.ServiceImageDtoResponse;

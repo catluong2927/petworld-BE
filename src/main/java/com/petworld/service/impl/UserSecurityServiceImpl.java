@@ -1,6 +1,6 @@
 package com.petworld.service.impl;
 
-import com.petworld.domain.User;
+import com.petworld.entity.User;
 import com.petworld.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

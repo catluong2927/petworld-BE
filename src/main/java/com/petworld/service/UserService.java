@@ -1,7 +1,6 @@
 package com.petworld.service;
 
-import com.petworld.domain.Role;
-import com.petworld.domain.User;
+import com.petworld.entity.Role;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
@@ -10,7 +9,6 @@ import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 import com.petworld.payload.response.UserDtoReponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.PackageReview;
-import com.petworld.domain.User;
+import com.petworld.entity.PackageReview;
 import com.petworld.dto.packageReviewDto.request.PackageReviewDtoRequest;
 import com.petworld.dto.packageReviewDto.response.PackageReviewDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponse;
