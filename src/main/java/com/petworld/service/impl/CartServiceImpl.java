@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
                 CartDetailDtoResponse cartDetailDto = new CartDetailDtoResponse();
                 cartDetailDto.setId(element.getId());
                 cartDetailDto.setType(true);
-                Double price = product.getPrice() - (product.getSale()/100 * product.getPrice() );
+                Double price = product.getPrice()- ((product.getSale() * product.getPrice())/ 100);
                 cartDetailDto.setPrice(price);
                 cartDetailDto.setOriginalPrice(product.getPrice());
                 cartDetailDto.setName(product.getName());
