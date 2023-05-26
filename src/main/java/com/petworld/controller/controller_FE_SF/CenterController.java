@@ -39,7 +39,7 @@ public class CenterController {
         if (centerDtoResponse.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(centerDtoResponse);
     }
-
+    
     @PostMapping("")
     public ResponseEntity<?> saveCenter(@RequestBody CenterDtoRequest centerDtoRequest){
         Optional<CenterDtoRequest> newCenter = Optional.ofNullable(centerDtoRequest);
@@ -61,6 +61,13 @@ public class CenterController {
         Optional<CenterDtoResponse> center = centerService.getById(id);
         if(center.isEmpty()) return ResponseEntity.notFound().build();
         centerService.deleteByIdByStatus(id);
+        return ResponseEntity.ok().body(center);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getCenterByUserId (@PathVariable(name = "userId") Long id){
+        Optional<CenterDtoResponse> center = centerService.findCenterByUserId(id);
+        if(center.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(center);
     }
 }

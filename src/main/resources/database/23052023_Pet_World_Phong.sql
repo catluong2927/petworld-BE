@@ -64,8 +64,8 @@ create table product
     `vitamins`      varchar(200)  not null,
     `animal`        varchar(200)  not null,
     `sale`          int default 0 check (`sale` >= 0 and `sale` <= 100),
-`status`        bit           not null check (`status` = 0 or `status` = 1),
-`mark_id`       bigint        not null,
+    `status`        bit not null check (`status` = 0 or `status` = 1),
+    `mark_id`       bigint not null,
     `category_id`   bigint
 );
 
@@ -137,7 +137,7 @@ ALTER TABLE cart
         FOREIGN KEY (`user_id`)
             REFERENCES `user` (`id`);
 
-/*Customer - Role*/
+/*User - Role*/
 
 
 

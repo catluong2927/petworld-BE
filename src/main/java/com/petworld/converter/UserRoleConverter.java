@@ -31,6 +31,7 @@ public class UserRoleConverter {
         userRoleDtoResponse.setRoleDtoResponse(roleConverter.entityToDto(userRole.getRole()));
         return userRoleDtoResponse;
     }
+
     public List<UserRoleDtoResponseDetail> entitiesToDtoResponseDetails(List<UserRole> userRoleSet ){
         List<UserRoleDtoResponseDetail> userRoleDtoResponses = new ArrayList<>();
         if(!userRoleSet.isEmpty()) {
