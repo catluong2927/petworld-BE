@@ -13,8 +13,7 @@ public class CartDetailDtoResponse {
   private String  name;
   private  Double price;
   private Double originalPrice;
-  private Float minPrice;
-  private Float maxPrice;
+
   private Integer amount;
   private String image;
   private Long typeId;
