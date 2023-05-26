@@ -40,12 +40,6 @@ public class SecurityConfiguration {
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
-//    @Bean
-//    public MessageSource messageSource() {
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasenames("validation-message");
-//        return messageSource;
-//    }
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
@@ -95,20 +89,25 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests() // links start with /api/
-                .antMatchers("/api/**") // perform segregate authorize
+                .antMatchers("/api/**")// perform segregate authorize
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/role/**")
+                .antMatchers("/api/role/**","/api/**")
                 .hasRole("ADMIN");
+
 
         // Pages require login with role: ROLE_USER
         // If not login at user role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/customer/**")
+                .antMatchers("/api/users/**")
                 .hasRole("CUSTOMER");
+
+        http.authorizeHttpRequests()
+                .antMatchers("/api/users/**")
+                .hasRole("OWNER");
 
         // When user login with ROLE_USER, but try to
         // access pages require ROLE_ADMIN, redirect to /error-403

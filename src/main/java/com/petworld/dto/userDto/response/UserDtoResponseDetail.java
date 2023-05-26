@@ -1,8 +1,13 @@
 package com.petworld.dto.userDto.response;
+import com.petworld.domain.UserRole;
+import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
+import com.petworld.dto.userRoleDto.response.UserRoleDtoResponseDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +23,5 @@ public class UserDtoResponseDetail {
     private String avatar;
     private Boolean isStatus;
     private String rememberToken;
+    private List<UserRoleDtoResponseDetail> userRoleDtos;
 }

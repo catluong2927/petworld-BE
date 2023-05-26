@@ -2,19 +2,20 @@ package com.petworld.converter;
 
 import com.petworld.domain.UserRole;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
+import com.petworld.dto.userRoleDto.response.UserRoleDtoResponseDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class UserRoleConverter {
     private final RoleConverter roleConverter;
-    public Set<UserRoleDtoResponse> entitiesToDtos(Set<UserRole> userRoleSet ){
-        Set<UserRoleDtoResponse> userRoleDtoResponses = new HashSet<>();
+    public List<UserRoleDtoResponse> entitiesToDtos(List<UserRole> userRoleSet ){
+        List<UserRoleDtoResponse> userRoleDtoResponses = new ArrayList<>();
         if(!userRoleSet.isEmpty()) {
             for(UserRole element : userRoleSet){
                 UserRoleDtoResponse userRoleDtoResponse = entityToDto(element);
@@ -29,5 +30,23 @@ public class UserRoleConverter {
         BeanUtils.copyProperties(userRole, userRoleDtoResponse);
         userRoleDtoResponse.setRoleDtoResponse(roleConverter.entityToDto(userRole.getRole()));
         return userRoleDtoResponse;
+    }
+
+    public List<UserRoleDtoResponseDetail> entitiesToDtoResponseDetails(List<UserRole> userRoleSet ){
+        List<UserRoleDtoResponseDetail> userRoleDtoResponses = new ArrayList<>();
+        if(!userRoleSet.isEmpty()) {
+            for(UserRole element : userRoleSet){
+                UserRoleDtoResponseDetail userRoleDtoResponseDetail = entityToDtoResponseDetail(element);
+                userRoleDtoResponses.add(userRoleDtoResponseDetail);
+            }
+            return userRoleDtoResponses;
+        }
+        return null;
+    }
+    public UserRoleDtoResponseDetail entityToDtoResponseDetail(UserRole userRole){
+        UserRoleDtoResponseDetail userRoleDtoResponseDetail = new UserRoleDtoResponseDetail();
+        BeanUtils.copyProperties(userRole, userRoleDtoResponseDetail);
+        userRoleDtoResponseDetail.setRoleDtoResponse(roleConverter.entityToDto(userRole.getRole()));
+        return userRoleDtoResponseDetail;
     }
 }

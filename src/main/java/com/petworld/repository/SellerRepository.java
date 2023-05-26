@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SellerRepository extends JpaRepository <Seller,Long> {
 
@@ -23,8 +25,5 @@ public interface SellerRepository extends JpaRepository <Seller,Long> {
 //    @Query("SELECT s FROM Seller s JOIN s.center c WHERE c.name = :name")
 //    Seller findByCenterName(@Param("name") String name);
 
-    @Query(value = "SELECT * FROM sellers " +
-            "JOIN centers ON sellers.center_id = centers.id " +
-            "WHERE sellers.name =:name", nativeQuery = true)
-    Seller findByCenterName(@Param("name") String name);
+    List<Seller> findSellersByCenterUserEmail(String email);
 }

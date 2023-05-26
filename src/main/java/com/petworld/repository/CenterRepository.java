@@ -14,9 +14,11 @@ import org.springframework.stereotype.Repository;
 public interface CenterRepository extends JpaRepository<Center,Long> {
     @Modifying
     @Query("UPDATE Center c SET c.isActive = false WHERE c.id = :id")
-    CenterDtoResponse deleteByIdCenter(@Param("id") Long id);
+    void deleteByIdCenter(@Param("id") Long id);
 
     @Override
     @Query("SELECT c FROM Center c WHERE c.isActive = true")
     Page<Center> findAll(Pageable pageable);
+
+    Center findCenterByUserEmail(String email);
 }

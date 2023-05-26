@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,11 +35,11 @@ public class SellerController {
         return ResponseEntity.ok().body(sellerDtoResponse);
     }
 
-    @GetMapping("/center/{name}")
-    public ResponseEntity<?> getSellerByCenterName(@PathVariable(name ="name")String name){
-        Optional<SellerDtoResponse> seller = sellerService.getByNameCenter(name);
-        if (seller.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(seller);
+    @GetMapping("/users/{email}")
+    public ResponseEntity<?> getSellerByUserEmail(@PathVariable(name ="email")String email){
+        List<SellerDtoResponse> sellers = sellerService.findSellersByCenterUserEmail(email);
+        if (sellers.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(sellers);
     }
 
     @PostMapping("")

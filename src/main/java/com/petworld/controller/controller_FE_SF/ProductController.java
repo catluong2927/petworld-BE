@@ -28,10 +28,6 @@ public class ProductController {
         Page<ProductDtoResponse> productDtoResponses = productService.getAllProducts(categoryIds, pageable);
         return new ResponseEntity<>(productDtoResponses, HttpStatus.OK);
     }
-//    @GetMapping("/image")
-//    public ResponseEntity<?> getAll(){
-//        return productService.getAllProducts()
-//    }
 
 
 

@@ -35,4 +35,8 @@ public class Center {
     private List<Package> packages = new ArrayList<>();
     @OneToMany(mappedBy = "center",fetch = FetchType.LAZY)
     private List<Seller> sellers = new ArrayList<>();
+
+    @OneToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

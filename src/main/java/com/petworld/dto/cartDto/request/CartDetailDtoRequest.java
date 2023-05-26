@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDetailDtoRequest {
-    private Long productId;
+    private String userEmail;
+    private Boolean type;
+    private Long typeId;
     private Integer amount;
     private Double totalPrice;
 }

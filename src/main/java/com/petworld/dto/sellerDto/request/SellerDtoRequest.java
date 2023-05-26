@@ -12,8 +12,10 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class SellerDtoRequest {
     private Long id;
+    private String userEmail;
     private String name;
     private String phone;
+    private String email;
     private String address;
     private Boolean isActive;
 }

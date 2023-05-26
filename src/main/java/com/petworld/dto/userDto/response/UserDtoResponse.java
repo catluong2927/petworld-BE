@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,6 +19,5 @@ public class UserDtoResponse {
     private String email;
     private String avatar;
     private Boolean isStatus;
-    private Set<UserRoleDtoResponse> userRoleDtos;
-
+    private List<UserRoleDtoResponse> userRoleDtos;
 }
