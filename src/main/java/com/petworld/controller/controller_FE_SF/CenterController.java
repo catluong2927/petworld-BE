@@ -66,7 +66,7 @@ public class CenterController {
         return ResponseEntity.ok().body(center);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<?> getCenterByUserId (@PathVariable(name = "userId") Long id){
         Optional<CenterDtoResponse> center = centerService.findCenterByUserId(id);
         if(center.isEmpty()) return ResponseEntity.notFound().build();
