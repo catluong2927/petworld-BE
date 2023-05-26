@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.CouponCodeConverter;
-import com.petworld.domain.CouponCode;
+import com.petworld.entity.CouponCode;
 import com.petworld.dto.couponCodeDto.response.CouponCodeDtoResponse;
 import com.petworld.repository.CouponCodeRepository;
 import com.petworld.service.ICouponCodeService;

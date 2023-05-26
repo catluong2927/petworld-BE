@@ -1,7 +1,6 @@
 package com.petworld.repository;
 
-import com.petworld.domain.Center;
-import com.petworld.dto.centerDto.response.CenterDtoResponse;
+import com.petworld.entity.Center;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +15,8 @@ public interface CenterRepository extends JpaRepository<Center,Long> {
     @Query("UPDATE Center c SET c.isActive = false WHERE c.id = :id")
     void deleteByIdCenter(@Param("id") Long id);
 
-    @Override
-    @Query("SELECT c FROM Center c WHERE c.isActive = true")
+    Page<Center> findAllByIsActiveTrue(Pageable pageable);
+
     Page<Center> findAll(Pageable pageable);
 
     Center findCenterByUserEmail(String email);

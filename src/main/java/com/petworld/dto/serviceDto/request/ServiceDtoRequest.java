@@ -1,6 +1,7 @@
 package com.petworld.dto.serviceDto.request;
 
-import com.petworld.domain.Package;
+import com.petworld.entity.Package;
+import com.petworld.entity.PackageDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class ServiceDtoRequest {
 
     private Float price;
 
-    private Package aPackage;
+    private PackageDetail packageDetail;
 
     private boolean isActive;
 }

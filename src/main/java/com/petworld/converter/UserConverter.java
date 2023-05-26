@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.User;
+import com.petworld.entity.User;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;

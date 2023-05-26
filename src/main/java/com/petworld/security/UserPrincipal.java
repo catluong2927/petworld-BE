@@ -1,7 +1,7 @@
 package com.petworld.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.petworld.domain.User;
+import com.petworld.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

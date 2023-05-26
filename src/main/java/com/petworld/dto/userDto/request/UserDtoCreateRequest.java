@@ -1,6 +1,6 @@
 package com.petworld.dto.userDto.request;
 
-import com.petworld.domain.Role;
+import com.petworld.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

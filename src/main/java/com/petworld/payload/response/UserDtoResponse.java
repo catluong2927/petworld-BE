@@ -1,6 +1,6 @@
 package com.petworld.payload.response;
 
-import com.petworld.domain.UserRole;
+import com.petworld.entity.UserRole;
 import lombok.Data;
 
 import java.util.Set;

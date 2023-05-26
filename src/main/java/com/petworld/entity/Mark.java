@@ -1,24 +1,23 @@
-package com.petworld.domain;
+package com.petworld.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.*;
-import java.util.List;
 
-@Entity
+import javax.persistence.*;
+
 @Getter
 @Setter
-@NoArgsConstructor
+@Entity
+@Table(name = "mark")
 @AllArgsConstructor
-@Table(name = "category")
-public class Category {
+@NoArgsConstructor
+public class Mark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    private List<Product> products;
-
+    private String tag;
+    @Column(name = "tag_badge")
+    private String tagBadge;
 }

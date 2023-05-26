@@ -1,9 +1,8 @@
 package com.petworld.service;
 
-import com.petworld.domain.PackageReview;
+import com.petworld.entity.PackageReview;
 import com.petworld.dto.packageReviewDto.request.PackageReviewDtoRequest;
 import com.petworld.dto.packageReviewDto.response.PackageReviewDtoResponse;
-import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

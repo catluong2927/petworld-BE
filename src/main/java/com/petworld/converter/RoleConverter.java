@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.Role;
+import com.petworld.entity.Role;
 import com.petworld.dto.roleDto.response.RoleDtoResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

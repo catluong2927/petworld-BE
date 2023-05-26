@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.ServiceImage;
+import com.petworld.entity.ServiceImage;
 import com.petworld.dto.serviceImageDto.request.ServiceImageDtoRequest;
 import com.petworld.dto.serviceImageDto.response.ServiceImageDtoResponse;
 import org.springframework.beans.BeanUtils;

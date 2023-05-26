@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.UserRole;
+import com.petworld.entity.UserRole;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponseDetail;
 import lombok.RequiredArgsConstructor;
