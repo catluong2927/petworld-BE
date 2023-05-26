@@ -39,9 +39,7 @@ public class CenterController {
         if (centerDtoResponse.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(centerDtoResponse);
     }
-
-
-
+    
     @PostMapping("")
     public ResponseEntity<?> saveCenter(@RequestBody CenterDtoRequest centerDtoRequest){
         Optional<CenterDtoRequest> newCenter = Optional.ofNullable(centerDtoRequest);
