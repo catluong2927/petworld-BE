@@ -1,4 +1,4 @@
-package com.petworld.domain;
+package com.petworld.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +27,8 @@ public class Service {
     private Float price;
 
     @ManyToOne
-    @JoinColumn(name = "package_id")
-    private Package servicePackage;
+    @JoinColumn(name = "package_detail_id")
+    private PackageDetail packageDetail;
 
     @Column(name = "active")
     private boolean isActive;

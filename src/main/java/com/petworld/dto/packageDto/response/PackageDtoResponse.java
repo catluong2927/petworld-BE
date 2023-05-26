@@ -14,13 +14,5 @@ import java.util.List;
 public class PackageDtoResponse {
     private Long id;
     private String name;
-    private String description;
-    private Float minPrice;
-    private Float maxPrice;
-    private String image;
-    private boolean isActive;
-    private String status;
-    private List<ServiceDtoResponse> serviceDtoResponses;
-
-    private String centerName;
+    private Boolean isActive;
 }

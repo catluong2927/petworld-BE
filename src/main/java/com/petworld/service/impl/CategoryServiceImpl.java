@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.CategoryConverter;
-import com.petworld.domain.Category;
+import com.petworld.entity.Category;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
 import com.petworld.repository.CategoryRepository;
 import com.petworld.service.CategoryService;

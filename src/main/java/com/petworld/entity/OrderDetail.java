@@ -1,9 +1,8 @@
-package com.petworld.domain;
+package com.petworld.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

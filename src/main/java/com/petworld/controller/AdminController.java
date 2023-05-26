@@ -1,9 +1,6 @@
 package com.petworld.controller;
 
-import com.petworld.domain.Role;
-import com.petworld.domain.User;
-import com.petworld.dto.userDto.request.UserDtoUpdate;
-import com.petworld.dto.userDto.response.UserDtoResponseDetail;
+import com.petworld.entity.Role;
 import com.petworld.security.JwtAuthFilter;
 import com.petworld.security.JwtTokenProvider;
 import com.petworld.service.SecurityService;
@@ -12,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @CrossOrigin(value = "*", maxAge = 3600)
 @RestController

@@ -1,6 +1,5 @@
 package com.petworld.dto.packageReviewDto.request;
 
-import com.petworld.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,6 @@ public class PackageReviewDtoRequest {
     private Integer star;
 
     private Date date;
-    private Long packageId;
+    private Long packageDetailId;
     private String useEmail;
 }

@@ -1,11 +1,13 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.PackageReviewConverter;
-import com.petworld.domain.Package;
-import com.petworld.domain.PackageReview;
-import com.petworld.domain.User;
+import com.petworld.entity.Package;
+import com.petworld.entity.PackageDetail;
+import com.petworld.entity.PackageReview;
+import com.petworld.entity.User;
 import com.petworld.dto.packageReviewDto.request.PackageReviewDtoRequest;
 import com.petworld.dto.packageReviewDto.response.PackageReviewDtoResponse;
+import com.petworld.repository.PackageDetailRepository;
 import com.petworld.repository.PackageRepository;
 import com.petworld.repository.PackageReviewRepository;
 import com.petworld.repository.UserRepository;
@@ -29,7 +31,7 @@ public class PackageReviewServiceImpl implements PackageReviewService {
     private final PackageReviewRepository packageReviewRepository;
     private final PackageReviewConverter packageReviewConverter;
     private final UserRepository userRepository;
-
+    private final PackageDetailRepository packageDetailRepository;
     private final PackageRepository packageRepository;
     @Override
     public Page<PackageReviewDtoResponse> findAll(Pageable pageable) {
@@ -41,9 +43,9 @@ public class PackageReviewServiceImpl implements PackageReviewService {
     public PackageReview savePackageReview(PackageReviewDtoRequest packageReviewDtoRequest) {
         PackageReview packageReview = packageReviewConverter.dtoToEntity(packageReviewDtoRequest);
         User user = userRepository.findUserByEmail(packageReviewDtoRequest.getUseEmail());
-        Package servicePackage = packageRepository.getById(packageReviewDtoRequest.getPackageId());
+        PackageDetail packageDetail = packageDetailRepository.getById(packageReviewDtoRequest.getPackageDetailId());
         packageReview.setUser(user);
-        packageReview.setServicePackage(servicePackage);
+        packageReview.setPackageDetail(packageDetail);
         return packageReviewRepository.save(packageReview);
     }
 

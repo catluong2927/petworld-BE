@@ -1,6 +1,6 @@
 package com.petworld.dto.productDto.request;
 
-import com.petworld.domain.ImageDetail;
+import com.petworld.entity.ImageDetail;
 import com.petworld.dto.markDto.request.MarkDtoRequest;
 import lombok.*;
 

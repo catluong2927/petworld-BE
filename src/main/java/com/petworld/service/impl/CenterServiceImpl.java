@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.CenterConverter;
-import com.petworld.domain.Center;
+import com.petworld.entity.Center;
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 import com.petworld.repository.CenterRepository;
@@ -32,23 +32,32 @@ public class CenterServiceImpl implements CenterService {
     }
 
     @Override
+    public Optional<Page<CenterDtoResponse>> findAllByStatus(Pageable pageable) {
+        Page<Center> centers = centerRepository.findAllByIsActiveTrue(pageable);
+        log.info("Finding all center status");
+        return Optional.of(centers.map(centerConverter::entityToDto));
+    }
+
+    @Override
     public Optional<Page<CenterDtoResponse>> findAll(Pageable pageable) {
         Page<Center> centers = centerRepository.findAll(pageable);
         log.info("Finding all center");
         return Optional.of(centers.map(centerConverter::entityToDto));
     }
 
+
     @Override
     public void deleteByIdByStatus(Long id) {
         log.info("deleting center from database");
         centerRepository.deleteByIdCenter(id);
     }
-
     @Override
     public Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest) {
         Center center = centerConverter.dtoToEntity(centerDtoRequest);
         center.setUser(userRepository.findUserByEmail(centerDtoRequest.getUserEmail()));
+
         centerRepository.save(center);
+        center.setIsActive(true);
         log.info("Saved new center to database",center.getName());
         return Optional.ofNullable(centerConverter.entityToDto(center));
     }

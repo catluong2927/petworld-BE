@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.ImageDetail;
+import com.petworld.entity.ImageDetail;
 import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
