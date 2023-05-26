@@ -20,4 +20,6 @@ public interface CenterRepository extends JpaRepository<Center,Long> {
     Page<Center> findAll(Pageable pageable);
 
     Center findCenterByUserEmail(String email);
+
+    Center findCenterByUserId (Long id);
 }

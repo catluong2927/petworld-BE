@@ -15,4 +15,5 @@ public interface CenterService {
    void deleteByIdByStatus (Long id);
     Optional<Page<CenterDtoResponse>> findAll(Pageable pageable);
     Optional<CenterDtoResponse> save(CenterDtoRequest centerDtoRequest);
+    Optional<CenterDtoResponse> findCenterByUserId(Long id);
 }

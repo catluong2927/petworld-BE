@@ -61,4 +61,10 @@ public class CenterServiceImpl implements CenterService {
         log.info("Saved new center to database",center.getName());
         return Optional.ofNullable(centerConverter.entityToDto(center));
     }
+
+    @Override
+    public Optional<CenterDtoResponse> findCenterByUserId(Long id) {
+        Center center = centerRepository.findCenterByUserId(id);
+        return Optional.ofNullable(centerConverter.entityToDto(center));
+    }
 }
