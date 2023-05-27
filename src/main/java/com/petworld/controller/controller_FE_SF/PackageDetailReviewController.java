@@ -22,15 +22,15 @@ public class PackageDetailReviewController {
     private final PackageDetailReviewService packageDetailReviewService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllPackageReviews(@PageableDefault(size = 9) Pageable pageable) {
-        Page<PackageDetailReviewDtoResponse> packageReviewDtoResponses = packageDetailReviewService.findAll(pageable);
-        if (packageReviewDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(packageReviewDtoResponses);
+    public ResponseEntity<?> getAllPackageDetailReviews(@PageableDefault(size = 9) Pageable pageable) {
+        Page<PackageDetailReviewDtoResponse> packageDetailReviewDtoResponses = packageDetailReviewService.findAll(pageable);
+        if (packageDetailReviewDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(packageDetailReviewDtoResponses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PackageDetailReviewDtoResponse>> getPackage(@PathVariable("id") Long id){
-        Optional<PackageDetailReviewDtoResponse> packageReviewDtoResponse = packageDetailReviewService.getPackReview(id);
+    public ResponseEntity<?> getPackageDetailReviewById(@PathVariable("id") Long id){
+        Optional<PackageDetailReviewDtoResponse> packageReviewDtoResponse = packageDetailReviewService.getPackDetailReviewById(id);
         if(packageReviewDtoResponse.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(packageReviewDtoResponse);
     }
@@ -38,12 +38,13 @@ public class PackageDetailReviewController {
     @PostMapping("")
     public ResponseEntity<?> savePackageReviews(@RequestBody PackageDetailReviewDtoRequest packageDetailReviewDtoRequest){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/package-reviews").toUriString());
-        return ResponseEntity.created(uri).body(packageDetailReviewService.savePackageReview(packageDetailReviewDtoRequest));
+        packageDetailReviewService.savePackageDetailReview(packageDetailReviewDtoRequest);
+        return ResponseEntity.created(uri).body(packageDetailReviewDtoRequest);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removePackageReview(@PathVariable("id") Long id){
-        Optional<PackageDetailReviewDtoResponse> packageReview = packageDetailReviewService.getPackReview(id);
+        Optional<PackageDetailReviewDtoResponse> packageReview = packageDetailReviewService.getPackDetailReviewById(id);
         if(packageReview.isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
@@ -52,9 +53,9 @@ public class PackageDetailReviewController {
         }
     }
 
-    @GetMapping("/package/{id}")
+    @GetMapping("/package-detail/{id}")
     public ResponseEntity<?> getPackReviewByPackageId(@PathVariable Long id,Pageable pageable){
-        Page<PackageDetailReviewDtoResponse> packageReviewDtoResponses = packageDetailReviewService.findPackageReviewsByPackage(id,pageable);
+        Page<PackageDetailReviewDtoResponse> packageReviewDtoResponses = packageDetailReviewService.findPackageDetailReviewsByPackageDetail(id,pageable);
         if (packageReviewDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(packageReviewDtoResponses);
     }

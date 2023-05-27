@@ -17,9 +17,5 @@ public interface PackageDetailReviewRepository extends JpaRepository<PackageDeta
     @Query("UPDATE PackageDetailReview pr SET pr.isActive = false WHERE pr.id = :id")
     void deleteByIdPackageReview(@Param("id") Long id);
 
-
-    @Query(value = "SELECT * FROM package_reviews " +
-            "JOIN packages ON package_reviews.package_id = packages.id " +
-            "WHERE packages.id =:id", nativeQuery = true)
-    Page<PackageDetailReview> findPackageReviewByPackageId(Long id, Pageable pageable);
+    Page<PackageDetailReview> findPackageDetailReviewsByPackageDetailId(Long id, Pageable pageable);
 }

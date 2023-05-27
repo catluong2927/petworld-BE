@@ -11,11 +11,11 @@ import java.util.Optional;
 public interface PackageDetailReviewService {
     Page<PackageDetailReviewDtoResponse> findAll(Pageable pageable);
 
-    PackageDetailReview savePackageReview(PackageDetailReviewDtoRequest packageDetailReviewDtoRequest);
+    PackageDetailReview savePackageDetailReview(PackageDetailReviewDtoRequest packageDetailReviewDtoRequest);
 
-    Optional<PackageDetailReviewDtoResponse> getPackReview(Long id);
+    Optional<PackageDetailReviewDtoResponse> getPackDetailReviewById(Long id);
 
     void deleteByIdByStatus(Long id);
 
-    Page<PackageDetailReviewDtoResponse> findPackageReviewsByPackage(Long id, Pageable pageable);
+    Page<PackageDetailReviewDtoResponse> findPackageDetailReviewsByPackageDetail(Long id, Pageable pageable);
 }
