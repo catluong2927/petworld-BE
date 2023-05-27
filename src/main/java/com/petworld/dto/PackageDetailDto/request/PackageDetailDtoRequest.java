@@ -13,7 +13,6 @@ public class PackageDetailDtoRequest {
     private String description;
     private Double price;
     private String image;
-    private Boolean isActive;
     private String status;
     private String userEmail;
     private Long packageId;

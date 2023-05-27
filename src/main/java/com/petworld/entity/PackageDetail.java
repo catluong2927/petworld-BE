@@ -28,7 +28,7 @@ public class PackageDetail {
     @OneToMany(mappedBy = "packageDetail",fetch = FetchType.LAZY)
     private List<Service> services;
     @OneToMany(mappedBy = "packageDetail",fetch = FetchType.LAZY)
-    private List<PackageReview> packageReviews;
+    private List<PackageDetailReview> packageDetailReviews;
     @ManyToOne(targetEntity = Center.class)
     @JoinColumn(name = "center_id", referencedColumnName = "id")
     private Center center;

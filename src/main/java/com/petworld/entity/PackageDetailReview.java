@@ -11,8 +11,8 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "package_reviews")
-public class PackageReview {
+@Table(name = "package_detail_reviews")
+public class PackageDetailReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
