@@ -39,7 +39,7 @@ public class PackageDetailDetailReviewServiceImpl implements PackageDetailReview
     }
 
     @Override
-    public PackageDetailReview savePackageReview(PackageDetailReviewDtoRequest packageDetailReviewDtoRequest) {
+    public PackageDetailReview savePackageDetailReview(PackageDetailReviewDtoRequest packageDetailReviewDtoRequest) {
         PackageDetailReview packageDetailReview = packageDetailReviewConverter.dtoToEntity(packageDetailReviewDtoRequest);
         User user = userRepository.findUserByEmail(packageDetailReviewDtoRequest.getUseEmail());
         PackageDetail packageDetail = packageDetailRepository.getById(packageDetailReviewDtoRequest.getPackageDetailId());
@@ -49,7 +49,7 @@ public class PackageDetailDetailReviewServiceImpl implements PackageDetailReview
     }
 
     @Override
-    public Optional<PackageDetailReviewDtoResponse> getPackReview(Long id) {
+    public Optional<PackageDetailReviewDtoResponse> getPackDetailReviewById(Long id) {
         PackageDetailReview packageDetailReview = packageDetailReviewRepository.getById(id);
         PackageDetailReviewDtoResponse packageDetailReviewDtoResponse = packageDetailReviewConverter.entityToDto(packageDetailReview);
         return Optional.of(packageDetailReviewDtoResponse);
@@ -61,8 +61,8 @@ public class PackageDetailDetailReviewServiceImpl implements PackageDetailReview
     }
 
     @Override
-    public Page<PackageDetailReviewDtoResponse> findPackageReviewsByPackage(Long id, Pageable pageable) {
-        Page<PackageDetailReview> packageReviews = packageDetailReviewRepository.findPackageReviewByPackageId(id, pageable);
+    public Page<PackageDetailReviewDtoResponse> findPackageDetailReviewsByPackageDetail(Long id, Pageable pageable) {
+        Page<PackageDetailReview> packageReviews = packageDetailReviewRepository.findPackageDetailReviewsByPackageDetailId(id, pageable);
         List<PackageDetailReviewDtoResponse> packageDetailReviewDtoResponseArrayList = new ArrayList<>();
         packageReviews.forEach(packageReview -> {
             packageDetailReviewDtoResponseArrayList.add(packageDetailReviewConverter.entityToDto(packageReview));
