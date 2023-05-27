@@ -18,5 +18,5 @@ public class PackageDetailReviewDtoRequest {
 
     private Date date;
     private Long packageDetailId;
-    private String useEmail;
+    private String userEmail;
 }
