@@ -14,6 +14,7 @@ public class PackageDetailDtoRequest {
     private Double price;
     private String image;
     private String status;
+    private Boolean isActive;
     private String userEmail;
     private Long packageId;
 }
