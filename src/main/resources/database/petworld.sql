@@ -638,7 +638,7 @@ VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295221/ImageProd
 -- Phong Minh
 INSERT INTO centers (name, phone, email, address, user_id)
 VALUES ('Pet Care Center', '1234567890', 'petcarecente@gmail.com.com', '123 Main St', 1),
-       ('Animal Hospital', '9876543210', 'animalhospital@gmail.com', '456 Elm St', 2),
+       -- ('Animal Hospital', '9876543210', 'animalhospital@gmail.com', '456 Elm St', 2),
        ('Paws and Claws Clinic', '5551234567', 'appointments@gmail.com', '789 Oak Ave', 3),
        ('Pet Lovers Vet', '9998887777', 'competloversvet@gmail.com', '321 Pine Rd', 4),
        ('Happy Pets Clinic', '5551112222', 'happypetsclinic@gmail.com', '789 Maple Ave', 5),
