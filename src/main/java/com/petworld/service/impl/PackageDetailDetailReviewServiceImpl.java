@@ -13,6 +13,7 @@ import com.petworld.repository.UserRepository;
 import com.petworld.service.PackageDetailReviewService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class PackageDetailDetailReviewServiceImpl implements PackageDetailReviewService {
     private final PackageDetailReviewRepository packageDetailReviewRepository;
     private final PackageDetailReviewConverter packageDetailReviewConverter;
@@ -41,8 +43,8 @@ public class PackageDetailDetailReviewServiceImpl implements PackageDetailReview
     @Override
     public PackageDetailReview savePackageDetailReview(PackageDetailReviewDtoRequest packageDetailReviewDtoRequest) {
         PackageDetailReview packageDetailReview = packageDetailReviewConverter.dtoToEntity(packageDetailReviewDtoRequest);
-        User user = userRepository.findUserByEmail(packageDetailReviewDtoRequest.getUseEmail());
-        PackageDetail packageDetail = packageDetailRepository.getById(packageDetailReviewDtoRequest.getPackageDetailId());
+        User user = userRepository.findUserByEmail(packageDetailReviewDtoRequest.getUserEmail());
+        PackageDetail packageDetail = packageDetailRepository.findById(packageDetailReviewDtoRequest.getPackageDetailId()).get();
         packageDetailReview.setUser(user);
         packageDetailReview.setPackageDetail(packageDetail);
         return packageDetailReviewRepository.save(packageDetailReview);

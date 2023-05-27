@@ -38,7 +38,8 @@ public class PackageDetailReviewController {
     @PostMapping("")
     public ResponseEntity<?> savePackageReviews(@RequestBody PackageDetailReviewDtoRequest packageDetailReviewDtoRequest){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/package-reviews").toUriString());
-        return ResponseEntity.created(uri).body(packageDetailReviewService.savePackageDetailReview(packageDetailReviewDtoRequest));
+        packageDetailReviewService.savePackageDetailReview(packageDetailReviewDtoRequest);
+        return ResponseEntity.created(uri).body(packageDetailReviewDtoRequest);
     }
 
     @DeleteMapping("/{id}")
