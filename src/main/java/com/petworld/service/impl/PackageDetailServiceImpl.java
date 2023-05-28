@@ -27,6 +27,7 @@ public class PackageDetailServiceImpl implements PackageDetailService {
     public PackageDetailDtoResponse savePackageDetail(PackageDetailDtoRequest packageDetailDtoRequest) {
         PackageDetail packageDetail = packageDetailConverter.dtoToEntity(packageDetailDtoRequest);
 
+
         Optional<Package> servicePackage = packageRepository.findPackageByName(packageDetailDtoRequest.getName());
         if (servicePackage.isEmpty()){
             Package newPackage = new Package();
@@ -36,6 +37,7 @@ public class PackageDetailServiceImpl implements PackageDetailService {
         }
         packageDetail.setServicePackage(servicePackage.get());
         packageDetailRepository.save(packageDetail);
+        packageDetail.setIsActive(true);
         return packageDetailConverter.entityToDto(packageDetail);
     }
 

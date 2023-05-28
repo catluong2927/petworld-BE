@@ -1,6 +1,5 @@
-package com.petworld.dto.packageReviewDto.response;
+package com.petworld.dto.packageDetailReviewDto.request;
 
-import com.petworld.dto.userDto.response.UserDtoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackageReviewDtoResponse {
+public class PackageDetailReviewDtoRequest {
     private Long id;
 
     private String review;
@@ -18,5 +17,6 @@ public class PackageReviewDtoResponse {
     private Integer star;
 
     private Date date;
-    private UserDtoResponse userDtoResponse;
+    private Long packageDetailId;
+    private String userEmail;
 }
