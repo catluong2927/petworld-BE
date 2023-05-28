@@ -55,11 +55,11 @@ public class PackageDetailController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Optional<PackageDetailDtoResponse>> removePackage(@PathVariable("id") Long id){
         Optional<PackageDetailDtoResponse> packageDetailDtoResponse = packageDetailService.getPackageDetail(id);
-        if(packageDetailDtoResponse.isPresent()) {
+        if(packageDetailDtoResponse.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
             packageDetailService.deleteByIdByStatus(id);
-            return ResponseEntity.ok().body(packageDetailDtoResponse);
+            return ResponseEntity.ok().body(packageDetailService.getPackageDetail(id));
         }
     }
 

@@ -1,8 +1,11 @@
 package com.petworld.dto.PackageDetailDto.response;
 
+import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
+import com.petworld.entity.Service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +21,5 @@ public class PackageDetailDtoResponse {
     private String status;
     private String packageName;
     private String centerName;
+    private Page<ServiceDtoResponse> serviceDtoResponses;
 }

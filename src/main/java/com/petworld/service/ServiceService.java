@@ -18,4 +18,5 @@ public interface ServiceService {
     Page<ServiceDtoResponse> findAll(Pageable pageable);
 
     void addImageToService(Long id,String urlImage);
+    Optional<Page<ServiceDtoResponse>> findByPackageId(Long packageDetailId,Pageable pageable);
 }
