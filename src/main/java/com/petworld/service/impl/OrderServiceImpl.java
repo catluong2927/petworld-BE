@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +50,14 @@ public class OrderServiceImpl implements OrderService {
         });
         savedOrders.setOrderDetails(orderDetails);
         return orderConverter.entityToDto(savedOrders);
+    }
+
+    @Override
+    public void updateOrder(Long id, String status) {
+        Optional<Orders> orders = orderRepository.findById(id);
+        if(orders.isPresent()){
+            orders.get().setStatus(status);
+            orderRepository.save(orders.get());
+        }
     }
 }

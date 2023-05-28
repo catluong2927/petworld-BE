@@ -9,4 +9,5 @@ public interface OrderService {
     List<OrdersDtoResponse> findOrderByEmail(String email);
 
     OrdersDtoResponse saveOrder(OrdersDtoRequest ordersDtoRequest);
+    void updateOrder(Long id, String status);
 }
