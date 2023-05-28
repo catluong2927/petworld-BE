@@ -59,7 +59,7 @@ public class PackageDetailController {
             return ResponseEntity.notFound().build();
         } else {
             packageDetailService.deleteByIdByStatus(id);
-            return ResponseEntity.ok().body(packageDetailDtoResponse);
+            return ResponseEntity.ok().body(packageDetailService.getPackageDetail(id));
         }
     }
 
