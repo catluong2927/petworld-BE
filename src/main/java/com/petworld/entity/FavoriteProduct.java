@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter @Setter @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "favorite_products")
 public class FavoriteProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

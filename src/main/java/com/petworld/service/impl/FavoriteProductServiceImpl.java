@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Table;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +39,9 @@ public class FavoriteProductServiceImpl implements FavoriteProductService {
     @Override
     public List<FavoriteProductDtoResponse> findAll() {
         List<FavoriteProduct> favoriteProducts = favoriteProductRepository.findAll();
-        return favoriteProducts.stream().map(favoriteProductConverter::entityToDto).collect(Collectors.toList());
+        List<FavoriteProductDtoResponse> favoriteProductDtoResponses = new ArrayList<>();
+        favoriteProductDtoResponses.addAll(favoriteProducts.stream().map(favoriteProductConverter::entityToDto).collect(Collectors.toList()));
+        return favoriteProductDtoResponses;
     }
 
     @Override
