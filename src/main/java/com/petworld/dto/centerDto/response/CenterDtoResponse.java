@@ -17,4 +17,5 @@ public class CenterDtoResponse {
 
     private String address;
     private Boolean isActive;
+
 }

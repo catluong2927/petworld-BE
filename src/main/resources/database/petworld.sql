@@ -67,42 +67,42 @@ create table mark(
 -- Phong Minh Section -------------------------
 create table `centers`
 (
-    id			int primary key auto_increment,
-    `name`		varchar(30)  not null,
-    phone		varchar(10)  not null,
-    email		varchar(100) not null,
-    address		varchar(200) not null,
-    is_active	bit default (1),
-    user_id		bigint not null
+    id      int primary key auto_increment,
+    name    varchar(30)  not null,
+    phone   varchar(10)  not null,
+    email   varchar(100) not null,
+    address varchar(200) not null,
+    is_active  bit default (1),
+    user_id bigint not null
 );
 
 create table `packages`
 (
     id          int primary key auto_increment,
-    `name`      varchar(20)  not null,
+    name        varchar(20)  not null,
     is_active   bit default (1)
 );
 
-create table `package_details`
+create table `package_details` 
 (
-    id          	int primary key auto_increment,
-    `description`	varchar(250) not null,
-    image       	varchar(255) not null,
-    price       	float not null,
-    `status`    	varchar(50),
-    is_active	    bit default (1),
-    center_id		int not null,
-    package_id		int not null
+	id          int primary key auto_increment,
+	description varchar(250) not null,
+    image       varchar(255) not null,
+    price       float        not null,
+    status      varchar(50),
+    is_active      bit default (1),
+    center_id   int not null,
+    package_id  int not null
 );
 
 create table `services`
 (
-    id	          			int primary key auto_increment,
-    `name`        			varchar(200) not null,
-    price	      			float not null,
-    `description` 			varchar(250) not null,
-    `active`      			bit default (1),
-    `package_detail_id`  	int not null
+    id          int primary key auto_increment,
+    name        varchar(200) not null,
+    price       float        not null,
+    description varchar(250) not null,
+    active      bit default (1),
+    `package_detail_id`  int   not null
 );
 
 create table `service_images`
@@ -112,27 +112,40 @@ create table `service_images`
     service_id int          not null
 );
 
-create table `package_reviews`
+create table `package_detail_reviews`
 (
-    id         			int primary key auto_increment,
-    review     			varchar(255) not null,
-    star      			int,
-    `date`       		datetime,
-    `active`     		bit default (1),
-    package_detail_id 	int not null,
-    user_id    			bigint not null
+    id         int primary key auto_increment,
+    review     varchar(255) not null,
+    star       int,
+    date       datetime,
+    active     bit default (1),
+    package_detail_id int          not null,
+    user_id    bigint       not null
 );
 
 create table `sellers`
 (
     id        int primary key auto_increment,
-    `name`    varchar(30)  not null,
+    name      varchar(30)  not null,
     phone     varchar(10)  not null,
     email     varchar(100) not null,
     address   varchar(200) not null,
-    `active`  bit default (1),
-    center_id int not null
+    active    bit default (1),
+    center_id int          not null
 );
+create table `favorites` 
+(
+	id 		bigint primary key auto_increment,
+    user_id bigint not null
+);
+
+create table `favorite_products` 
+(
+	id 		bigint primary key auto_increment,
+    product_id bigint not null,
+    favorite_id bigint not null
+);
+
 /*Order*/
 create table `orders`
 (
@@ -215,13 +228,13 @@ ADD CONSTRAINT `FK_seller_center`
     FOREIGN KEY(center_id) 
     REFERENCES centers (`id`);
 
-ALTER TABLE `package_reviews`
-ADD CONSTRAINT `FK_package_review_package` 
+ALTER TABLE `package_detail_reviews`
+ADD CONSTRAINT `FK_package_detail_review_package` 
     FOREIGN KEY(package_detail_id) 
     REFERENCES package_details (`id`);
     
-ALTER TABLE `package_reviews`
-ADD CONSTRAINT `FK_package_review_user` 
+ALTER TABLE `package_detail_reviews`
+ADD CONSTRAINT `FK_package_detail_review_user` 
     FOREIGN KEY(user_id) 
     REFERENCES `user`(`id`);
     
@@ -235,12 +248,27 @@ ADD CONSTRAINT `FK_order_detail_order`
     FOREIGN KEY(orders_id) 
     REFERENCES `orders` (`id`);
 
+ALTER TABLE `favorites`
+ADD CONSTRAINT `FK_favorites_user` 
+	FOREIGN KEY(user_id) 
+    REFERENCES `user`(`id`);
+
+ALTER TABLE `favorite_products`
+ADD CONSTRAINT `FK_favorite_products_products` 
+	FOREIGN KEY(product_id) 
+    REFERENCES product (`id`);
+
+ALTER TABLE `favorite_products`
+ADD CONSTRAINT `FK_favorite_products_favorites` 
+	FOREIGN KEY(favorite_id) 
+    REFERENCES favorites (`id`);
+
 /*Customer - Role*/
 INSERT INTO `role`(`name`,`Desc`) 
 VALUES
 	('ROLE_ADMIN','Quản trị viên'),
 	('ROLE_OWNER','Trung tâm dịch vụ'),
-	('ROLE_SALER','Nhân viên bán hàng'),
+	('ROLE_SELLER','Nhân viên bán hàng'),
 	('ROLE_CUSTOMER','Khách hàng');
     
 INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`,avatar)
@@ -264,7 +292,7 @@ INSERT INTO `user_role`(`user_id`, `role_id`)
 VALUES
 	(1,1),
 	(2,2),
-	(2,4),
+	(2,3),
     (3,4),
     (3,2);
 
@@ -636,7 +664,7 @@ VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295221/ImageProd
 	('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295319/ImageProduct/images_vzevgi.jpg', 39);
 
 -- Phong Minh
-INSERT INTO centers (name, phone, email, address, user_id)
+INSERT INTO centers (`name`, phone, email, address, user_id)
 VALUES ('Pet Care Center', '1234567890', 'petcarecente@gmail.com.com', '123 Main St', 1),
        -- ('Animal Hospital', '9876543210', 'animalhospital@gmail.com', '456 Elm St', 2),
        ('Paws and Claws Clinic', '5551234567', 'appointments@gmail.com', '789 Oak Ave', 3),
@@ -659,13 +687,13 @@ VALUES ('Pet Care Center', '1234567890', 'petcarecente@gmail.com.com', '123 Main
        ('Aquatic Animal Hospital', '2223334444', 'comaquaticanimalhospitalcontact@gmail.com', '789 Elm St', 10),
        ('Rabbit and Rodent Clinic', '8889990000', 'infocomrabbitandrodentclinic12@gmail.com', '456 Maple Ave', 10);
 
-insert into packages (name)
+insert into packages (`name`)
 values ('Day care'),
        ('Walking Service'),
        ("Pet's Sap"),
        ('Training Program');
 
-insert into `package_details` (description, image, price, status, is_active, center_id, package_id)
+insert into `package_details` (`description`, image, price, `status`, is_active, center_id, package_id)
 values ( 'Essential vaccinations for your pet',
          'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376796/Packages/dog-massage-therapy-picture-id909810936_gtpm6j.jpg',
          80.0,'Active', 1,1,1),
@@ -679,7 +707,7 @@ values ( 'Essential vaccinations for your pet',
         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376983/Packages/caninemassagefeat-1080x675_hvebpl.jpg',
         40.0, 'Active',1,3,4);
 
-INSERT INTO services (name, price, description, package_detail_id)
+INSERT INTO services (`name`, price, `description`, package_detail_id)
 VALUES ('Basic Check-up', 50.0, 'Routine health check-up for your pet', 1),
        ('Vaccination', 30.0, 'Essential vaccinations for your pet', 2),
        ('Grooming', 40.0, 'Grooming session for your pet', 3),
@@ -752,7 +780,7 @@ VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377733/Packages/
        ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378251/Packages/ServiceImage/images_kmpwb2.jpg', 2);
 
 
-INSERT INTO package_reviews (review, star, date, package_detail_id, user_id)
+INSERT INTO package_detail_reviews (review, star, `date`, package_detail_id, user_id)
 VALUES ('Great service package, highly recommended!', 5, '2022-01-01 10:00:00', 1, 1),
        ('The service package was good, but could be better.', 4, '2022-02-01 11:00:00', 2, 2),
        ('I really enjoyed the service package, will come back again!', 5, '2022-03-01 12:00:00', 1, 1),
@@ -774,7 +802,7 @@ VALUES ('Great service package, highly recommended!', 5, '2022-01-01 10:00:00', 
        --        ('Great service package, highly recommended!', 5, '2023-07-01 04:00:00',1,4),
        ('The service package was good, but the quality was inconsistent.', 3, '2023-08-01 05:00:00', 2, 1);
 
-INSERT INTO `sellers` (name, phone, email, address, center_id, active)
+INSERT INTO `sellers` (`name`, phone, email, address, center_id, `active`)
 VALUES ('Seller A', '1234567890', 'sellerA@gmail.comexample.com', '123 Main St, City A', 1, 1),
        ('Seller B', '2345678901', 'sellerB@gmail.comexample.com', '456 Broad St, City B', 2, 1),
        ('Seller C', '3456789012', 'sellerC@gmail.comexample.com', '789 Oak St, City C', 3, 0),

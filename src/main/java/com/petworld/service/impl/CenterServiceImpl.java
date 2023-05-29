@@ -65,7 +65,7 @@ public class CenterServiceImpl implements CenterService {
     @Override
     public Optional<CenterDtoResponse> findCenterByUserId(Long id) {
         Optional<Center> center = centerRepository.findCenterByUserId(id);
-        if (center.isEmpty()) return Optional.ofNullable(new CenterDtoResponse());
+        if (center.isEmpty()) return Optional.ofNullable(null);
         return Optional.ofNullable(centerConverter.entityToDto(center.get()));
     }
 }
