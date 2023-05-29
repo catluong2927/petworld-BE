@@ -19,4 +19,5 @@ public interface ServiceRepository extends JpaRepository <Service ,Long> {
 
     Page<Service> findServiceByPackageDetailServicePackageName(@Param("name") String name,Pageable pageable);
 
+    Page<Service> findServicesByPackageDetailId(@Param("id") Long packageDetailId,Pageable pageable);
 }

@@ -49,6 +49,7 @@ public class CartServiceImpl implements CartService {
                 cartDetailDto.setId(element.getId());
                 cartDetailDto.setType(false);
                 cartDetailDto.setName(packageDetail.getServicePackage().getName());
+                cartDetailDto.setOriginalPrice(packageDetail.getPrice());
                 cartDetailDto.setPrice(packageDetail.getPrice());
                 cartDetailDto.setAmount(element.getAmount());
                 cartDetailDto.setImage(packageDetail.getImage());
