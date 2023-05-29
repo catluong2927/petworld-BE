@@ -95,7 +95,7 @@ public class SecurityConfiguration {
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/role/**")
+                .antMatchers("/api/role/**","/api/**")
                 .hasRole("ADMIN");
 
 
@@ -106,7 +106,7 @@ public class SecurityConfiguration {
                 .hasRole("CUSTOMER");
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/users/**")
+                .antMatchers("/api/owner/**")
                 .hasRole("OWNER");
 
         // When user login with ROLE_USER, but try to

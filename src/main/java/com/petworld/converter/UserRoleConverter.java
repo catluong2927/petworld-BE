@@ -1,6 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.UserRole;
+import com.petworld.entity.UserRole;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponse;
 import com.petworld.dto.userRoleDto.response.UserRoleDtoResponseDetail;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -33,6 +31,7 @@ public class UserRoleConverter {
         userRoleDtoResponse.setRoleDtoResponse(roleConverter.entityToDto(userRole.getRole()));
         return userRoleDtoResponse;
     }
+
     public List<UserRoleDtoResponseDetail> entitiesToDtoResponseDetails(List<UserRole> userRoleSet ){
         List<UserRoleDtoResponseDetail> userRoleDtoResponses = new ArrayList<>();
         if(!userRoleSet.isEmpty()) {

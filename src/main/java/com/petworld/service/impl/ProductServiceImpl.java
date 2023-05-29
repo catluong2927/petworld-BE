@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.ProductConverter;
-import com.petworld.domain.Product;
+import com.petworld.entity.Product;
 import com.petworld.dto.productDto.request.ProductDtoRequest;
 import com.petworld.dto.productDto.request.UpdateProductDtoRequest;
 import com.petworld.dto.productDto.response.ProductDetailDtoResponse;
@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductDtoResponse> getAllProducts(List<Long> categoryIds,Pageable pageable) {
         Page<Product> products;
-//        if(categoryIds == null) {
         if(categoryIds.isEmpty()) {
+
             products = productRepository.getAllProducts(pageable);
         } else {
             products = productRepository.findByCategoryIds(categoryIds, pageable);

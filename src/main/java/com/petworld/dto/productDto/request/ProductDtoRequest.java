@@ -1,12 +1,9 @@
 package com.petworld.dto.productDto.request;
 
-import com.petworld.domain.ImageDetail;
+import com.petworld.entity.ImageDetail;
 import com.petworld.dto.markDto.request.MarkDtoRequest;
-import com.petworld.dto.markDto.response.MarkDtoResponse;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Setter

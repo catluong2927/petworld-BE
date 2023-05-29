@@ -1,10 +1,8 @@
 package com.petworld.converter;
 
-import com.petworld.domain.Mark;
-import com.petworld.domain.Product;
+import com.petworld.entity.Mark;
 import com.petworld.dto.markDto.request.MarkDtoRequest;
 import com.petworld.dto.markDto.response.MarkDtoResponse;
-import com.petworld.dto.productDto.response.ProductDtoResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

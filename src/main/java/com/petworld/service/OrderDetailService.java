@@ -1,7 +1,6 @@
 package com.petworld.service;
 
-import com.petworld.domain.OrderDetail;
-import com.petworld.dto.order.OrderDetailDtoRequest;
+import com.petworld.entity.OrderDetail;
 
 public interface OrderDetailService {
 

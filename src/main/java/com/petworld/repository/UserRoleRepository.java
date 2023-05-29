@@ -1,8 +1,8 @@
 package com.petworld.repository;
 
-import com.petworld.domain.Role;
-import com.petworld.domain.User;
-import com.petworld.domain.UserRole;
+import com.petworld.entity.Role;
+import com.petworld.entity.User;
+import com.petworld.entity.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

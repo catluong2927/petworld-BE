@@ -1,14 +1,9 @@
 package com.petworld.service.impl;
-import com.petworld.domain.Cart;
-import com.petworld.domain.CartDetail;
-import com.petworld.domain.Package;
-import com.petworld.domain.Product;
+import com.petworld.entity.*;
 import com.petworld.dto.cartDto.response.CartDetailDtoResponse;
 import com.petworld.dto.cartDto.request.CartDetailDtoRequest;
-import com.petworld.repository.CartDetailRepository;
-import com.petworld.repository.CartRepository;
-import com.petworld.repository.PackageRepository;
-import com.petworld.repository.ProductRepository;
+import com.petworld.entity.Package;
+import com.petworld.repository.*;
 import com.petworld.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +18,7 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartDetailRepository cartDetailRepository;
     private final ProductRepository productRepository;
+    private final PackageDetailRepository packageDetailRepository;
     private final PackageRepository packageRepository;
 
     @Override
@@ -37,7 +33,7 @@ public class CartServiceImpl implements CartService {
                 CartDetailDtoResponse cartDetailDto = new CartDetailDtoResponse();
                 cartDetailDto.setId(element.getId());
                 cartDetailDto.setType(true);
-                Double price = product.getPrice() - (product.getSale()/100 * product.getPrice() );
+                Double price = product.getPrice()- ((product.getSale() * product.getPrice())/ 100);
                 cartDetailDto.setPrice(price);
                 cartDetailDto.setOriginalPrice(product.getPrice());
                 cartDetailDto.setName(product.getName());
@@ -48,18 +44,16 @@ public class CartServiceImpl implements CartService {
                 cartDetailDtos.add(cartDetailDto);
             }
             else {
-                Package servicePackage = packageRepository.getById(element.getTypeId());
+                PackageDetail packageDetail = packageDetailRepository.getById(element.getTypeId());
                 CartDetailDtoResponse cartDetailDto = new CartDetailDtoResponse();
                 cartDetailDto.setId(element.getId());
                 cartDetailDto.setType(false);
-                cartDetailDto.setName(servicePackage.getName());
-                cartDetailDto.setMaxPrice(servicePackage.getMaxPrice());
-                cartDetailDto.setMinPrice(servicePackage.getMinPrice());
-                Double price = servicePackage.getMinPrice() + 0.00;
-                cartDetailDto.setOriginalPrice(price);
+                cartDetailDto.setName(packageDetail.getServicePackage().getName());
+                cartDetailDto.setOriginalPrice(packageDetail.getPrice());
+                cartDetailDto.setPrice(packageDetail.getPrice());
                 cartDetailDto.setAmount(element.getAmount());
-                cartDetailDto.setImage(servicePackage.getImage());
-                cartDetailDto.setTypeId(servicePackage.getId());
+                cartDetailDto.setImage(packageDetail.getImage());
+                cartDetailDto.setTypeId(packageDetail.getId());
                 cartDetailDto.setTotalPrice(element.getTotalPrice());
                 cartDetailDtos.add(cartDetailDto);
             };

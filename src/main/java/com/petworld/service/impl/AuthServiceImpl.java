@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
-import com.petworld.domain.User;
+import com.petworld.entity.User;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.payload.request.LoginRequest;
 import com.petworld.payload.response.LoginResponse;

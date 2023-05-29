@@ -1,7 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.ServiceConverter;
-import com.petworld.domain.Service;
+import com.petworld.entity.Service;
 import com.petworld.dto.serviceDto.request.ServiceDtoRequest;
 import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
 import com.petworld.repository.ServiceRepository;
@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -53,5 +55,11 @@ public class ServiceServiceImpl implements ServiceService {
        Service service = serviceRepository.getById(id);
 
        serviceRepository.save(service);
+    }
+
+    @Override
+    public Optional<Page<ServiceDtoResponse>> findByPackageId(Long packageDetailId,Pageable pageable) {
+       Page<Service> services= serviceRepository.findServicesByPackageDetailId(packageDetailId,pageable);
+       return Optional.ofNullable(services.map(serviceConverter::entityToDto));
     }
 }

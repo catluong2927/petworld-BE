@@ -1,6 +1,5 @@
 package com.petworld.service;
-
-import com.petworld.domain.Role;
+import com.petworld.entity.Role;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;

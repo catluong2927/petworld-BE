@@ -2,13 +2,12 @@ package com.petworld.service.impl;
 
 import com.petworld.converter.OrderConverter;
 import com.petworld.converter.OrderDetailConverter;
-import com.petworld.domain.OrderDetail;
-import com.petworld.domain.Orders;
+import com.petworld.entity.OrderDetail;
+import com.petworld.entity.Orders;
 import com.petworld.dto.order.OrderDetailDtoRequest;
 import com.petworld.dto.order.OrdersDtoRequest;
 import com.petworld.dto.order.OrdersDtoResponse;
 import com.petworld.repository.OrderRepository;
-import com.petworld.repository.UserRepository;
 import com.petworld.service.OrderDetailService;
 import com.petworld.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +50,14 @@ public class OrderServiceImpl implements OrderService {
         });
         savedOrders.setOrderDetails(orderDetails);
         return orderConverter.entityToDto(savedOrders);
+    }
+
+    @Override
+    public void updateOrder(Long id, String status) {
+        Optional<Orders> orders = orderRepository.findById(id);
+        if(orders.isPresent()){
+            orders.get().setStatus(status);
+            orderRepository.save(orders.get());
+        }
     }
 }

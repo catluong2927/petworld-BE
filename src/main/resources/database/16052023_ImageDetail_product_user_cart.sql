@@ -83,6 +83,17 @@ create table `user_role`(
 	 `role_id`	bigint not null
 );
 
+<<<<<<< HEAD
+CREATE TABLE `coupon_code` (
+    `id`					bigint primary key auto_increment,
+    `code`					VARCHAR(20) not null unique,
+    `discount`				int NOT NULL check(`discount` > 0 and `discount` <= 100),
+    `begin_date`			date not null,
+    `expiration_date`		date not null,
+    `total_pay_condition`	double(16,4) not null
+);
+
+=======
 
 
 
@@ -329,6 +340,7 @@ alter table `sellers`
     foreign key(user_id) references user(`id`);
     
 -----------------------------------------------------
+>>>>>>> e01741fde383799b7a9d1f8d951f7c8e158e3ca4
 -- Khóa ngoại 
 ALTER TABLE product
 ADD CONSTRAINT fk_product_category
@@ -383,18 +395,32 @@ VALUES
 
     
    
-INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`, `role_id`)
+INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`, `role_id`,`avatar`)
 VALUES
-	('Lượng','kakashi','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','luong@codegym.com',1,1),
-	('Hiếu','hieuthuhai','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','hieu@codegym.com',1,2),
-	('Phong','phongxoan','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','xoan@codegym.com',1,3);
+	('Lượng','kakashi','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','luong@codegym.com',1,1,'https://static.vecteezy.com/system/resources/previews/006/936/459/original/cute-panda-with-coffee-cartoon-illustration-vector.jpg'),
+	('Hiếu','hieuthuhai','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','hieu@codegym.com',1,2,'https://easydrawingguides.com/wp-content/uploads/2022/07/cute-cartoon-cat-11.png'),
+	('Phong','phongxoan','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','xoan@codegym.com',0,3,'https://chocanh.vn/wp-content/uploads/avatar-cho-cute-chibi_101022348.jpg'),
+    ('Trần Thị B', 'tranthib', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'tranthib@example.com', 1, 2, 'https://i.pinimg.com/originals/20/9b/22/209b22123451e5e45fe0e99d35e1f2ae.jpg'),
+    ('Lê Văn C', 'levanc', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'levanc@example.com', 0, 3, 'https://c3kienthuyhp.edu.vn/wp-content/uploads/2022/12/220-Anh-Avatar-CUTE-Dep-Sieu-Cap-Dang-Yeu-Nhin.jpg'),
+    ('Phạm Thị D', 'phamthid', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'phamthid@example.com', 1, 1, 'https://hanoitop10.com/wp-content/uploads/2023/02/anh-avatar-cute_19.jpg'),
+    ('Hoàng Văn E', 'hoangvane', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'hoangvane@example.com', 1, 2, 'https://img5.thuthuatphanmem.vn/uploads/2021/11/22/anh-gau-truc-chibi_092901624.jpg'),
+    ('Nguyễn Thị F', 'nguyenthif', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'nguyenthif@example.com', 0, 3, 'https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/03/hinh-cute-meo.jpg?ssl=1'),
+    ('Trần Văn G', 'tranvang', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'tranvang@example.com', 1, 1, 'https://img.freepik.com/premium-photo/adorable-cute-kawaii-cat-sticker-design-illustration_784625-2370.jpg?w=2000'),
+    ('Lê Thị H', 'lethih', '$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq', 'lethih@example.com', 1, 2, 'https://cdn.dribbble.com/userupload/3147664/file/original-e26d0e2b3cf193ee7ff3965f2aa59b26.png?resize=400x0');
  
 INSERT INTO `user_role`(`user_id`, `role_id`)
 VALUES
 	(1,1),
 	(1,2),
 	(2,2),
-    (3,2);
+    (3,2),
+    (4,1),
+	(5,2),
+	(6,2),
+    (7,2),
+    (8,2),
+	(9,1),
+    (10,1);
  
 /*Product - Cart*/
 INSERT INTO category(`name`)
@@ -660,7 +686,18 @@ VALUES  ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295221/ImagePro
 	    ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295319/ImageProduct/images_vzevgi.jpg',39),
 	    ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295319/ImageProduct/images_vzevgi.jpg',39);
 
-
+INSERT INTO `coupon_code` (`code`, `discount`, `begin_date`, `expiration_date`, `total_pay_condition`)
+VALUES
+    ('SUMMER2023', 20, '2023-05-12', '2023-05-14', 100000.0000),
+    ('FALLSALE', 15, '2023-05-15', '2023-05-16', 150000.0000),
+    ('WINTER2024', 25, '2023-12-01', '2024-02-29', 200000.0000),
+    ('CODE1', 10, '2023-05-16', '2023-05-18', 50000.0000),
+    ('CODE2', 30, '2023-06-01', '2023-06-30', 100000.0000),
+    ('CODE3', 20, '2023-07-01', '2023-07-31', 150000.0000),
+    ('CODE4', 15, '2023-05-16', '2023-08-31', 100000.0000),
+    ('CODE5', 25, '2023-09-01', '2023-09-30', 200000.0000),
+    ('CODE6', 30, '2023-10-01', '2023-10-31', 300000.0000),
+    ('CODE7', 20, '2023-11-01', '2023-11-30', 150000.0000);
 
 INSERT INTO cart(`user_id`)
 VALUES

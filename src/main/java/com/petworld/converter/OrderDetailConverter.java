@@ -1,7 +1,6 @@
 package com.petworld.converter;
 
-import com.petworld.domain.OrderDetail;
-import com.petworld.domain.Orders;
+import com.petworld.entity.OrderDetail;
 import com.petworld.dto.order.OrderDetailDtoRequest;
 import com.petworld.dto.order.OrderDetailDtoResponse;
 import com.petworld.dto.order.OrdersDtoResponse;

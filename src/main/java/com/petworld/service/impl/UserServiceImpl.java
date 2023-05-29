@@ -1,9 +1,9 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
-import com.petworld.domain.Role;
-import com.petworld.domain.User;
-import com.petworld.domain.UserRole;
+import com.petworld.entity.Role;
+import com.petworld.entity.User;
+import com.petworld.entity.UserRole;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;

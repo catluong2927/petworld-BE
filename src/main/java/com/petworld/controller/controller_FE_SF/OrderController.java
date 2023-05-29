@@ -23,4 +23,9 @@ public class OrderController {
         return new ResponseEntity<>(orderService.saveOrder(ordersDtoRequest), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCart(@PathVariable Long id, @RequestBody OrdersDtoRequest ordersDtoRequest){
+        orderService.updateOrder(id, ordersDtoRequest.getStatus());
+        return new ResponseEntity<>(  HttpStatus.CREATED);
+    }
 }

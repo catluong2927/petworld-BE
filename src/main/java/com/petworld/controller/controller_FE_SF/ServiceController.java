@@ -1,6 +1,7 @@
 package com.petworld.controller.controller_FE_SF;
 
-import com.petworld.domain.Service;
+import com.petworld.dto.centerDto.response.CenterDtoResponse;
+import com.petworld.entity.Service;
 import com.petworld.dto.serviceDto.request.ServiceDtoRequest;
 import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
 import com.petworld.service.ServiceService;
@@ -51,5 +52,12 @@ public class ServiceController {
         Optional<ServiceDtoResponse> editedService = serviceService.getService(service.getId());
         if (editedService == null) return ResponseEntity.notFound().build();
         else return ResponseEntity.ok().body(serviceService.saveService(service));
+    }
+
+    @GetMapping("/package-detail/{id}")
+    public ResponseEntity<?> getCentersByPackageDetailId(@PathVariable(name = "id") Long id,Pageable pageable) {
+        Optional<Page<ServiceDtoResponse>> serviceDtoResponses = serviceService.findByPackageId(id,pageable);
+        if (serviceDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(serviceDtoResponses);
     }
 }

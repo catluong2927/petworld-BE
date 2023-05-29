@@ -5,6 +5,7 @@ import com.petworld.dto.sellerDto.response.SellerDtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SellerService {
@@ -15,5 +16,5 @@ public interface SellerService {
 
     Optional<SellerDtoResponse> save(SellerDtoRequest sellerDtoRequest);
 
-    Optional<SellerDtoResponse> getByNameCenter(String name);
+    List<SellerDtoResponse> findSellersByCenterUserEmail(String email);
 }

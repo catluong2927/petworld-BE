@@ -11,9 +11,7 @@ import com.petworld.security.JwtAuthFilter;
 import com.petworld.security.JwtTokenProvider;
 import com.petworld.service.SecurityService;
 import com.petworld.service.UserService;
-//import com.petworld.validation.UserDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -40,11 +38,10 @@ public class UserController {
     private JwtAuthFilter jwtAuthFilter;
     @Autowired
     private JwtTokenProvider tokenProvider;
-    @Autowired
-    private Environment env;
 
     @GetMapping
-    public ResponseEntity<?> getAll(@RequestHeader("Authorization") final String authToken, @PageableDefault(size = 3) Pageable pageable) {
+    public ResponseEntity<?> getAll(@RequestHeader("Authorization") final String authToken,
+                                    @PageableDefault(size = 5) Pageable pageable) {
 
         if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
             return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);

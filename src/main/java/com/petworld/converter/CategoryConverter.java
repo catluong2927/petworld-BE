@@ -1,14 +1,11 @@
 package com.petworld.converter;
 
-import com.petworld.domain.Category;
-import com.petworld.domain.Category;
-import com.petworld.domain.Product;
-import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
+import com.petworld.entity.Category;
+import com.petworld.entity.Product;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
 import com.petworld.dto.productDto.response.ProductDtoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
