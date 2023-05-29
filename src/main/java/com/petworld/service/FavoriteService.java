@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface FavoriteService {
     Page<FavoriteDtoResponse> getAll(Pageable pageable);
 
-//    Optional<FavoriteDtoResponse> getById(Long id);
-//
-//    Optional<FavoriteDtoResponse> getByUserId(Long id);
+    Optional<FavoriteDtoResponse> getById(Long id);
+
+    Optional<FavoriteDtoResponse> getByUserId(Long id);
  }
