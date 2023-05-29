@@ -3,7 +3,7 @@ package com.petworld.payload.response;
 import lombok.Data;
 
 @Data
-public class UserDtoReponse {
+public class checkEmailPassword {
     private String email;
     private String userName;
 }

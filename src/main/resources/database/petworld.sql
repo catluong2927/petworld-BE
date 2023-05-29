@@ -27,6 +27,23 @@ create table `user_role`(
 	 `user_id`	bigint not null,
 	 `role_id`	bigint not null
 );
+<<<<<<< HEAD
+ALTER TABLE user_role ADD CONSTRAINT fk_user_role_customer FOREIGN KEY(`user_id`) REFERENCES `user`(`id`);
+ALTER TABLE user_role ADD CONSTRAINT fk_user_role_role FOREIGN KEY(`role_id`) REFERENCES role(`id`);
+INSERT INTO `user` (full_name, username, `password`, email, is_status,avatar)
+values
+('Lượng','kakashi','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','luong@codegym.com',1,'https://res.cloudinary.com/dr3rwgzpl/image/upload/v1684729641/Product/cute-panda-with-coffee-cartoon-illustration-vector_dog4rb.jpg'),
+    ('Hiếu','hieuthuhai','$2a$12$3StsBnHAgc9gnLhm1nIpUeQzdtf0SpdDiFTEsF9M2YQr0TAKoKmSq','hieu@codegym.com',1,'https://res.cloudinary.com/dr3rwgzpl/image/upload/v1684729686/Product/cute-cartoon-cat-11_oe8jb8.png');
+INSERT INTO `role`(`name`,`desc`) values
+('ROLE_ADMIN','Quản trị viên'),
+    ('ROLE_CUSTOMER','Khách hàng'),
+    ('ROLE_OWNER','Trung tâm dịch vụ');
+INSERT INTO `user_role` (user_id,role_id)
+values (1,1),
+		(1,2),
+        (2,2);
+=======
+>>>>>>> af73be7f8879d84dda696965b1708d8a80fd7d75
 
 create table product(
 	`id`			bigint primary key auto_increment,
@@ -807,3 +824,7 @@ VALUES ('Item 4', 'https://loremflickr.com/641/480/food', 1, 7.99, 'Spicy', 3);
 
 INSERT INTO `order_detail` (item_name, image, quantity, total, note, orders_id)
 VALUES ('Item 5', 'https://loremflickr.com/641/480/food', 2, 15.99, 'No onions', 3);
+<<<<<<< HEAD
+
+=======
+>>>>>>> af73be7f8879d84dda696965b1708d8a80fd7d75

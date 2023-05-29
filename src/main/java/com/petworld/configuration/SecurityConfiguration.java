@@ -89,7 +89,7 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests() // links start with /api/
-                .antMatchers("/api/**")// perform segregate authorize
+                .antMatchers("/api/auth/**")// perform segregate authorize
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
@@ -106,7 +106,7 @@ public class SecurityConfiguration {
                 .hasRole("CUSTOMER");
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/users/**")
+                .antMatchers("/api/owner/**")
                 .hasRole("OWNER");
 
         // When user login with ROLE_USER, but try to
