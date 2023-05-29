@@ -31,6 +31,7 @@ public class UserDtoCreateRequest {
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",message = "password có ít nhất 8 kí tự, có chữ cái in hoa, chữ cái thường, kí tự đặt biệt")
     private String password;
     private String address;
+    @NotNull
     private String phone;
     @Nullable
     private String avatar;

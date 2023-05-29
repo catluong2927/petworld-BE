@@ -13,8 +13,11 @@ import javax.validation.constraints.NotBlank;
 public class LoginRequest {
 
     @NotBlank
-    private String email;
+    private String account;
 
     @NotBlank
     private String password;
+    public LoginRequest(String account){
+        this.account = account;
+    }
 }
