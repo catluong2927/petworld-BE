@@ -1,5 +1,6 @@
 package com.petworld.converter;
 
+import com.petworld.dto.FavoriteDto.response.FavoriteDtoResponse;
 import com.petworld.dto.favoriteProductDto.request.FavoriteProductDtoRequest;
 import com.petworld.dto.favoriteProductDto.response.FavoriteProductDtoResponse;
 import com.petworld.entity.Favorite;
@@ -19,13 +20,11 @@ public class FavoriteProductConverter {
     private final ProductRepository productRepository;
     private final FavoriteRepository favoriteRepository;
     private final ProductConverter productConverter;
-    private final FavoriteConverter favoriteConverter;
 
     public FavoriteProductDtoResponse entityToDto(FavoriteProduct favoriteProduct){
         FavoriteProductDtoResponse favoriteProductDtoResponse = new FavoriteProductDtoResponse();
         BeanUtils.copyProperties(favoriteProduct,favoriteProductDtoResponse);
         favoriteProductDtoResponse.setProductDtoResponse(productConverter.entityToDto(favoriteProduct.getProduct()));
-        favoriteProductDtoResponse.setFavoriteDtoResponse(favoriteConverter.entityToDto(favoriteProduct.getFavorite()));
         return favoriteProductDtoResponse;
     }
 

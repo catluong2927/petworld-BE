@@ -1,4 +1,5 @@
 package com.petworld.dto.FavoriteDto.response;
+import com.petworld.dto.favoriteProductDto.response.FavoriteProductDtoResponse;
 import com.petworld.entity.FavoriteProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,5 +12,5 @@ import java.util.List;
 public class FavoriteDtoResponse {
     private Long id;
 
-    private List<FavoriteProduct> favoriteProduct;
+    private List<FavoriteProductDtoResponse> favoriteProductDtoResponses;
 }
