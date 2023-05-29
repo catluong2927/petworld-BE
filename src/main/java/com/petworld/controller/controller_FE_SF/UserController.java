@@ -6,7 +6,7 @@ import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 import com.petworld.payload.request.SearchRequest;
-import com.petworld.payload.response.UserDtoReponse;
+import com.petworld.payload.response.checkEmailPassword;
 import com.petworld.security.JwtAuthFilter;
 import com.petworld.security.JwtTokenProvider;
 import com.petworld.service.SecurityService;
@@ -85,17 +85,6 @@ public class UserController {
         }
         return new ResponseEntity<>(userDtoResponses, HttpStatus.OK);
     }
-
-    @PostMapping
-    public ResponseEntity<?> create(@Validated @RequestBody UserDtoCreateRequest userDtoCreateRequest, BindingResult bindingResult) {
-//        new UserDtoValidator(userService).validate(userDtoCreateRequest, bindingResult);
-        UserDtoReponse userDtoReponse = userService.save(userDtoCreateRequest);
-        if (userDtoReponse == null) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        } else return new ResponseEntity<>(userDtoReponse, HttpStatus.BAD_REQUEST);
-    }
-
-
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody UserDtoUpdate userDtoUpdate,
                                         @RequestHeader("Authorization") final String authToken, HttpServletRequest request) {

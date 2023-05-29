@@ -15,7 +15,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-//    @Query(value = "select u from User u where u.email = :email")
+    @Query(value = "select u from User u where u.email = :account or u.userName  = :account or u.phone  = :account")
+    User findUserByAccount (String account);
     User findUserByEmail(String email);
 
     @Query(value = "select  u from User u where u.fullName like (:full_name)")

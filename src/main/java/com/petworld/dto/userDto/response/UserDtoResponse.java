@@ -20,5 +20,6 @@ public class UserDtoResponse {
     private String email;
     private String avatar;
     private Boolean isStatus;
+    private String phone;
     private List<UserRoleDtoResponse> userRoleDtos;
 }

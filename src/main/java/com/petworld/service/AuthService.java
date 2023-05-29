@@ -1,2 +1,11 @@
-package com.petworld.service.impl;public interface AuthService {
+package com.petworld.service;
+
+import com.petworld.domain.User;
+import com.petworld.dto.userDto.response.UserDtoResponse;
+import com.petworld.payload.request.LoginRequest;
+import com.petworld.payload.response.LoginResponse;
+
+public interface AuthService {
+    LoginResponse login (LoginRequest loginRequest);
+    Boolean isExistAccount (String account);
 }

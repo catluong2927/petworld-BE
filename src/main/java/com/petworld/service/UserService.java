@@ -1,16 +1,14 @@
 package com.petworld.service;
 
 import com.petworld.domain.Role;
-import com.petworld.domain.User;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
-import com.petworld.payload.response.UserDtoReponse;
+import com.petworld.payload.response.checkEmailPassword;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
@@ -24,7 +22,7 @@ public interface UserService {
     UserDtoResponseDetail getUserById(Long customerId);
     Page<UserDtoResponse> getUsers(Pageable pageable);
     Optional<UserDtoResponse> findById(Long id);
-    UserDtoReponse save(UserDtoCreateRequest userDtoCreateRequest);
+    checkEmailPassword save(UserDtoCreateRequest userDtoCreateRequest);
     Boolean remove(Long id);
     Boolean updateSimple(String email, UserDtoUpdate userDtoUpdate);
     Boolean updatePassword (String email, UserDtoPassword userDtoPassword);
@@ -32,5 +30,6 @@ public interface UserService {
     UserDtoResponse getUserByEmail(String email);
     Boolean updateAddRole(Long id, Role role);
     Boolean updateRemoveRole(Long userId, Role role);
+//    User findUserByAccount(String account);
 
 }

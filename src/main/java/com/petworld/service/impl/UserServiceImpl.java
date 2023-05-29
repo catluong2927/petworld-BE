@@ -9,7 +9,7 @@ import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
-import com.petworld.payload.response.UserDtoReponse;
+import com.petworld.payload.response.checkEmailPassword;
 import com.petworld.repository.UserRoleRepository;
 import com.petworld.repository.UserRepository;
 import com.petworld.service.UserService;
@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
-
     }
 
     @Override
@@ -57,20 +56,20 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDtoReponse save(UserDtoCreateRequest userDtoCreateRequest) {
+    public checkEmailPassword save(UserDtoCreateRequest userDtoCreateRequest) {
         User email = userRepository.findUserByEmail(userDtoCreateRequest.getEmail());
         User userName = userRepository.findUserByUserName(userDtoCreateRequest.getUserName());
-        UserDtoReponse userDtoReponse = new UserDtoReponse();
+        checkEmailPassword checkEmailPassword = new checkEmailPassword();
         if (email != null && userName != null) {
-            userDtoReponse.setUserName("userName already exists");
-            userDtoReponse.setEmail("email already exists");
-            return userDtoReponse;
+            checkEmailPassword.setUserName("userName already exists");
+            checkEmailPassword.setEmail("email already exists");
+            return checkEmailPassword;
         } else if (email == null && userName != null) {
-            userDtoReponse.setUserName("userName already exists");
-            return userDtoReponse;
+            checkEmailPassword.setUserName("userName already exists");
+            return checkEmailPassword;
         } else if (email != null && userName == null) {
-            userDtoReponse.setEmail("email already exists");
-            return userDtoReponse;
+            checkEmailPassword.setEmail("email already exists");
+            return checkEmailPassword;
         } else {
             User newUser = userConverter.dtoToEntity(userDtoCreateRequest);
             String hashedPassword = BCrypt.hashpw(userDtoCreateRequest.getPassword(), BCrypt.gensalt(10));
@@ -133,8 +132,8 @@ public class UserServiceImpl implements UserService {
 
 
 //    @Override
-//    public User findUserByEmail(String email) {
-//        return userRepository.findUserByEmail(email);
+//    public UserDtoResponse findUserByAccount(String account) {
+//        return userConverter.entityToDto(userRepository.findUserByAccount(account));
 //    }
 
     @Override
