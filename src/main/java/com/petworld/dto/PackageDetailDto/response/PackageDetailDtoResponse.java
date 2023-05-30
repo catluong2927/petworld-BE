@@ -1,6 +1,8 @@
 package com.petworld.dto.PackageDetailDto.response;
 
+import com.petworld.dto.packageDetailReviewDto.response.PackageDetailReviewDtoResponse;
 import com.petworld.dto.serviceDto.response.ServiceDtoResponse;
+import com.petworld.entity.PackageDetailReview;
 import com.petworld.entity.Service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +24,5 @@ public class PackageDetailDtoResponse {
     private String packageName;
     private String centerName;
     private Page<ServiceDtoResponse> serviceDtoResponses;
+    private Page<PackageDetailReviewDtoResponse> packageDetailReviewDtoResponses;
 }

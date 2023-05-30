@@ -1,6 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
+import com.petworld.entity.*;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
@@ -11,8 +12,10 @@ import com.petworld.entity.User;
 import com.petworld.entity.UserRole;
 import com.petworld.payload.response.checkEmailPassword;
 import com.petworld.repository.RoleRepository;
-import com.petworld.repository.UserRepository;
+import com.petworld.repository.CartRepository;
+import com.petworld.repository.FavoriteRepository;
 import com.petworld.repository.UserRoleRepository;
+import com.petworld.repository.UserRepository;
 import com.petworld.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,14 +36,18 @@ public class UserServiceImpl implements UserService {
     private final UserRoleRepository userRoleRepository;
     private final RoleRepository roleRepository;
 
+    private final CartRepository cartRepository;
+    private final FavoriteRepository favoriteRepository;
     private final UserConverter userConverter;
 
 
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
-                           UserRoleRepository userRoleRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository,UserRoleRepository userRoleRepository, CartRepository cartRepository,
+                           FavoriteRepository favoriteRepository,RoleRepository roleRepository,UserConverter userConverter ) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
+        this.cartRepository = cartRepository;
+        this.favoriteRepository = favoriteRepository;
         this.roleRepository = roleRepository;
     }
 
@@ -81,6 +88,12 @@ public class UserServiceImpl implements UserService {
                 UserRole userRole = new UserRole(newUser, role);
                 userRoleRepository.save(userRole);
             });
+            Cart cart = new Cart();
+            cart.setUser(newUser);
+            cartRepository.save(cart);
+            Favorite favorite = new Favorite();
+            favorite.setUser(newUser);
+            favoriteRepository.save(favorite);
             return null;
         }
     }

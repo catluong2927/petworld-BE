@@ -65,13 +65,13 @@ public class AdminController {
         if(updateRole) return new ResponseEntity<String>("Update role successful", HttpStatus.OK);
         return new ResponseEntity<String>("update role failed", HttpStatus.BAD_REQUEST);
     }
-    @GetMapping
-    public ResponseEntity<?> getAllRole (@RequestHeader("Authorization") final String authToken){
-        if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
-            return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
-        }
-        List<RoleDtoResponse> roleDtoResponses = roleService.getAllRole();
-        if(!roleDtoResponses.isEmpty()) return new ResponseEntity<>(roleDtoResponses, HttpStatus.OK);
-        else return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> getAllRole (@RequestHeader("Authorization") final String authToken){
+//        if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
+//            return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
+//        }
+//        List<RoleDtoResponse> roleDtoResponses = roleService.getAllRole();
+//        if(!roleDtoResponses.isEmpty()) return new ResponseEntity<>(roleDtoResponses, HttpStatus.OK);
+//        else return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+//    }
 }

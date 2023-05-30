@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FavoriteProductDtoResponse {
     private Long id;
-    private FavoriteDtoResponse favoriteDtoResponse;
     private ProductDtoResponse productDtoResponse;
 }
