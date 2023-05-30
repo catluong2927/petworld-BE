@@ -1,15 +1,15 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
-import com.petworld.entity.Role;
-import com.petworld.entity.User;
-import com.petworld.entity.UserRole;
+import com.petworld.entity.*;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 import com.petworld.payload.response.checkEmailPassword;
+import com.petworld.repository.CartRepository;
+import com.petworld.repository.FavoriteRepository;
 import com.petworld.repository.UserRoleRepository;
 import com.petworld.repository.UserRepository;
 import com.petworld.service.UserService;
@@ -31,15 +31,20 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final CartRepository cartRepository;
+    private final FavoriteRepository favoriteRepository;
 
     private final UserConverter userConverter;
 
 
     public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
-                           UserRoleRepository userRoleRepository) {
+                           UserRoleRepository userRoleRepository, CartRepository cartRepository,
+                           FavoriteRepository favoriteRepository ) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
+        this.cartRepository = cartRepository;
+        this.favoriteRepository = favoriteRepository;
     }
 
     @Override
@@ -79,6 +84,12 @@ public class UserServiceImpl implements UserService {
                 UserRole userRole = new UserRole(newUser, role);
                 userRoleRepository.save(userRole);
             });
+            Cart cart = new Cart();
+            cart.setUser(newUser);
+            cartRepository.save(cart);
+            Favorite favorite = new Favorite();
+            favorite.setUser(newUser);
+            favoriteRepository.save(favorite);
             return null;
         }
     }
