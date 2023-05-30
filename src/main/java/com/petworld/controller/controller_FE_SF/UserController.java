@@ -1,12 +1,10 @@
 package com.petworld.controller.controller_FE_SF;
 
-import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 import com.petworld.payload.request.SearchRequest;
-import com.petworld.payload.response.checkEmailPassword;
 import com.petworld.security.JwtAuthFilter;
 import com.petworld.security.JwtTokenProvider;
 import com.petworld.service.SecurityService;
@@ -18,8 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

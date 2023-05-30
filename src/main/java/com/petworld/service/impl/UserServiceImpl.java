@@ -1,19 +1,19 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
-import com.petworld.entity.Role;
-import com.petworld.entity.User;
-import com.petworld.entity.UserRole;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
+import com.petworld.entity.Role;
+import com.petworld.entity.User;
+import com.petworld.entity.UserRole;
 import com.petworld.payload.response.checkEmailPassword;
-import com.petworld.repository.UserRoleRepository;
+import com.petworld.repository.RoleRepository;
 import com.petworld.repository.UserRepository;
+import com.petworld.repository.UserRoleRepository;
 import com.petworld.service.UserService;
-//import com.petworld.validation.RegexValidate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -31,15 +31,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RoleRepository roleRepository;
 
     private final UserConverter userConverter;
 
 
     public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
-                           UserRoleRepository userRoleRepository) {
+                           UserRoleRepository userRoleRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -130,12 +132,6 @@ public class UserServiceImpl implements UserService {
         return userDtoResponse;
     }
 
-
-//    @Override
-//    public UserDtoResponse findUserByAccount(String account) {
-//        return userConverter.entityToDto(userRepository.findUserByAccount(account));
-//    }
-
     @Override
     public UserDtoResponseDetail getUserById(Long customerId) {
         User user = userRepository.findById(customerId).orElse(null);
@@ -168,6 +164,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
     public Boolean updateAddRole(Long id, Role role) {
         User user = userRepository.getUserById(id);
         if (user != null) {
@@ -178,6 +175,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
     public Boolean updateRemoveRole(Long userId, Role role) {
         User user = userRepository.getUserById(userId);
         UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
@@ -187,4 +185,36 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public Boolean updateRole(Long id, List<Long> roles) {
+        User user = userRepository.getUserById(id);
+        List<Long> roleResponse = new ArrayList<>();
+        if(user!= null){
+            user.getUserRoles().forEach(role -> {
+                roleResponse.add(role.getRole().getId());
+            });
+            roleResponse.forEach(idRole ->{
+                Role role = roleRepository.getRoleById(idRole);
+                UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+                if (userRole != null) {
+                    userRoleRepository.removeUserRoleById(userRole.getId());
+                }
+            });
+            roles.forEach(idNewRole ->{
+                Role role = roleRepository.getRoleById(idNewRole);
+                UserRole newUserRole = new UserRole(user,role);
+                userRoleRepository.save(newUserRole);
+            });
+            return true;
+        }
+        return false;
+    }
+
+//    public Boolean isRoleExist(Role role, List<UserRoleDtoResponse> roles) {
+//        for (int i = 0; i < roles.size(); i++) {
+//            if (role.getId() == roles.get(i).getRoleDtoResponse().getId()) return true;
+//        }
+//        return false;
+//    }
 }

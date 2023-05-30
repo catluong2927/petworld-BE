@@ -29,6 +29,5 @@ public interface UserService {
     UserDtoResponse getUserByEmail(String email);
     Boolean updateAddRole(Long id, Role role);
     Boolean updateRemoveRole(Long userId, Role role);
-//    User findUserByAccount(String account);
-
+    Boolean updateRole(Long id, List<Long> roles);
 }

@@ -1,2 +1,9 @@
-package com.petworld.service;public interface RoleService {
+package com.petworld.service;
+
+import com.petworld.dto.roleDto.response.RoleDtoResponse;
+
+import java.util.List;
+
+public interface RoleService {
+    List<RoleDtoResponse> getAllRole ();
 }
