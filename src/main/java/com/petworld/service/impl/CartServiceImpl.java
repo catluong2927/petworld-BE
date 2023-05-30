@@ -23,7 +23,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartDetailDtoResponse> getCartByEmail(String email) {
-        Long cartId = cartRepository.findCartByEmail(email).getId();
+        Long cartId = cartRepository.findCartByUserEmail(email).getId();
         List<CartDetail> cartDetailList = cartDetailRepository.findCartDetailByCartId(cartId);
         List<CartDetailDtoResponse> cartDetailDtos = new ArrayList<>();
 
