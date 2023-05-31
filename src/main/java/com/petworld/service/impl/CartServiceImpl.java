@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addToCart( CartDetailDtoRequest cartDetailDtoRequest) {
-        Cart cart = cartRepository.findCartByEmail(cartDetailDtoRequest.getUserEmail());
+        Cart cart = cartRepository.findCartByUserEmail(cartDetailDtoRequest.getUserEmail());
         Long typeId = cartDetailDtoRequest.getTypeId();
         Boolean type = cartDetailDtoRequest.getType();
         Integer amount = cartDetailDtoRequest.getAmount();
@@ -83,7 +83,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeToCart(CartDetailDtoRequest cartDetailDtoRequest) {
-        Cart cart = cartRepository.findCartByEmail(cartDetailDtoRequest.getUserEmail());
+        Cart cart = cartRepository.findCartByUserEmail(cartDetailDtoRequest.getUserEmail());
         Long typeId = cartDetailDtoRequest.getTypeId();
         Boolean type = cartDetailDtoRequest.getType();
         Integer amount = cartDetailDtoRequest.getAmount();
