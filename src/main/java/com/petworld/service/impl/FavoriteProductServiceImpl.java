@@ -3,6 +3,7 @@ package com.petworld.service.impl;
 import com.petworld.converter.FavoriteProductConverter;
 import com.petworld.dto.favoriteProductDto.request.FavoriteProductDtoRequest;
 import com.petworld.dto.favoriteProductDto.response.FavoriteProductDtoResponse;
+import com.petworld.entity.Favorite;
 import com.petworld.entity.FavoriteProduct;
 import com.petworld.repository.FavoriteProductRepository;
 import com.petworld.repository.FavoriteRepository;
@@ -48,5 +49,10 @@ public class FavoriteProductServiceImpl implements FavoriteProductService {
     public Optional<FavoriteProductDtoResponse> getById(Long id) {
         Optional<FavoriteProduct> favoriteProduct = Optional.ofNullable(favoriteProductRepository.getById(id));
         return Optional.ofNullable(favoriteProductConverter.entityToDto(favoriteProduct.get()));
+    }
+
+    @Override
+    public void deleteByUserIdAndProductId(Long userId, Long productId) {
+        favoriteProductRepository.deleteFavoriteProductByFavoriteUserIdAndProductId(userId,productId);
     }
 }

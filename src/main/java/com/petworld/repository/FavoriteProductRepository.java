@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FavoriteProductRepository extends JpaRepository<FavoriteProduct,Long> {
-
+//    void deleteFavoriteProductByProductIdAndFavoriteUserId(Long UserId,Long productId);
+    void deleteFavoriteProductByFavoriteUserIdAndProductId(Long UserId,Long productId);
 }
