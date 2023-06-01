@@ -835,3 +835,4 @@ VALUES ('Item 4', 'https://loremflickr.com/641/480/food', 1, 7.99, 'Spicy', 3);
 
 INSERT INTO `order_detail` (item_name, image, quantity, total, note, orders_id)
 VALUES ('Item 5', 'https://loremflickr.com/641/480/food', 2, 15.99, 'No onions', 3);
+

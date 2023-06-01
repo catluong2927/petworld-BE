@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDtoResponse {
-    private Integer id;
+    private Long id;
     private String name;
     private String desc;
 }

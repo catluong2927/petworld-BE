@@ -1,19 +1,22 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.UserConverter;
-import com.petworld.entity.Role;
-import com.petworld.entity.User;
-import com.petworld.entity.UserRole;
+import com.petworld.entity.*;
 import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
-import com.petworld.payload.response.UserDtoReponse;
+import com.petworld.entity.Role;
+import com.petworld.entity.User;
+import com.petworld.entity.UserRole;
+import com.petworld.payload.response.checkEmailPassword;
+import com.petworld.repository.RoleRepository;
+import com.petworld.repository.CartRepository;
+import com.petworld.repository.FavoriteRepository;
 import com.petworld.repository.UserRoleRepository;
 import com.petworld.repository.UserRepository;
 import com.petworld.service.UserService;
-//import com.petworld.validation.RegexValidate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -31,16 +34,21 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RoleRepository roleRepository;
 
+    private final CartRepository cartRepository;
+    private final FavoriteRepository favoriteRepository;
     private final UserConverter userConverter;
 
 
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
-                           UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(UserRepository userRepository,UserRoleRepository userRoleRepository, CartRepository cartRepository,
+                           FavoriteRepository favoriteRepository,RoleRepository roleRepository,UserConverter userConverter ) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
-
+        this.cartRepository = cartRepository;
+        this.favoriteRepository = favoriteRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -57,20 +65,20 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDtoReponse save(UserDtoCreateRequest userDtoCreateRequest) {
+    public checkEmailPassword save(UserDtoCreateRequest userDtoCreateRequest) {
         User email = userRepository.findUserByEmail(userDtoCreateRequest.getEmail());
         User userName = userRepository.findUserByUserName(userDtoCreateRequest.getUserName());
-        UserDtoReponse userDtoReponse = new UserDtoReponse();
+        checkEmailPassword checkEmailPassword = new checkEmailPassword();
         if (email != null && userName != null) {
-            userDtoReponse.setUserName("userName already exists");
-            userDtoReponse.setEmail("email already exists");
-            return userDtoReponse;
+            checkEmailPassword.setUserName("userName already exists");
+            checkEmailPassword.setEmail("email already exists");
+            return checkEmailPassword;
         } else if (email == null && userName != null) {
-            userDtoReponse.setUserName("userName already exists");
-            return userDtoReponse;
+            checkEmailPassword.setUserName("userName already exists");
+            return checkEmailPassword;
         } else if (email != null && userName == null) {
-            userDtoReponse.setEmail("email already exists");
-            return userDtoReponse;
+            checkEmailPassword.setEmail("email already exists");
+            return checkEmailPassword;
         } else {
             User newUser = userConverter.dtoToEntity(userDtoCreateRequest);
             String hashedPassword = BCrypt.hashpw(userDtoCreateRequest.getPassword(), BCrypt.gensalt(10));
@@ -80,6 +88,12 @@ public class UserServiceImpl implements UserService {
                 UserRole userRole = new UserRole(newUser, role);
                 userRoleRepository.save(userRole);
             });
+            Cart cart = new Cart();
+            cart.setUser(newUser);
+            cartRepository.save(cart);
+            Favorite favorite = new Favorite();
+            favorite.setUser(newUser);
+            favoriteRepository.save(favorite);
             return null;
         }
     }
@@ -131,12 +145,6 @@ public class UserServiceImpl implements UserService {
         return userDtoResponse;
     }
 
-
-//    @Override
-//    public User findUserByEmail(String email) {
-//        return userRepository.findUserByEmail(email);
-//    }
-
     @Override
     public UserDtoResponseDetail getUserById(Long customerId) {
         User user = userRepository.findById(customerId).orElse(null);
@@ -169,6 +177,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
     public Boolean updateAddRole(Long id, Role role) {
         User user = userRepository.getUserById(id);
         if (user != null) {
@@ -179,6 +188,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
     public Boolean updateRemoveRole(Long userId, Role role) {
         User user = userRepository.getUserById(userId);
         UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
@@ -188,4 +198,36 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public Boolean updateRole(Long id, List<Long> roles) {
+        User user = userRepository.getUserById(id);
+        List<Long> roleResponse = new ArrayList<>();
+        if(user!= null){
+            user.getUserRoles().forEach(role -> {
+                roleResponse.add(role.getRole().getId());
+            });
+            roleResponse.forEach(idRole ->{
+                Role role = roleRepository.getRoleById(idRole);
+                UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+                if (userRole != null) {
+                    userRoleRepository.removeUserRoleById(userRole.getId());
+                }
+            });
+            roles.forEach(idNewRole ->{
+                Role role = roleRepository.getRoleById(idNewRole);
+                UserRole newUserRole = new UserRole(user,role);
+                userRoleRepository.save(newUserRole);
+            });
+            return true;
+        }
+        return false;
+    }
+
+//    public Boolean isRoleExist(Role role, List<UserRoleDtoResponse> roles) {
+//        for (int i = 0; i < roles.size(); i++) {
+//            if (role.getId() == roles.get(i).getRoleDtoResponse().getId()) return true;
+//        }
+//        return false;
+//    }
 }

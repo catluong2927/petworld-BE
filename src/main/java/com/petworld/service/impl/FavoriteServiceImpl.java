@@ -25,14 +25,17 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favorites.map(favoriteConverter::entityToDto);
     }
 
-//    @Override
-//    public Optional<FavoriteDtoResponse> getById(Long id) {
-//
-//        return Optional.ofNullable(favoriteRepository.getById(id));
-//    }
-//
-//    @Override
-//    public Optional<FavoriteDtoResponse> getByUserId(Long id) {
-//        return favoriteRepository.findFavoriteByUserId(id);
-//    }
+    @Override
+    public Optional<FavoriteDtoResponse> getById(Long id) {
+        return Optional.ofNullable(favoriteConverter.
+                entityToDto(favoriteRepository.getById(id)));
+    }
+
+    @Override
+    public Optional<FavoriteDtoResponse> getByUserId(Long id) {
+        return Optional.ofNullable(favoriteConverter.
+                entityToDto(favoriteRepository.findFavoriteByUserId(id).get()));
+    }
+
+
 }

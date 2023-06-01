@@ -2,10 +2,12 @@ package com.petworld.controller.controller_FE_SF;
 import com.petworld.dto.centerDto.request.CenterDtoRequest;
 import com.petworld.dto.centerDto.response.CenterDtoResponse;
 import com.petworld.service.CenterService;
+import com.petworld.service.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CenterController {
     private final CenterService centerService;
+    private final SecurityService securityService;
     @GetMapping("")
     public ResponseEntity<?> getAllCentersByStatus(@PageableDefault(size = 9) Pageable pageable) {
         Optional<Page<CenterDtoResponse>> centerDtoResponses = centerService.findAllByStatus(pageable);
@@ -27,7 +30,12 @@ public class CenterController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllCenters(@PageableDefault(size = 9) Pageable pageable) {
+    public ResponseEntity<?> getAllCenters(@PageableDefault(size = 9) Pageable pageable,
+                                           @RequestHeader("Authorization") final String authToken) {
+
+        if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
+            return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
+        }
         Optional<Page<CenterDtoResponse>> centerDtoResponses = centerService.findAll(pageable);
         if (centerDtoResponses.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(centerDtoResponses);

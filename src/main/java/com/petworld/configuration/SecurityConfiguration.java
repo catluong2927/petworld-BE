@@ -89,13 +89,14 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests() // links start with /api/
-                .antMatchers("/api/**")// perform segregate authorize
+                .antMatchers("/api/auth/**", "/api/products/**", "/api/package-details/**", "/api/categorys/**",
+                        "/api/orders/**", "/api/cart/**", "/api/role/**", "/api/userroles/**","/api/centers/**")// perform segregate authorize
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
         http.authorizeHttpRequests()
-                .antMatchers("/api/role/**","/api/**")
+                .antMatchers("/api/**")
                 .hasRole("ADMIN");
 
 
@@ -106,7 +107,7 @@ public class SecurityConfiguration {
                 .hasRole("CUSTOMER");
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/users/**")
+                .antMatchers("/api/owner/**")
                 .hasRole("OWNER");
 
         // When user login with ROLE_USER, but try to

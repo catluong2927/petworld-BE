@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,5 +22,18 @@ public class FavoriteController {
         Page<FavoriteDtoResponse> favorites = favoriteService.getAll(pageable);
         if(favorites.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(favorites);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+         if(favoriteService.getById(id).isEmpty()) return ResponseEntity.notFound().build();
+         return ResponseEntity.ok().body(favoriteService.getById(id).get());
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findByUserId (@PathVariable("id") Long id){
+        Optional<FavoriteDtoResponse> favorite = favoriteService.getByUserId(id);
+        if (favorite.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(favorite);
     }
 }
