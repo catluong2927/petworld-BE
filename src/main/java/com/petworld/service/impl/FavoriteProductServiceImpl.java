@@ -27,6 +27,12 @@ public class FavoriteProductServiceImpl implements FavoriteProductService {
     @Override
     public FavoriteProductDtoResponse add(FavoriteProductDtoRequest favoriteProductDtoRequest) {
         FavoriteProduct favoriteProduct = favoriteProductConverter.dtoToEntity(favoriteProductDtoRequest);
+        Optional<FavoriteProduct> currentFavoriteProduct = favoriteProductRepository
+                .findFavoriteProductByFavoriteUserIdAndProductId(favoriteProductDtoRequest.getUserId()
+                        , favoriteProductDtoRequest.getProductId());
+        if(currentFavoriteProduct.isPresent()){
+            return null;
+        }
         favoriteProductRepository.save(favoriteProduct);
         return favoriteProductConverter.entityToDto(favoriteProduct);
     }
