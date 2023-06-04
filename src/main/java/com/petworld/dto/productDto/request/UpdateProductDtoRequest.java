@@ -26,6 +26,6 @@ public class UpdateProductDtoRequest {
     private Boolean status;
     private Integer sale;
     private MarkDtoRequest markDtoRequest;
-    private List<ImageDetail> imageDetail;
+    private List<ImageDetail> imageDetailList;
 
 }

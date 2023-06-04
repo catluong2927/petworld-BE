@@ -25,5 +25,6 @@ public class ProductDtoRequest {
     private boolean status;
     private MarkDtoRequest markDtoRequest;
     private Integer sale;
+    private Long categoryId;
     private List<ImageDetail> imageDetail;
 }

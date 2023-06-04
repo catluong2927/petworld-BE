@@ -27,5 +27,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("UPDATE Product p SET p.status = false WHERE p.id = :id")
     void deleteProductById(@Param("id") Long id);
 
+    @Query( value = "select p from Product p ")
+    Page<Product> getAllProductBo(Pageable pageable);
+
 
 }

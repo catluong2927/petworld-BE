@@ -5,6 +5,9 @@ import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +34,13 @@ public class ImageDetailsConverter {
         BeanUtils.copyProperties(imageDetailsDto, imageDetail);
         return imageDetail;
     }
+
+//    public List<ImageDetail> dtoToEntities(List <ImageDetailsDto> imageDetailsDto) {
+//        List<ImageDetail>  imageDetails = new ArrayList<>();
+//        for(ImageDetailsDto element : imageDetailsDto){
+//            ImageDetail imageDetail = dtoToEntity(element);
+//            imageDetails.add(imageDetail);
+//        }
+//        return imageDetails;
+//    }
 }

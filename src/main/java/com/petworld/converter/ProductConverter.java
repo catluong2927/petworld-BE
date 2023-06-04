@@ -33,6 +33,7 @@ public class ProductConverter{
         Product product = new Product();
         BeanUtils.copyProperties(productDtoRequest, product);
         product.setMark(markConverter.dtoToEntity(productDtoRequest.getMarkDtoRequest()));
+//        product.setImageDetails(imageDetailsConverter.dtoToEntities(productDtoRequest.getImageDetail().get()));
         return product;
     }
 
