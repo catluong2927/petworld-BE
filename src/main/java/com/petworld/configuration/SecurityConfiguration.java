@@ -90,7 +90,7 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests() // links start with /api/
                 .antMatchers("/api/auth/**","/api/products/**","/api/package-details/**", "/api/categorys/**",
-                        "/api/orders/**","/api/cart/**")// perform segregate authorize
+                        "/api/orders/**","/api/favorite-products/**","/api/favorites/**","/api/cart/**")// perform segregate authorize
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
