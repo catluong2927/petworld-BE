@@ -1,14 +1,11 @@
 package com.petworld.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -27,6 +24,6 @@ public class Favorite {
     private User user;
 
     @OneToMany(mappedBy = "favorite", fetch = FetchType.LAZY)
-    private List<FavoriteProduct> favoriteProducts;
+    private Set<FavoriteProduct> favoriteProducts;
 
 }

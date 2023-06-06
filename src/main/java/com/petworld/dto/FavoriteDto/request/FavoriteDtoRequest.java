@@ -7,7 +7,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FavoriteDtoRequest {
-    private Long id;
-
     private Long userId;
 }

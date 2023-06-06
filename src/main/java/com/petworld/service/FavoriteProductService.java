@@ -15,4 +15,6 @@ public interface FavoriteProductService {
     List<FavoriteProductDtoResponse> findAll();
 
     Optional<FavoriteProductDtoResponse> getById(Long id);
+
+    void deleteByUserIdAndProductId(Long userId, Long productId);
 }
