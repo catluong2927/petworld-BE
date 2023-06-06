@@ -56,8 +56,8 @@ public class User {
     @Column(name = "is_status", nullable = false)
     private Boolean isStatus;
 
-    @Column(name = "remember_token", length = 255, nullable = true)
-    private String rememberToken;
+//    @Column(name = "remember_token", length = 255, nullable = true)
+//    private String rememberToken;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Orders> orders = new ArrayList<>();

@@ -1,8 +1,7 @@
 package com.petworld.dto.productDto.response;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
-import com.petworld.entity.Category;
 import com.petworld.entity.Mark;
-import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
+import com.petworld.dto.imagedetailDto.response.ImageDetailsDto;
 import lombok.*;
 
 import java.util.List;

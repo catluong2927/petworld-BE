@@ -23,7 +23,7 @@ public class ProductDtoRequest {
     private String vitamins;
     private String animal;
     private boolean status;
-    private MarkDtoRequest markDtoRequest;
+    private MarkDtoRequest mark;
     private Integer sale;
     private Long categoryId;
     private List<ImageDetail> imageDetail;

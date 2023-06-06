@@ -22,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductControllerBo {
 
-
     private final SecurityService securityService;
     private final ProductService productService;
     @GetMapping("")
@@ -61,4 +60,10 @@ public class ProductControllerBo {
         return new ResponseEntity<>(productDetailDtoResponse, HttpStatus.OK);
     }
 
+    @GetMapping("search")
+    public ResponseEntity<?> findProductByName(@RequestParam ("name") String name) {
+        List<ProductDtoResponse> productDtoResponse = productService.findProductByName(name);
+        return new ResponseEntity<>(productDtoResponse, HttpStatus.OK);
+
+    }
 }

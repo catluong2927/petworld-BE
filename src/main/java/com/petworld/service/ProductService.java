@@ -22,6 +22,6 @@ public interface ProductService {
 
     Page<ProductDtoResponse> getAllProductBo(Pageable pageable);
 
-
+    List<ProductDtoResponse> findProductByName(String name);
 
 }

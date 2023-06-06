@@ -1,6 +1,7 @@
 package com.petworld.service.impl;
 
 import com.petworld.converter.CategoryConverter;
+import com.petworld.converter.ImageDetailsConverter;
 import com.petworld.converter.ProductConverter;
 import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
 import com.petworld.entity.Product;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,11 +32,12 @@ public class ProductServiceImpl implements ProductService {
     private final ImageDetailRepository imageDetailRepository;
     private final CategoryConverter categoryConverter;
     private final MarkRepository markRepository;
+    private final ImageDetailsConverter imageDetailsConverter;
 
     @Override
-    public Page<ProductDtoResponse> getAllProducts(List<Long> categoryIds,Pageable pageable) {
+    public Page<ProductDtoResponse> getAllProducts(List<Long> categoryIds, Pageable pageable) {
         Page<Product> products;
-        if(categoryIds.isEmpty()) {
+        if (categoryIds.isEmpty()) {
 
             products = productRepository.getAllProducts(pageable);
         } else {
@@ -66,12 +69,12 @@ public class ProductServiceImpl implements ProductService {
             Product product = productConverter.dtoToEntity(productDtoRequest);
             product.setStatus(true);
             product.setCategory(categoryRepository.findById(productDtoRequest.getCategoryId()).get());
-//            product.setMark(markRepository.findById(productDtoRequest.getMarkDtoRequestid()).get());
             productRepository.save(product);
             productDtoRequest.getImageDetail().forEach(element -> {
                 element.setProduct(product);
                 imageDetailRepository.save(element);
             });
+
         } else {
             System.out.println("Don't save database");
         }
@@ -86,13 +89,17 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest) {
         Product product = productRepository.findById(id).orElse(null);
         product = productConverter.dtoToEntity(updateProductDtoRequest, product);
-
-        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
-
+        product.setImageDetails(updateProductDtoRequest.getImageDetailList());
+        Product finalProduct = product;
+        updateProductDtoRequest.getImageDetailList().forEach(imageDetail -> {
+            imageDetail.setProduct(finalProduct);
+            imageDetailRepository.save(imageDetail);
+        });
         productRepository.save(product);
-
+        ProductDetailDtoResponse productDetailDtoResponse = findById(id);
         return productDetailDtoResponse;
     }
+
 
     @Override
     public Page<ProductDtoResponse> getAllProductBo(Pageable pageable) {
@@ -103,5 +110,16 @@ public class ProductServiceImpl implements ProductService {
             return productDtoResponses;
         }
         return null;
+    }
+
+    @Override
+    public List<ProductDtoResponse> findProductByName(String name) {
+        List<Product> products = productRepository.findProductByName(name);
+        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
+        for (Product product : products) {
+            ProductDtoResponse productDtoResponse = productConverter.entityToDto(product);
+            productDtoResponses.add(productDtoResponse);
+        }
+        return productDtoResponses;
     }
 }

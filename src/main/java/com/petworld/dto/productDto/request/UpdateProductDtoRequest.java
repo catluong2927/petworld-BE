@@ -25,7 +25,7 @@ public class UpdateProductDtoRequest {
     private String animal;
     private Boolean status;
     private Integer sale;
-    private MarkDtoRequest markDtoRequest;
+    private MarkDtoRequest mark;
     private List<ImageDetail> imageDetailList;
 
 }
