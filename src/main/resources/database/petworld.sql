@@ -1,17 +1,19 @@
 drop database `petworld-v1`;
 create database `petworld-v1`;
 use `petworld-v1`;
+
 create table `user`(
 	`id`				bigint not null auto_increment,
 	`full_name`			varchar(255) not null,
 	`username`			varchar(255) not null,
 	`password`			varchar(255) not null,
-	`email`				varchar(255),
+	`email`				varchar(100) check(`email` LIKE '%_@_%.__%'),
 	`address`			varchar(255),
 	`phone`				varchar(10),
 	`avatar`			varchar(255),
-	`is_status`			varchar(255),
-	`remember_token`	varchar(255),
+	`is_status`			bit not null check(`is_status` = 0 or `is_status` = 1),
+    `dob` 				date,
+    `descript`			varchar(255),
 	PRIMARY KEY (id)
 );
 
@@ -64,7 +66,7 @@ create table mark(
     `tag_badge`		varchar(10)
 );
 
--- Phong Minh Section -------------------------
+-- /////////////////////// -- 
 create table `centers`
 (
     id			int primary key auto_increment,
@@ -72,54 +74,54 @@ create table `centers`
     phone		varchar(10)  not null,
     email		varchar(100) not null,
     address		varchar(200) not null,
-    is_active	bit default (1),
+    is_active	bit default(1),
     user_id		bigint not null
 );
 
 create table `packages`
 (
     id          int primary key auto_increment,
-    `name`      varchar(20)  not null,
-    is_active   bit default (1)
+    `name`      varchar(20) not null,
+    is_active   bit default(1)
 );
 
 create table `package_details`
 (
-    id          	int primary key auto_increment,
+    id				int primary key auto_increment,
     `description`	varchar(250) not null,
     image       	varchar(255) not null,
     price       	float not null,
-    `status`    	varchar(50),
-    is_active	    bit default (1),
-    center_id		int not null,
-    package_id		int not null
+    `status`      	varchar(50),
+    is_active      	bit default (1),
+    center_id   	int not null,
+    package_id  	int not null
 );
 
 create table `services`
 (
-    id	          			int primary key auto_increment,
-    `name`        			varchar(200) not null,
-    price	      			float not null,
-    `description` 			varchar(250) not null,
-    `active`      			bit default (1),
-    `package_detail_id`  	int not null
+    id						int primary key auto_increment,
+    `name`					varchar(200) not null,
+    price					float not null,
+    `description`			varchar(250) not null,
+    `active`				bit default (1),
+    `package_detail_id`		int not null
 );
 
 create table `service_images`
 (
     id         int primary key auto_increment,
     url        varchar(255) not null,
-    service_id int          not null
+    service_id int not null
 );
 
-create table `package_reviews`
+create table `package_detail_reviews`
 (
     id         			int primary key auto_increment,
     review     			varchar(255) not null,
-    star      			int,
+    star       			int,
     `date`       		datetime,
     `active`     		bit default (1),
-    package_detail_id 	int not null,
+    package_detail_id	int not null,
     user_id    			bigint not null
 );
 
@@ -133,13 +135,13 @@ create table `sellers`
     `active`  bit default (1),
     center_id int not null
 );
-/*Order*/
+
 create table `orders`
 (
     id           int primary key auto_increment,
     phone_number varchar(20)  not null,
     note         varchar(200),
-    `date`       datetime     not null,
+    `date`       datetime not null,
     address      varchar(200) not null,
     `status`     varchar(100) not null,
     total        double,
@@ -151,96 +153,126 @@ create table `order_detail`
     id        int primary key auto_increment,
     item_name varchar(200),
     image     varchar(300),
-    quantity  int    not null,
+    quantity  int not null,
     total     double not null,
     note      varchar(200),
     orders_id int not null
 );
 
+create table `favorites`
+(
+    id 		bigint primary key auto_increment,
+    user_id bigint not null
+);
+
+create table `favorite_products`
+(
+    id			bigint primary key auto_increment,
+    product_id	bigint not null,
+    favorite_id	bigint not null
+);
+
 -- Khóa ngoại
+/*Product - image-detail*/
 ALTER TABLE product
-ADD CONSTRAINT fk_product_category
-	FOREIGN KEY (`category_id`)
-	REFERENCES category(`id`);
-    
+    ADD CONSTRAINT fk_product_category
+        FOREIGN KEY (`category_id`)
+            REFERENCES category(`id`);
+
 ALTER TABLE product
-ADD CONSTRAINT fk_product_mark
-	FOREIGN KEY (`mark_id`)
-	REFERENCES mark(`id`);
- 
+    ADD CONSTRAINT fk_product_mark
+        FOREIGN KEY (`mark_id`)
+            REFERENCES mark(`id`);
+
 ALTER TABLE image_detail
-ADD CONSTRAINT fk_image_detail_product
-	FOREIGN KEY (`product_id`)
-    REFERENCES product(`id`);
-    
+    ADD CONSTRAINT fk_image_detail_product
+        FOREIGN KEY (`product_id`)
+            REFERENCES product(`id`);
+
 /*Customer - Role*/
 ALTER TABLE `user_role`
-ADD CONSTRAINT fk_user_role_user
-    FOREIGN KEY(`user_id`)
-    REFERENCES `user`(`id`);
-    
+    ADD CONSTRAINT fk_user_role_user
+        FOREIGN KEY(`user_id`)
+            REFERENCES `user`(`id`);
+
 ALTER TABLE `user_role`
-ADD CONSTRAINT fk_user_role_role
-	FOREIGN KEY(`role_id`)
-    REFERENCES role(`id`);
+    ADD CONSTRAINT fk_user_role_role
+        FOREIGN KEY(`role_id`)
+            REFERENCES `role`(`id`);
 
 /*Center - Service*/
 ALTER TABLE `package_details`
-ADD CONSTRAINT `FK_package_details_centers` 
-    FOREIGN KEY(center_id) 
-    REFERENCES centers (`id`);
+	ADD CONSTRAINT `FK_package_details_centers` 
+		FOREIGN KEY(center_id) 
+			REFERENCES centers(`id`);
 
 ALTER TABLE `package_details`
-ADD CONSTRAINT `FK_package_details_packages` 
-	FOREIGN KEY(package_id) 
-    REFERENCES packages (`id`);
+	ADD CONSTRAINT `FK_package_details_packages` 
+		FOREIGN KEY(package_id) 
+			REFERENCES packages(`id`);
 
 ALTER TABLE `services`
-ADD CONSTRAINT `FK_service_package_detail` 
-	FOREIGN KEY(package_detail_id) 
-    REFERENCES package_details (`id`);
+	ADD CONSTRAINT `FK_service_package_detail` 
+		FOREIGN KEY(package_detail_id) 
+			REFERENCES package_details(`id`);
 
 ALTER TABLE `centers`
-ADD CONSTRAINT `FK_center_user` 
-	FOREIGN KEY(user_id) 
-    REFERENCES `user` (`id`);
+	ADD CONSTRAINT `FK_center_user` 
+		FOREIGN KEY(user_id) 
+			REFERENCES `user`(`id`);
 
 ALTER TABLE `service_images`
-ADD CONSTRAINT `FK_service_service_image` 
-	FOREIGN KEY(service_id) 
-    REFERENCES services (`id`);
+	ADD CONSTRAINT `FK_service_service_image` 
+		FOREIGN KEY(service_id) 
+			REFERENCES services(`id`);
 
 ALTER TABLE `sellers`
-ADD CONSTRAINT `FK_seller_center` 
-    FOREIGN KEY(center_id) 
-    REFERENCES centers (`id`);
+	ADD CONSTRAINT `FK_seller_center` 
+		FOREIGN KEY(center_id) 
+			REFERENCES centers(`id`);
 
-ALTER TABLE `package_reviews`
-ADD CONSTRAINT `FK_package_review_package` 
-    FOREIGN KEY(package_detail_id) 
-    REFERENCES package_details (`id`);
-    
-ALTER TABLE `package_reviews`
-ADD CONSTRAINT `FK_package_review_user` 
-    FOREIGN KEY(user_id) 
-    REFERENCES `user`(`id`);
-    
+ALTER TABLE `package_detail_reviews`
+    ADD CONSTRAINT `FK_package_detail_review_package` 
+		FOREIGN KEY(package_detail_id) 
+			REFERENCES package_details (`id`);
+
+ALTER TABLE `package_detail_reviews`
+    ADD CONSTRAINT `FK_package_detail_review_user` 
+		FOREIGN KEY(user_id) 
+			REFERENCES `user`(`id`);
+            
 ALTER TABLE  `orders`
-ADD CONSTRAINT `FK_order_user` 
-    FOREIGN KEY(user_id) 
-    REFERENCES `user` (`id`);
-    
-ALTER TABLE `order_detail`
-ADD CONSTRAINT `FK_order_detail_order` 
-    FOREIGN KEY(orders_id) 
-    REFERENCES `orders` (`id`);
+    ADD CONSTRAINT `FK_order_user`
+        FOREIGN KEY(user_id)
+            REFERENCES `user`(`id`);
 
+ALTER TABLE `order_detail`
+    ADD CONSTRAINT `FK_order_detail_order`
+        FOREIGN KEY(orders_id)
+            REFERENCES `orders`(`id`);
+
+ALTER TABLE `favorites`
+    ADD CONSTRAINT `FK_favorites_user` 
+		FOREIGN KEY(user_id) 
+			REFERENCES `user`(`id`);
+
+ALTER TABLE `favorite_products`
+    ADD CONSTRAINT `FK_favorite_products_products` 
+		FOREIGN KEY(product_id) 
+			REFERENCES product(`id`);
+
+ALTER TABLE `favorite_products`
+    ADD CONSTRAINT `FK_favorite_products_favorites` 
+		FOREIGN KEY(favorite_id) 
+			REFERENCES favorites(`id`);
+
+-- Insert 
 /*Customer - Role*/
 INSERT INTO `role`(`name`,`Desc`) 
 VALUES
 	('ROLE_ADMIN','Quản trị viên'),
 	('ROLE_OWNER','Trung tâm dịch vụ'),
-	('ROLE_SALER','Nhân viên bán hàng'),
+	('ROLE_SELLER','Nhân viên bán hàng'),
 	('ROLE_CUSTOMER','Khách hàng');
     
 INSERT INTO `user`(`full_name`,`username`,`password`,`email`,`is_status`,avatar)
@@ -267,7 +299,7 @@ VALUES
 	(2,4),
     (3,4),
     (3,2);
-
+    
 /*Product - Cart*/
 INSERT INTO category(`name`)
 VALUES
@@ -431,7 +463,6 @@ VALUES ('Pate for cats',
         'Cat Food - Kitcat Grain Food is produced and packaged according to international standards, the ingredients of the food are made from selected and high-grade raw materials. Food will be the most balanced and healthy source of nutrition for the cat to develop fully',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzeDA7w_rOUT6LmGJjQSKdXmxCDqH5jbMvTg&usqp=CAU', 25000,
         'SEED04', '1g', '2g', '20g', '50mg', '', '', 1, 5, 3, 0);
-
 
 INSERT INTO `image_detail`(`url`, `product_id`)
 VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295221/ImageProduct/pate-gan-ga_qduh4y.jpg', 1),
@@ -635,7 +666,6 @@ VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295221/ImageProd
 	('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295319/ImageProduct/images_vzevgi.jpg', 39),
 	('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684295319/ImageProduct/images_vzevgi.jpg', 39);
 
--- Phong Minh
 INSERT INTO centers (name, phone, email, address, user_id)
 VALUES ('Pet Care Center', '1234567890', 'petcarecente@gmail.com.com', '123 Main St', 1),
        ('Animal Hospital', '9876543210', 'animalhospital@gmail.com', '456 Elm St', 2),
@@ -659,13 +689,13 @@ VALUES ('Pet Care Center', '1234567890', 'petcarecente@gmail.com.com', '123 Main
        ('Aquatic Animal Hospital', '2223334444', 'comaquaticanimalhospitalcontact@gmail.com', '789 Elm St', 10),
        ('Rabbit and Rodent Clinic', '8889990000', 'infocomrabbitandrodentclinic12@gmail.com', '456 Maple Ave', 10);
 
-insert into packages (name)
+insert into packages(`name`)
 values ('Day care'),
        ('Walking Service'),
        ("Pet's Sap"),
        ('Training Program');
 
-insert into `package_details` (description, image, price, status, is_active, center_id, package_id)
+insert into `package_details`(`description`, image, price, `status`, is_active, center_id, package_id)
 values ( 'Essential vaccinations for your pet',
          'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376796/Packages/dog-massage-therapy-picture-id909810936_gtpm6j.jpg',
          80.0,'Active', 1,1,1),
@@ -677,54 +707,183 @@ values ( 'Essential vaccinations for your pet',
         'Active',1,2,3),
        ('Safe and comfortable boarding for your pet',
         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376983/Packages/caninemassagefeat-1080x675_hvebpl.jpg',
-        40.0, 'Active',1,3,4);
+        40.0, 'Active',1,3,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376983/Packages/caninemassagefeat-1080x675_hvebpl.jpg',
+         65.0, 'Active',1,2,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377007/Packages/oakland-and-east-bay-dog-daycare-1024x683_csvb5i.jpg',
+         61.0, 'Active',1,3,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377039/Packages/images_otmqqy.jpg',
+         70.0, 'Active',1,4,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377079/Packages/images_l2npht.jpg',
+         63.0, 'Active',1,5,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377116/Packages/images_y4dyct.jpg',
+         90.0, 'Active',1,6,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377150/Packages/rs_h_1000_cg_true_m_eqc1z7.jpg',
+         67.0, 'Active',1,7,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377180/Packages/images_sfguki.jpg',
+         45.0, 'Active',1,8,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377227/Packages/images_es7beo.jpg',
+         34.0, 'Active',1,9,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377252/Packages/images_tqmpxw.jpg',
+         33.0, 'Active',1,10,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377276/Packages/images_xhk5e2.jpg',
+         39.0, 'Active',1,11,1),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377360/Packages/images_fz4ihk.jpg',
+         22.0, 'Active',1,3,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377427/Packages/images_ithwde.jpg',
+         54.0, 'Active',1,4,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377461/Packages/images_womxnd.jpg',
+         53.0, 'Active',1,5,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377504/Packages/images_vjgni4.jpg',
+         61.0, 'Active',1,6,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377526/Packages/images_fbqldb.jpg',
+         69.0, 'Active',1,7,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377550/Packages/images_ww33bd.jpg',
+         66.0, 'Active',1,8,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377584/Packages/images_awbr7q.jpg',
+         60.0, 'Active',1,9,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377767/Packages/ServiceImage/images_kd4ium.jpg',
+         34.0, 'Active',1,10,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377780/Packages/ServiceImage/home-2_eoovki.jpg',
+         57.0, 'Active',1,11,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377805/Packages/ServiceImage/pet-care_cat-care_thumb_fgw2hf.jpg',
+         35.0, 'Active',1,12,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377816/Packages/ServiceImage/images_zansmg.jpg',
+         46.0, 'Active',1,13,2),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377827/Packages/ServiceImage/jack-russell-terrier-dog-holding-260nw-2100518530_wojavq.jpg',
+         86.0, 'Active',1,4,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377935/Packages/ServiceImage/s3wf6poxajhl0fa0adbu.jpg',
+         43.0, 'Active',1,5,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377973/Packages/ServiceImage/images_jvdrwd.jpg',
+         90.0, 'Active',1,6,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377994/Packages/ServiceImage/images_g9vmwq.jpg',
+         45.0, 'Active',1,7,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378011/Packages/ServiceImage/images_una9lg.jpg',
+         86.0, 'Active',1,8,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378061/Packages/ServiceImage/images_obdjp4.jpg',
+         35.0, 'Active',1,9,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378127/Packages/ServiceImage/images_vz5c3h.jpg',
+         37.0, 'Active',1,10,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378142/Packages/ServiceImage/images_rfh8op.jpg',
+         86.0, 'Active',1,11,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378162/Packages/ServiceImage/images_leocve.jpg',
+         45.0, 'Active',1,12,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378187/Packages/ServiceImage/images_sdyeow.jpg',
+         64.0, 'Active',1,13,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378208/Packages/ServiceImage/images_pqgm2f.jpg',
+         76.0, 'Active',1,14,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378230/Packages/ServiceImage/images_bxpyvu.jpg',
+         46.0, 'Active',1,15,3),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378251/Packages/ServiceImage/images_kmpwb2.jpg',
+         97.0, 'Active',1,16,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         45.0, 'Active',1,17,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         65.0, 'Active',1,18,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         86.0, 'Active',1,19,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         45.0, 'Active',1,12,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         67.0, 'Active',1,11,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         56.0, 'Active',1,9,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         68.0, 'Active',1,8,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         67.0, 'Active',1,7,4),
+       ( 'Pamper your pet with a grooming session',
+         'https://res.cloudinary.com/dhnom0aq3/image/upload/v1684376888/Packages/16735324573a9cefdabf6cc000ef1f49028cce059c_nyzkus.jpg',
+         66.0, 'Active',1,6,4);
 
-INSERT INTO services (name, price, description, package_detail_id)
+INSERT INTO services (`name`, price, `description`, package_detail_id)
 VALUES ('Basic Check-up', 50.0, 'Routine health check-up for your pet', 1),
        ('Vaccination', 30.0, 'Essential vaccinations for your pet', 2),
        ('Grooming', 40.0, 'Grooming session for your pet', 3),
        ('Dental Cleaning', 70.0, 'Professional dental cleaning for your pet', 1),
        ('Training Session', 80.0, 'Training session for your pet', 2),
        ('Nutrition Consultation', 60.0, 'Consultation for your pet''s nutrition', 3),
-       --  ('Microchipping', 50.0, 'Microchipping service for identification', 4),
---        ('Bathing', 20.0, 'Bathing service for your pet', 5),
---        ('Behavioral Training', 100.0, 'Training to address behavioral issues', 6),
---        ('Flea and Tick Treatment', 35.0, 'Treatment for fleas and ticks', 16),
---        ('Cat Boarding', 40.0, 'Boarding services for cats', 17),
---        ('Deworming', 25.0, 'Deworming treatment for your pet', 18),
---        ('Bird Grooming', 30.0, 'Grooming services for pet birds', 19),
---        ('Exotic Pet Care', 90.0, 'Specialized care for exotic pets', 20),
---        ('Dog Walking', 25.0, 'Professional dog walking service', 2),
---        ('Dental Surgery', 150.0, 'Surgical procedures for pet dental issues', 4),
---        ('Pet Massage', 50.0, 'Relaxing massage therapy for your pet', 3),
---        ('Allergy Testing', 120.0, 'Testing to identify pet allergies', 6),
---        ('Rehabilitation Therapy', 150.0, 'Therapy for pets recovering from injuries', 1),
---        ('Pet Bathing', 25.0, 'Bathing service for your pet', 2),
---        ('Eye and Ear Care', 70.0, 'Specialized care for pet eye and ear issues', 3),
---        ('Pet Dental Care', 80.0, 'Professional dental care for your pet', 5),
---        ('Tick Removal', 15.0, 'Removal of ticks from your pet', 7),
---        ('Pet Sitting', 40.0, 'Professional pet sitting service', 1),
---        ('Nail Trimming', 15.0, 'Trimming your pet''s nails', 8),
---        ('Wound Care', 60.0, 'Care for pet wounds and injuries', 9),
---        ('Pet Dental Scaling', 100.0, 'Scaling and cleaning for pet teeth', 9),
---        ('Pet CPR Training', 80.0, 'Training on pet CPR techniques', 10),
---        ('Pet Photography', 80.0, 'Professional pet photography service', 1),
---        ('Dog Training', 120.0, 'Training to teach basic commands and obedience', 2),
---        ('Pet Transportation', 50.0, 'Transportation service for your pet', 3),
---        ('Pet Nail Trimming', 15.0, 'Professional nail trimming for your pet', 4),
---        ('Pet Dental Cleaning', 100.0, 'Deep cleaning for your pet''s teeth', 5),
---        ('Pet Behavioral Training', 80.0, 'Training to modify pet behavior', 6),
---        ('Pet Eye Care', 70.0, 'Specialized care for pet eye conditions', 7),
---        ('Pet Bath and Brush', 35.0, 'Bathing and brushing service for your pet', 8),
---        ('Pet Health Check-up', 50.0, 'Comprehensive health check-up for your pet', 9),
---        ('Pet Dental Examination', 60.0, 'Thorough examination of your pet''s dental health', 11),
---        ('Pet Tick Treatment', 40.0, 'Treatment for ticks infestation on your pet', 14),
---        ('Overnight Pet Care', 60.0, 'Care for your pet overnight', 12),
---        ('Pet Microchip Installation', 50.0, 'Installation of microchip for pet identification', 5),
---        ('Pet First Aid Training', 90.0, 'Training on administering first aid to your pet', 6),
---        ('Pet Massage Therapy', 70.0, 'Relaxing massage therapy for your pet', 7),
---        ('Pet Allergy Treatment', 120.0, 'Treatment for pet allergies', 8),
---        ('Pet Rehabilitation Exercises', 80.0, 'Exercises to aid pet rehabilitation', 9),
+       ('Microchipping', 50.0, 'Microchipping service for identification', 4),
+       ('Bathing', 20.0, 'Bathing service for your pet', 5),
+       ('Behavioral Training', 100.0, 'Training to address behavioral issues', 6),
+       ('Flea and Tick Treatment', 35.0, 'Treatment for fleas and ticks', 16),
+       ('Cat Boarding', 40.0, 'Boarding services for cats', 17),
+       ('Deworming', 25.0, 'Deworming treatment for your pet', 18),
+       ('Bird Grooming', 30.0, 'Grooming services for pet birds', 19),
+       ('Exotic Pet Care', 90.0, 'Specialized care for exotic pets', 20),
+       ('Dog Walking', 25.0, 'Professional dog walking service', 2),
+       ('Dental Surgery', 150.0, 'Surgical procedures for pet dental issues', 4),
+       ('Pet Massage', 50.0, 'Relaxing massage therapy for your pet', 3),
+       ('Allergy Testing', 120.0, 'Testing to identify pet allergies', 6),
+       ('Rehabilitation Therapy', 150.0, 'Therapy for pets recovering from injuries', 1),
+       ('Pet Bathing', 25.0, 'Bathing service for your pet', 2),
+       ('Eye and Ear Care', 70.0, 'Specialized care for pet eye and ear issues', 3),
+       ('Pet Dental Care', 80.0, 'Professional dental care for your pet', 5),
+       ('Tick Removal', 15.0, 'Removal of ticks from your pet', 7),
+       ('Pet Sitting', 40.0, 'Professional pet sitting service', 1),
+       ('Nail Trimming', 15.0, 'Trimming your pet''s nails', 8),
+       ('Wound Care', 60.0, 'Care for pet wounds and injuries', 9),
+       ('Pet Dental Scaling', 100.0, 'Scaling and cleaning for pet teeth', 9),
+       ('Pet CPR Training', 80.0, 'Training on pet CPR techniques', 10),
+       ('Pet Photography', 80.0, 'Professional pet photography service', 1),
+       ('Dog Training', 120.0, 'Training to teach basic commands and obedience', 2),
+       ('Pet Transportation', 50.0, 'Transportation service for your pet', 3),
+       ('Pet Nail Trimming', 15.0, 'Professional nail trimming for your pet', 4),
+       ('Pet Dental Cleaning', 100.0, 'Deep cleaning for your pet''s teeth', 5),
+       ('Pet Behavioral Training', 80.0, 'Training to modify pet behavior', 6),
+       ('Pet Eye Care', 70.0, 'Specialized care for pet eye conditions', 7),
+       ('Pet Bath and Brush', 35.0, 'Bathing and brushing service for your pet', 8),
+       ('Pet Health Check-up', 50.0, 'Comprehensive health check-up for your pet', 9),
+       ('Pet Dental Examination', 60.0, 'Thorough examination of your pet''s dental health', 11),
+       ('Pet Tick Treatment', 40.0, 'Treatment for ticks infestation on your pet', 14),
+       ('Overnight Pet Care', 60.0, 'Care for your pet overnight', 12),
+       ('Pet Microchip Installation', 50.0, 'Installation of microchip for pet identification', 5),
+       ('Pet First Aid Training', 90.0, 'Training on administering first aid to your pet', 6),
+       ('Pet Massage Therapy', 70.0, 'Relaxing massage therapy for your pet', 7),
+       ('Pet Allergy Treatment', 120.0, 'Treatment for pet allergies', 8),
+       ('Pet Rehabilitation Exercises', 80.0, 'Exercises to aid pet rehabilitation', 9),
        ('Pet Ear Cleaning', 30.0, 'Cleaning your pet''s ears', 1);
 
 INSERT INTO service_images (url, service_id)
@@ -749,10 +908,36 @@ VALUES ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377733/Packages/
        ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378187/Packages/ServiceImage/images_sdyeow.jpg', 3),
        ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378208/Packages/ServiceImage/images_pqgm2f.jpg', 4),
        ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378230/Packages/ServiceImage/images_bxpyvu.jpg', 1),
-       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378251/Packages/ServiceImage/images_kmpwb2.jpg', 2);
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378251/Packages/ServiceImage/images_kmpwb2.jpg', 3),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377973/Packages/ServiceImage/images_jvdrwd.jpg', 10),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377994/Packages/ServiceImage/images_g9vmwq.jpg', 9),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378011/Packages/ServiceImage/images_una9lg.jpg', 9),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378061/Packages/ServiceImage/images_obdjp4.jpg', 8),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378127/Packages/ServiceImage/images_vz5c3h.jpg', 7),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378142/Packages/ServiceImage/images_rfh8op.jpg', 11),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378162/Packages/ServiceImage/images_leocve.jpg', 12),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378187/Packages/ServiceImage/images_sdyeow.jpg', 13),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378208/Packages/ServiceImage/images_pqgm2f.jpg', 14),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377973/Packages/ServiceImage/images_jvdrwd.jpg', 15),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377994/Packages/ServiceImage/images_g9vmwq.jpg', 16),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378011/Packages/ServiceImage/images_una9lg.jpg', 17),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378061/Packages/ServiceImage/images_obdjp4.jpg', 18),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378127/Packages/ServiceImage/images_vz5c3h.jpg', 19),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378142/Packages/ServiceImage/images_rfh8op.jpg', 20),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378162/Packages/ServiceImage/images_leocve.jpg', 21),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378187/Packages/ServiceImage/images_sdyeow.jpg', 22),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378208/Packages/ServiceImage/images_pqgm2f.jpg', 25),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377973/Packages/ServiceImage/images_jvdrwd.jpg', 5),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684377994/Packages/ServiceImage/images_g9vmwq.jpg', 6),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378011/Packages/ServiceImage/images_una9lg.jpg', 7),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378061/Packages/ServiceImage/images_obdjp4.jpg', 8),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378127/Packages/ServiceImage/images_vz5c3h.jpg', 9),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378142/Packages/ServiceImage/images_rfh8op.jpg', 10),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378162/Packages/ServiceImage/images_leocve.jpg', 12),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378187/Packages/ServiceImage/images_sdyeow.jpg', 13),
+       ('https://res.cloudinary.com/dhnom0aq3/image/upload/v1684378208/Packages/ServiceImage/images_pqgm2f.jpg', 14);
 
-
-INSERT INTO package_reviews (review, star, date, package_detail_id, user_id)
+INSERT INTO package_detail_reviews (review, star, `date`, package_detail_id, user_id)
 VALUES ('Great service package, highly recommended!', 5, '2022-01-01 10:00:00', 1, 1),
        ('The service package was good, but could be better.', 4, '2022-02-01 11:00:00', 2, 2),
        ('I really enjoyed the service package, will come back again!', 5, '2022-03-01 12:00:00', 1, 1),
@@ -761,17 +946,17 @@ VALUES ('Great service package, highly recommended!', 5, '2022-01-01 10:00:00', 
        ('The service package was a bit pricey, but the quality was good.', 4, '2022-06-01 15:00:00', 2, 1),
        ('Great value for money, highly recommend this service package!', 5, '2022-07-01 16:00:00', 3, 1),
        ('Service package was good, but could be better.', 4, '2022-08-01 17:00:00', 1, 2),
-       --        ('The service package was excellent, highly recommended!', 5, '2022-09-01 18:00:00',2,3),
-       --        ('I had a good experience with the service package, but it was a bit too expensive.', 3, '2022-10-01 19:00:00',2,1),
-       --        ('The service package was good, but I expected more.', 4, '2022-11-01 20:00:00',3,2),
-       --        ('I was satisfied with the service package, but there is room for improvement.', 4, '2022-12-01 21:00:00',1,3),
-       --        ('The service package was great, exceeded my expectations!', 5, '2023-01-01 22:00:00',1,4),
-       --        ('I had a good experience with the service package, but it was a bit overpriced.', 4, '2023-02-01 23:00:00',2,3),
-       --        ('The service package was excellent, highly recommended!', 5, '2023-03-01 00:00:00',3,1),
-       --        ('The service package was good, but I expected more.', 4, '2023-04-01 01:00:00',6,1),
-       --        ('I enjoyed the service package, but the price was a bit high.', 4, '2023-05-01 02:00:00',1,2),
-       --        ('The service package was good, but it could be better.', 3, '2023-06-01 03:00:00',3,2),
-       --        ('Great service package, highly recommended!', 5, '2023-07-01 04:00:00',1,4),
+       ('The service package was excellent, highly recommended!', 5, '2022-09-01 18:00:00',2,3),
+       ('I had a good experience with the service package, but it was a bit too expensive.', 3, '2022-10-01 19:00:00',2,1),
+       ('The service package was good, but I expected more.', 4, '2022-11-01 20:00:00',3,2),
+       ('I was satisfied with the service package, but there is room for improvement.', 4, '2022-12-01 21:00:00',1,3),
+       ('The service package was great, exceeded my expectations!', 5, '2023-01-01 22:00:00',1,4),
+       ('I had a good experience with the service package, but it was a bit overpriced.', 4, '2023-02-01 23:00:00',2,3),
+       ('The service package was excellent, highly recommended!', 5, '2023-03-01 00:00:00',3,1),
+       ('The service package was good, but I expected more.', 4, '2023-04-01 01:00:00',6,1),
+       ('I enjoyed the service package, but the price was a bit high.', 4, '2023-05-01 02:00:00',1,2),
+       ('The service package was good, but it could be better.', 3, '2023-06-01 03:00:00',3,2),
+       ('Great service package, highly recommended!', 5, '2023-07-01 04:00:00',1,4),
        ('The service package was good, but the quality was inconsistent.', 3, '2023-08-01 05:00:00', 2, 1);
 
 INSERT INTO `sellers` (name, phone, email, address, center_id, active)
@@ -807,4 +992,34 @@ VALUES ('Item 4', 'https://loremflickr.com/641/480/food', 1, 7.99, 'Spicy', 3);
 
 INSERT INTO `order_detail` (item_name, image, quantity, total, note, orders_id)
 VALUES ('Item 5', 'https://loremflickr.com/641/480/food', 2, 15.99, 'No onions', 3);
+
+Insert into `favorites` (user_id)
+values (1),
+       (2),
+       (3);
+
+insert into `favorite_products` (favorite_id,product_id)
+values (1,1),
+       (1,2),
+       (2,4),
+       (2,3);
+create table cart
+(
+    `id`            bigint primary key auto_increment,
+    `amount_item`   int           default 0,
+    `total_payment` double(16, 4) default 0.0000,
+    `cart_date`     date          default (CURRENT_DATE),
+    `user_id`       bigint not null unique
+);
+
+create table cart_detail
+(
+    `id`          bigint primary key auto_increment,
+    `type`        bit    not null check (`type` = 0 or `type` = 1),
+    `cart_id`     bigint not null,
+    `type_id`     bigint not null,
+    `total_price` double not null,
+    `amount`      int    not null,
+    `status`      bit check (`status` = 0 or `status` = 1)
+);
 

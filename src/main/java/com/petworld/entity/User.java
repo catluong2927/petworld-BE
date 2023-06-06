@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -56,9 +57,13 @@ public class User {
     @Column(name = "is_status", nullable = false)
     private Boolean isStatus;
 
-    @Column(name = "remember_token", length = 255, nullable = true)
-    private String rememberToken;
+    @Column
+    private Date dob;
+
+    @Column
+    private String descript;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Orders> orders = new ArrayList<>();
+
 }
