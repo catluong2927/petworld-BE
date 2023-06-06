@@ -48,10 +48,11 @@ public class AuthController {
 
     @GetMapping
     public ResponseEntity<?> findUserByAccount(@Valid @RequestParam String account) {
-
-        Boolean isExist = authService.isExistAccount(account);
-        if (!isExist) return new ResponseEntity<>(false, HttpStatus.OK);
-        else return new ResponseEntity<>(true, HttpStatus.BAD_REQUEST);
-
+        try {
+            Boolean isExist = authService.isExistAccount(account);
+            return new ResponseEntity<>(isExist, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
 }
