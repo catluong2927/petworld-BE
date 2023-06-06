@@ -1,12 +1,10 @@
 package com.petworld.controller.controller_FE_SF;
 
-import com.petworld.dto.userDto.request.UserDtoCreateRequest;
 import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
 import com.petworld.payload.request.SearchRequest;
-import com.petworld.payload.response.checkEmailPassword;
 import com.petworld.security.JwtAuthFilter;
 import com.petworld.security.JwtTokenProvider;
 import com.petworld.service.SecurityService;
@@ -18,8 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,17 +80,13 @@ public class UserController {
     }
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody UserDtoUpdate userDtoUpdate,
-                                        @RequestHeader("Authorization") final String authToken, HttpServletRequest request) {
+                                        @RequestHeader("Authorization") final String authToken) {
         if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
             return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
         }
-        String jwt = jwtAuthFilter.getJwtFromRequest(request);
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            String email = tokenProvider.getEmailFromJWT(jwt);
-            if (userService.updateSimple(email, userDtoUpdate))
+            if (userService.updateSimple( userDtoUpdate))
                 return new ResponseEntity<String>("Update successful", HttpStatus.OK);
             else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/password")
@@ -105,8 +97,7 @@ public class UserController {
         }
         String jwt = jwtAuthFilter.getJwtFromRequest(request);
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            String email = tokenProvider.getEmailFromJWT(jwt);
-            if (userService.updatePassword(email, userDtoPassword))
+            if (userService.updatePassword(userDtoPassword))
                 return new ResponseEntity<String>("Update successful", HttpStatus.OK);
             else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
@@ -122,5 +113,18 @@ public class UserController {
             return new ResponseEntity<String>("delete failed", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>("successful delete", HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateImage(@PathVariable("id") Long id, @RequestParam String avatarUrl,
+                                         @RequestHeader("Authorization") final String authToken) {
+        if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
+            return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
+        }
+        Boolean updateImage = userService.updateImage(id,avatarUrl);
+        UserDtoResponseDetail userDtoResponseDetail = userService.getUserById(id);
+        if (!updateImage) {
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userDtoResponseDetail.getAvatar(), HttpStatus.OK);
     }
 }

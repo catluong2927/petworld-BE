@@ -7,13 +7,16 @@ import com.petworld.dto.userDto.request.UserDtoPassword;
 import com.petworld.dto.userDto.request.UserDtoUpdate;
 import com.petworld.dto.userDto.response.UserDtoResponse;
 import com.petworld.dto.userDto.response.UserDtoResponseDetail;
+import com.petworld.entity.Role;
+import com.petworld.entity.User;
+import com.petworld.entity.UserRole;
 import com.petworld.payload.response.checkEmailPassword;
+import com.petworld.repository.RoleRepository;
 import com.petworld.repository.CartRepository;
 import com.petworld.repository.FavoriteRepository;
 import com.petworld.repository.UserRoleRepository;
 import com.petworld.repository.UserRepository;
 import com.petworld.service.UserService;
-//import com.petworld.validation.RegexValidate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -31,20 +34,21 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RoleRepository roleRepository;
+
     private final CartRepository cartRepository;
     private final FavoriteRepository favoriteRepository;
-
     private final UserConverter userConverter;
 
 
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter,
-                           UserRoleRepository userRoleRepository, CartRepository cartRepository,
-                           FavoriteRepository favoriteRepository ) {
+    public UserServiceImpl(UserRepository userRepository,UserRoleRepository userRoleRepository, CartRepository cartRepository,
+                           FavoriteRepository favoriteRepository,RoleRepository roleRepository,UserConverter userConverter ) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userRoleRepository = userRoleRepository;
         this.cartRepository = cartRepository;
         this.favoriteRepository = favoriteRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -141,12 +145,6 @@ public class UserServiceImpl implements UserService {
         return userDtoResponse;
     }
 
-
-//    @Override
-//    public UserDtoResponse findUserByAccount(String account) {
-//        return userConverter.entityToDto(userRepository.findUserByAccount(account));
-//    }
-
     @Override
     public UserDtoResponseDetail getUserById(Long customerId) {
         User user = userRepository.findById(customerId).orElse(null);
@@ -154,13 +152,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateSimple(String email, UserDtoUpdate userDtoUpdate) {
-        User user = userRepository.findUserByEmail(email);
+    public Boolean updateSimple(UserDtoUpdate userDtoUpdate) {
+        User user = userRepository.findUserByEmail(userDtoUpdate.getEmail());
         if (user != null) {
             user.setAddress(userDtoUpdate.getAddress());
             user.setFullName(userDtoUpdate.getFullName());
             user.setAvatar(userDtoUpdate.getAvatar());
             user.setPhone(userDtoUpdate.getPhone());
+            user.setDescript(userDtoUpdate.getDescript());
+            user.setDob(userDtoUpdate.getDob());
             userRepository.save(user);
             return true;
         }
@@ -168,8 +168,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updatePassword(String email, UserDtoPassword userDtoPassword) {
-        User user = userRepository.findUserByEmail(email);
+    public Boolean updatePassword(UserDtoPassword userDtoPassword) {
+        User user = userRepository.findUserByEmail(userDtoPassword.getEmail());
         if (BCrypt.checkpw(userDtoPassword.getOldPassword(), user.getPassword())) {
             String hashedPassword = BCrypt.hashpw(userDtoPassword.getNewPassword(), BCrypt.gensalt(10));
             user.setPassword(hashedPassword);
@@ -179,21 +179,57 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public Boolean updateAddRole(Long id, Role role) {
+//    @Override
+//    public Boolean updateAddRole(Long id, Role role) {
+//        User user = userRepository.getUserById(id);
+//        if (user != null) {
+//            UserRole userRole = new UserRole(user, role);
+//            userRoleRepository.save(userRole);
+//            return true;
+//        }
+//        return false;
+//    }
+
+//    @Override
+//    public Boolean updateRemoveRole(Long userId, Role role) {
+//        User user = userRepository.getUserById(userId);
+//        UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+//        if (userRole != null) {
+//            userRoleRepository.removeUserRoleById(userRole.getId());
+//            return true;
+//        }
+//        return false;
+//    }
+
+    @Override
+    public Boolean updateRole(Long id, List<Long> roles) {
         User user = userRepository.getUserById(id);
-        if (user != null) {
-            UserRole userRole = new UserRole(user, role);
-            userRoleRepository.save(userRole);
+        List<Long> roleResponse = new ArrayList<>();
+        if(user!= null){
+            user.getUserRoles().forEach(role -> {
+                roleResponse.add(role.getRole().getId());
+            });
+            roleResponse.forEach(idRole ->{
+                Role role = roleRepository.getRoleById(idRole);
+                UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+                if (userRole != null) {
+                    userRoleRepository.removeUserRoleById(userRole.getId());
+                }
+            });
+            roles.forEach(idNewRole ->{
+                Role role = roleRepository.getRoleById(idNewRole);
+                UserRole newUserRole = new UserRole(user,role);
+                userRoleRepository.save(newUserRole);
+            });
             return true;
         }
         return false;
     }
-
-    public Boolean updateRemoveRole(Long userId, Role role) {
-        User user = userRepository.getUserById(userId);
-        UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
-        if (userRole != null) {
-            userRoleRepository.removeUserRoleById(userRole.getId());
+    @Override
+    public Boolean updateImage(Long id, String avatarUrl) {
+        User user = userRepository.getUserById(id);
+        if(user != null){
+            user.setAvatar(avatarUrl);
             return true;
         }
         return false;
