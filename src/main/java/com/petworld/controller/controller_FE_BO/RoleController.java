@@ -1,4 +1,4 @@
-package com.petworld.controller.controller_FE_SF;
+package com.petworld.controller.controller_FE_BO;
 
 import com.petworld.dto.roleDto.response.RoleDtoResponse;
 import com.petworld.entity.Role;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin(value = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/userroles")
 public class RoleController {
     @Autowired
     private SecurityService securityService;

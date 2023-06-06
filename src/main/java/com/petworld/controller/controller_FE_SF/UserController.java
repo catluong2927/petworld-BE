@@ -80,17 +80,13 @@ public class UserController {
     }
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody UserDtoUpdate userDtoUpdate,
-                                        @RequestHeader("Authorization") final String authToken, HttpServletRequest request) {
+                                        @RequestHeader("Authorization") final String authToken) {
         if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
             return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
         }
-        String jwt = jwtAuthFilter.getJwtFromRequest(request);
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            String email = tokenProvider.getEmailFromJWT(jwt);
-            if (userService.updateSimple(email, userDtoUpdate))
+            if (userService.updateSimple( userDtoUpdate))
                 return new ResponseEntity<String>("Update successful", HttpStatus.OK);
             else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/password")
@@ -101,8 +97,7 @@ public class UserController {
         }
         String jwt = jwtAuthFilter.getJwtFromRequest(request);
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            String email = tokenProvider.getEmailFromJWT(jwt);
-            if (userService.updatePassword(email, userDtoPassword))
+            if (userService.updatePassword(userDtoPassword))
                 return new ResponseEntity<String>("Update successful", HttpStatus.OK);
             else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<String>("update failed", HttpStatus.BAD_REQUEST);
@@ -118,5 +113,18 @@ public class UserController {
             return new ResponseEntity<String>("delete failed", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>("successful delete", HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateImage(@PathVariable("id") Long id, @RequestParam String avatarUrl,
+                                         @RequestHeader("Authorization") final String authToken) {
+        if (!securityService.isAuthenticated() && !securityService.isValidToken(authToken)) {
+            return new ResponseEntity<String>("Responding with unauthorized error. Message - {}", HttpStatus.UNAUTHORIZED);
+        }
+        Boolean updateImage = userService.updateImage(id,avatarUrl);
+        UserDtoResponseDetail userDtoResponseDetail = userService.getUserById(id);
+        if (!updateImage) {
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userDtoResponseDetail.getAvatar(), HttpStatus.OK);
     }
 }

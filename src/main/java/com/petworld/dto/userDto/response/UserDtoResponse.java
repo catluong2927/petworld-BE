@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -20,5 +22,8 @@ public class UserDtoResponse {
     private String avatar;
     private Boolean isStatus;
     private String phone;
+    private String address;
+    private Date dob;
+    private String descript;
     private List<UserRoleDtoResponse> userRoleDtos;
 }

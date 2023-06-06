@@ -152,13 +152,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateSimple(String email, UserDtoUpdate userDtoUpdate) {
-        User user = userRepository.findUserByEmail(email);
+    public Boolean updateSimple(UserDtoUpdate userDtoUpdate) {
+        User user = userRepository.findUserByEmail(userDtoUpdate.getEmail());
         if (user != null) {
             user.setAddress(userDtoUpdate.getAddress());
             user.setFullName(userDtoUpdate.getFullName());
             user.setAvatar(userDtoUpdate.getAvatar());
             user.setPhone(userDtoUpdate.getPhone());
+            user.setDescript(userDtoUpdate.getDescript());
+            user.setDob(userDtoUpdate.getDob());
             userRepository.save(user);
             return true;
         }
@@ -166,8 +168,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updatePassword(String email, UserDtoPassword userDtoPassword) {
-        User user = userRepository.findUserByEmail(email);
+    public Boolean updatePassword(UserDtoPassword userDtoPassword) {
+        User user = userRepository.findUserByEmail(userDtoPassword.getEmail());
         if (BCrypt.checkpw(userDtoPassword.getOldPassword(), user.getPassword())) {
             String hashedPassword = BCrypt.hashpw(userDtoPassword.getNewPassword(), BCrypt.gensalt(10));
             user.setPassword(hashedPassword);
@@ -177,27 +179,27 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    @Override
-    public Boolean updateAddRole(Long id, Role role) {
-        User user = userRepository.getUserById(id);
-        if (user != null) {
-            UserRole userRole = new UserRole(user, role);
-            userRoleRepository.save(userRole);
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public Boolean updateAddRole(Long id, Role role) {
+//        User user = userRepository.getUserById(id);
+//        if (user != null) {
+//            UserRole userRole = new UserRole(user, role);
+//            userRoleRepository.save(userRole);
+//            return true;
+//        }
+//        return false;
+//    }
 
-    @Override
-    public Boolean updateRemoveRole(Long userId, Role role) {
-        User user = userRepository.getUserById(userId);
-        UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
-        if (userRole != null) {
-            userRoleRepository.removeUserRoleById(userRole.getId());
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public Boolean updateRemoveRole(Long userId, Role role) {
+//        User user = userRepository.getUserById(userId);
+//        UserRole userRole = userRoleRepository.getUserRoleByUserId(user, role);
+//        if (userRole != null) {
+//            userRoleRepository.removeUserRoleById(userRole.getId());
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public Boolean updateRole(Long id, List<Long> roles) {
@@ -223,11 +225,13 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
-
-//    public Boolean isRoleExist(Role role, List<UserRoleDtoResponse> roles) {
-//        for (int i = 0; i < roles.size(); i++) {
-//            if (role.getId() == roles.get(i).getRoleDtoResponse().getId()) return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public Boolean updateImage(Long id, String avatarUrl) {
+        User user = userRepository.getUserById(id);
+        if(user != null){
+            user.setAvatar(avatarUrl);
+            return true;
+        }
+        return false;
+    }
 }

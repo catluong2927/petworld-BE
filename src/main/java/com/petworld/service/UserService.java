@@ -23,11 +23,10 @@ public interface UserService {
     Optional<UserDtoResponse> findById(Long id);
     checkEmailPassword save(UserDtoCreateRequest userDtoCreateRequest);
     Boolean remove(Long id);
-    Boolean updateSimple(String email, UserDtoUpdate userDtoUpdate);
-    Boolean updatePassword (String email, UserDtoPassword userDtoPassword);
+    Boolean updateSimple(UserDtoUpdate userDtoUpdate);
+    Boolean updatePassword (UserDtoPassword userDtoPassword);
     Boolean active(Long id);
     UserDtoResponse getUserByEmail(String email);
-    Boolean updateAddRole(Long id, Role role);
-    Boolean updateRemoveRole(Long userId, Role role);
     Boolean updateRole(Long id, List<Long> roles);
+    Boolean updateImage(Long id, String avatarUrl);
 }
