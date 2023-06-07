@@ -91,25 +91,30 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests() // links start with /api/
                 .antMatchers("/api/auth/**","/api/products/**","/api/package-details/**", "/api/categorys/**",
                         "/api/orders/**","/api/favorite-products/**","/api/favorites/**","/api/cart/**")// perform segregate authorize
-
                 .permitAll();
 
         // Pages require login with role: ROLE_ADMIN.
         // If not login at admin role yet, redirect to /login
-        http.authorizeHttpRequests()
-                .antMatchers("/api/role/**", "/api/**")
-                .hasRole("ADMIN");
+
 
 
         // Pages require login with role: ROLE_USER
         // If not login at user role yet, redirect to /login
+//        http.authorizeHttpRequests()
+//                .antMatchers("/api/users/**")
+//                .hasRole("CUSTOMER");
         http.authorizeHttpRequests()
                 .antMatchers("/api/users/**")
-                .hasRole("CUSTOMER");
+                .hasAnyRole("CUSTOMER","ADMIN");
+
 
         http.authorizeHttpRequests()
                 .antMatchers("/api/owner/**")
-                .hasRole("OWNER");
+                .hasAnyRole("OWNER","ADMIN");
+
+        http.authorizeHttpRequests()
+                .antMatchers( "/api/**","/api/role/**")
+                .hasRole("ADMIN");
 
         // When user login with ROLE_USER, but try to
         // access pages require ROLE_ADMIN, redirect to /error-403
