@@ -58,7 +58,7 @@ public class UserController {
         }
         UserDtoResponseDetail userDtoResponseDetail = userService.getUserById(id);
         if (userDtoResponseDetail == null) {
-            return new ResponseEntity<UserDtoResponseDetail>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userDtoResponseDetail, HttpStatus.OK);
     }
