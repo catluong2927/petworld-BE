@@ -18,7 +18,7 @@ public class ImageDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String url;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 }

@@ -20,6 +20,8 @@ public interface ProductService {
     void deleteProductById(Long id);
     ProductDetailDtoResponse updateProductById(Long id, UpdateProductDtoRequest updateProductDtoRequest);
 
+    Page<ProductDtoResponse> getAllProductBo(Pageable pageable);
 
+    List<ProductDtoResponse> findProductByName(String name);
 
 }

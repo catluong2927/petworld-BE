@@ -57,11 +57,13 @@ public class User {
     @Column(name = "is_status", nullable = false)
     private Boolean isStatus;
 
+
     @Column
     private Date dob;
 
     @Column
     private String descript;
+
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Orders> orders = new ArrayList<>();
