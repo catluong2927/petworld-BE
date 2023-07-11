@@ -1,4 +1,4 @@
-package com.petworld.dto.imageDetailsDto;
+package com.petworld.dto.imagedetailDto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageDetailsDto {
+public class UpdateImageDetailDto {
+    private Long id;
     private String url;
 }

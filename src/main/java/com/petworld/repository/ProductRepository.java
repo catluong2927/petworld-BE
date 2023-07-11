@@ -1,6 +1,7 @@
 package com.petworld.repository;
 
 
+import com.petworld.dto.productDto.response.ProductDtoResponse;
 import com.petworld.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("UPDATE Product p SET p.status = false WHERE p.id = :id")
     void deleteProductById(@Param("id") Long id);
+
+    @Query( value = "select p from Product p ")
+    Page<Product> getAllProductBo(Pageable pageable);
+
+    @Query( value = "select p from Product p where p.name Like %:name%")
+    List<Product> findProductByName(String name);
 
 
 }

@@ -1,6 +1,7 @@
 package com.petworld.dto.productDto.response;
+import com.petworld.dto.categoryDto.response.CategoryDtoResponse;
 import com.petworld.entity.Mark;
-import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
+import com.petworld.dto.imagedetailDto.response.ImageDetailsDto;
 import lombok.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 
 public class ProductDetailDtoResponse {
-    private long id ;
+    private Long id ;
     private String name;
     private String description;
     private String image;
@@ -26,5 +27,7 @@ public class ProductDetailDtoResponse {
     private String animal;
     private Integer sale;
     private Mark mark;
+    private Boolean status;
+    private CategoryDtoResponse categoryDtoResponse;
     private List<ImageDetailsDto> imageDetailList;
 }

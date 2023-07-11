@@ -1,7 +1,9 @@
 package com.petworld.converter;
 
+import com.petworld.dto.imagedetailDto.request.UpdateImageDetailDto;
+import com.petworld.dto.imagedetailDto.response.ImageDetailsDto;
 import com.petworld.entity.ImageDetail;
-import com.petworld.dto.imageDetailsDto.ImageDetailsDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ImageDetailsConverter {
+
 
     public List<ImageDetailsDto> entititesToDtos(List<ImageDetail> imageDetails){
         List<ImageDetailsDto> imageDetailsDtos = new ArrayList<>();
@@ -29,6 +33,22 @@ public class ImageDetailsConverter {
     public ImageDetail dtoToEntity(ImageDetailsDto imageDetailsDto){
         ImageDetail imageDetail = new ImageDetail();
         BeanUtils.copyProperties(imageDetailsDto, imageDetail);
+//        imageDetail.setProduct(productConverter.dtoToEntity(imageDetailsDto.getProductDtoRequest()));
         return imageDetail;
+    }
+
+    public ImageDetail updateDtoToEntity(UpdateImageDetailDto updateImageDetailDto){
+        ImageDetail imageDetail = new ImageDetail();
+        BeanUtils.copyProperties(updateImageDetailDto, imageDetail);
+        return imageDetail;
+    }
+
+    public List<ImageDetail> dtoToEntities(List <UpdateImageDetailDto> updateImageDetailDtos) {
+        List<ImageDetail>  imageDetails = new ArrayList<>();
+        for(UpdateImageDetailDto element : updateImageDetailDtos){
+            ImageDetail imageDetail = updateDtoToEntity(element);
+            imageDetails.add(imageDetail);
+        }
+        return imageDetails;
     }
 }
