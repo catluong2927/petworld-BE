@@ -105,11 +105,11 @@ public class SecurityConfiguration {
 //                .hasRole("CUSTOMER");
         http.authorizeHttpRequests()
                 .antMatchers("/api/users/**")
-                .hasAnyRole("CUSTOMER","ADMIN");
+                .hasAnyRole("CUSTOMER","ADMIN","OWNER");
 
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/owner/**")
+                .antMatchers("/api/center/**")
                 .hasAnyRole("OWNER","ADMIN");
 
         http.authorizeHttpRequests()

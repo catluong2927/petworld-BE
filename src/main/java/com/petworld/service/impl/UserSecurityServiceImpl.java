@@ -23,19 +23,15 @@ public class UserSecurityServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
-
         if (user == null) {
             throw new UsernameNotFoundException("This" +email + "was not found in database!");
         }
-
         List<String> roles = userRepository.findRolesByEmail(email);
-
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (String role: roles) {
             GrantedAuthority authority = new SimpleGrantedAuthority(role);
             grantedAuthorities.add(authority);
         }
-
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
